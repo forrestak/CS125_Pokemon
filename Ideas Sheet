@@ -1,6 +1,8 @@
 Kinda like a todo list/what do you want to do
+///////////////////////////////////////////////////////////////////////////////////////////////////
+Ideas
 -map for navigation
--decide whether its just 1v1 pokemon or if you can switch pokemon idk
+-decide whether its just 1v1 pokemon or if you can switch pokemon with a party of 6
 -items
 -pokemon type advantages
 -stab bonus
@@ -14,17 +16,43 @@ Kinda like a todo list/what do you want to do
   ~we dont exactly have to do the defensive stuff, maybe do like effective hp and effective damage?
   ~and if we want to cut corners more, just make sp attack and attack the same, also with defense
   
- -crits
- -accuracy of moves
- -which moves do we give pokemon
- -stat booster moves? yay or nay
- -unique moves like protect, false swipe, fake out
- -status effects? paralysis, burn, freeze
- -leveling? probably not neccessary imo, we only got 5 ish minutes xD
- -max evolution pokemon only?
- -what pokemon do we start with? or maybe give them some starters and after a battle, "evolve" them
- -mega evolutions and z moves (jk jk xD)
- -held items
+-crits
+-accuracy of moves
+-which moves do we give pokemon
+-stat booster moves? yay or nay
+-unique moves like protect, false swipe, fake out
+-status effects? paralysis, burn, freeze
+-leveling? probably not neccessary imo, we only got 5 ish minutes xD
+-max evolution pokemon only?
+-what pokemon do we start with? or maybe give them some starters and after a battle, "evolve" them
+-mega evolutions and z moves (jk jk xD)
+-held items
+-color scheme?if any
+-battle ui
+-catching pokemon?(probably not)
+///////////////////////////////////////////////////////////////////////////////////////////////////
+Implementation
+How do we want to store our pokemon data?
+  -individual arrays
+  -custom data type (classes)
+  -hashed/base 64 like iaos214i4h1289f
+
+Map/movement?
+  Make it an open may where you can move with wasd and interact with things
+    -matrix (array in an array) as the map/tile grid
+    -interact button
+  Make it text based and more linear
+    -like which path do you want to go, type left to go left, type right to go right
+    -kinda like a text based adventure but with the addon of pokemon
+  Screw map movement, all I want is fighting
+    -no movement/map creation needed
+    -maybe the scenario is a pokemon tournament where youre fighting the _____ league
+    
+///////////////////////////////////////////////////////////////////////////////////////////////////
+Resources
+ 
+https://stackoverflow.com/questions/428884/how-to-play-mp3-files-in-c
+for some dank battle music xD
 
 
 https://manytools.org/hacker-tools/convert-images-to-ascii-art/go/

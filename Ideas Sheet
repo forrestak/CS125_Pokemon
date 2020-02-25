@@ -29,6 +29,15 @@ Ideas
 -held items
 -color scheme?if any
 -battle ui
+    -Health bars
+    -Current Hp / Total Hp
+    -Name or Nickname 
+    -Pokemon image
+    -Background?
+    -Menus  
+        Would it be the traditional 4 moves selection?
+        Change pokemon?
+        Item bag?
 -catching pokemon?(probably not)
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 Implementation

@@ -40,13 +40,15 @@ Ideas
         Change pokemon?
         Item bag?
 -catching pokemon?(probably not)
-
+-title screen
+-if we bump into a house or go somewhere illegal, have professor scold at you
 Forrest's Thoughts
 - Player chooses starting Pokemon
 - Player can move around and random battle will take place
 - Player can win or lose
 - Battle will be pretty standard (4 moves, able to use items)
 - Probably not much more than that
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 Implementation
 How do we want to store our pokemon data?

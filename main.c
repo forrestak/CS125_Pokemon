@@ -3,6 +3,7 @@
     main.c
     Main program for the group project
 */
+#include "intro.c"
 
 /* Intro
     - Title Screen
@@ -28,3 +29,11 @@
         dreams, adventure and friendships await! First, let's choose a
         Pokemon companion!"
 */
+
+
+void intro();
+
+int main(){
+
+  return 0;
+}

@@ -34,6 +34,6 @@
 void intro();
 
 int main(){
-
+  intro();
   return 0;
 }

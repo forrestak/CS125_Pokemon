@@ -1,5 +1,7 @@
 /*  CS125_Pokemon
     CS125 Programming Project
+    main.c
+    Main program for the group project
 */
 
 /* Intro

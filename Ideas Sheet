@@ -4,6 +4,7 @@ Ideas
 -map for navigation
 -decide whether its just 1v1 pokemon or if you can switch pokemon with a party of 6
 	- I think we should just have 1 Pokemon. Don't want to kill ourselves
+		- Colton: seconded ^, unless we opt for a "fight-only" version; 
 -items
 -pokemon type advantages
 -stab bonus
@@ -55,6 +56,7 @@ How do we want to store our pokemon data?
   -individual arrays
   -custom data type (classes)
   -hashed/base 64 like iaos214i4h1289f
+  -Colton: could store simple numerical stats in .txt files and read-in using a function, for file I/O implementation
 
 Map/movement?
   Make it an open may where you can move with wasd and interact with things
@@ -62,12 +64,15 @@ Map/movement?
     -interact button
 
 	- Forrest: I like the idea of doing a tile map
+	- Colton: Also like tile map - if it's as easy to implement as say, MATLAB
   Make it text based and more linear
     -like which path do you want to go, type left to go left, type right to go right
     -kinda like a text based adventure but with the addon of pokemon
+    - Colton: text based is super lame for movement IMO; would rather opt for tournament mode if tile map doesn't work
   Screw map movement, all I want is fighting
     -no movement/map creation needed
     -maybe the scenario is a pokemon tournament where youre fighting the _____ league
+    - Colton: Fighting-only/tournament would be a good alternative if making a tile map UI proves to be too much effort
     
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 Resources

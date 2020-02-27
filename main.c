@@ -9,24 +9,8 @@
 #include <stdio.h>
 
 /* Intro
-    - Title Screen
-      - Pokemon
-      - Title of game (Eagle, Embry - Riddle)
-      - Slides up like in real game
-      - Press Enter to Start?
-    - Intro Text
-      - "Hi! Sorry to keep you waiting! Welcome to the world of Pokemon!
-        My name is Heather Marriot. But everyone calls me the Coding Professor.
-        This world is widely inhabited by creatures known as Pokemon.
-        We humans live alongside Pokemon, at times as friendly playmates,
-        and at times as cooperative workmates.
-        And sometimes, we band together and battle others like us.
-        But despite our closeness, we don't know everything about Pokemon.
-        In fact, there are many, many secrets surrounding Pokémon.
-        To unravel Pokemon mysteries, I've been undertaking research.
-        That's what I do. And you are?"
-      - Have user enter name <player>
-      -"Ah, okay! You're <player> who's moving to my hometown of Prescott.
+
+        -"Ah, okay! You're <player> who's moving to my hometown of Prescott.
         I get it now! All right, are you ready? Your very own adventure is about
         to unfold. Take courage, and leap into the world of Pokemon where
         dreams, adventure and friendships await! First, let's choose a
@@ -40,6 +24,7 @@ int main(){
   // Initializing Vars
   char dummy;
   int count;
+  char userName[50];
 
   // Structure for changing sleep times
   struct timespec tim, tim2;
@@ -52,10 +37,36 @@ int main(){
   printf("\e[1;1H\e[2J");
   fflush(stdout);
   // Printing Intro Text
-  char text1[]="Hi! Sorry to keep you waiting! Welcome to the world of Pokemon!\nMy name is Heather Marriot. But everyone calls me the\nCoding Professor. This world is widely inhabited by creatures known\nas Pokemon. We humans live alongside Pokemon, at times\nas friendly playmates, and at times as cooperative workmates.\nAnd sometimes, we band together and battle others like us.\nBut despite our closeness, we don't know everything about Pokemon.\nIn fact, there are many, many secrets surrounding Pokémon.\nTo unravel Pokemon mysteries, I've been undertaking research.\nThat's what I do. And you are?\n";
+  char text1[]="Hi! Sorry to keep you waiting! Welcome to the world of Pokemon!\nMy name is Heather Marriot. But everyone calls me the\nCoding Professor. This world is widely inhabited by creatures known\nas Pokemon. We humans live alongside Pokemon, at times\nas friendly playmates, and at times as cooperative workmates.\nAnd sometimes, we band together and battle others like us.\nBut despite our closeness, we don't know everything about Pokemon.\nIn fact, there are many, many secrets surrounding Pokémon.\nTo unravel Pokemon mysteries, I've been undertaking research.\nThat's what I do.\n";
   sleep(3);
   for (count=0;count<strlen(text1);count++){
     printf("%c", text1[count]);
+    fflush(stdout);
+    nanosleep(&tim , &tim2);
+  }
+  char text2[]="\nAnd you are? ";
+  for (count=0;count<strlen(text2);count++){
+    printf("\e[0;33m%c\e[0m", text2[count]);
+    fflush(stdout);
+    nanosleep(&tim , &tim2);
+  }
+  fgets(userName, 50, stdin);
+  userName[strcspn(userName, "\n")]=0;
+  //fflush(stdin);
+  char text3[]="\nAh, okay! You're ";
+  char text4[]=" who's moving to my hometown of Prescott. I get it now! All right, are you ready? Your very own adventure\nis about to unfold. Take courage, and leap into the world of Pokemon\nwhere dreams, adventure and friendships await!\nFirst, let's choose a Pokemon companion!\n";
+  for (count=0;count<strlen(text3);count++){
+    printf("%c", text3[count]);
+    fflush(stdout);
+    nanosleep(&tim , &tim2);
+  }
+  for (count=0;count<strlen(userName);count++){
+    printf("\e[0;33m%c\e[0m", userName[count]);
+    fflush(stdout);
+    nanosleep(&tim , &tim2);
+  }
+  for (count=0;count<strlen(text4);count++){
+    printf("%c", text4[count]);
     fflush(stdout);
     nanosleep(&tim , &tim2);
   }

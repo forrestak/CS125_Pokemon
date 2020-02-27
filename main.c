@@ -5,6 +5,9 @@
 */
 #include "intro.c"
 
+#include <string.h>
+#include <stdio.h>
+
 /* Intro
     - Title Screen
       - Pokemon
@@ -34,6 +37,27 @@
 void intro();
 
 int main(){
+  // Initializing Vars
+  char dummy;
+  int count;
+
+  // Structure for changing sleep times
+  struct timespec tim, tim2;
+    tim.tv_sec = 0;
+    tim.tv_nsec = 50000000;
+
+  // Running Start Screen & looking for Enter input
   intro();
+  scanf("%c", &dummy);
+  printf("\e[1;1H\e[2J");
+  fflush(stdout);
+  // Printing Intro Text
+  char text1[]="Hi! Sorry to keep you waiting! Welcome to the world of Pokemon!\nMy name is Heather Marriot. But everyone calls me the\nCoding Professor. This world is widely inhabited by creatures known\nas Pokemon. We humans live alongside Pokemon, at times\nas friendly playmates, and at times as cooperative workmates.\nAnd sometimes, we band together and battle others like us.\nBut despite our closeness, we don't know everything about Pokemon.\nIn fact, there are many, many secrets surrounding Pokémon.\nTo unravel Pokemon mysteries, I've been undertaking research.\nThat's what I do. And you are?\n";
+  sleep(3);
+  for (count=0;count<strlen(text1);count++){
+    printf("%c", text1[count]);
+    fflush(stdout);
+    nanosleep(&tim , &tim2);
+  }
   return 0;
 }

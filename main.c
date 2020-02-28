@@ -4,12 +4,14 @@
     Main program for the group project
 */
 #include "intro.c"
+#include "starter.c"
 
 #include <string.h>
 #include <stdio.h>
 
 
 void intro();
+int starter();
 
 int main(){
   // Initializing Vars
@@ -61,7 +63,10 @@ int main(){
     fflush(stdout);
     nanosleep(&tim , &tim2);
   }
-
+  sleep(2);
   // Pokemon Choice
+  int pokemonChoice;
+  pokemonChoice = starter();
+
   return 0;
 }

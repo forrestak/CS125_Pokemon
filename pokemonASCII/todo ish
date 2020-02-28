@@ -4,3 +4,15 @@ probably gonna delete everything and try out new websites
 https://www.text-image.com/convert/ascii.html <-- maybe this?
 or i can manually fix them
 escape sequences and // might be the bane of my existence :p
+
+
+things to do later
+so roughly 31 and 17 sized pokemons seem fine
+30 width, 16 height i believe
+
+
+so far, the functions arent working where there are two string inputs :/
+so gotta figure that out
+concat seems to be a big player in this code
+
+

@@ -8,15 +8,6 @@
 #include <string.h>
 #include <stdio.h>
 
-/* Intro
-
-        -"Ah, okay! You're <player> who's moving to my hometown of Prescott.
-        I get it now! All right, are you ready? Your very own adventure is about
-        to unfold. Take courage, and leap into the world of Pokemon where
-        dreams, adventure and friendships await! First, let's choose a
-        Pokemon companion!"
-*/
-
 
 void intro();
 
@@ -52,7 +43,7 @@ int main(){
   }
   fgets(userName, 50, stdin);
   userName[strcspn(userName, "\n")]=0;
-  //fflush(stdin);
+
   char text3[]="\nAh, okay! You're ";
   char text4[]=" who's moving to my hometown of Prescott. I get it now! All right, are you ready? Your very own adventure\nis about to unfold. Take courage, and leap into the world of Pokemon\nwhere dreams, adventure and friendships await!\nFirst, let's choose a Pokemon companion!\n";
   for (count=0;count<strlen(text3);count++){
@@ -70,5 +61,7 @@ int main(){
     fflush(stdout);
     nanosleep(&tim , &tim2);
   }
+
+  // Pokemon Choice
   return 0;
 }

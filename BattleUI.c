@@ -14,21 +14,57 @@ void delay(int milliseconds)
     clock_t start_time =clock();
     while(clock()<start_time + milliseconds);
 }
+///////////////////////////////////
 void clear()
 {
     printf("\e[2J\e[H");
 }
+//////////////////////////////////
 void run(char screen[ROWS][COLS])
 {
     int x=0;
     for(x=0;x<ROWS;x++)
     printf("%s\n",screen[x]);
 }
-
 ///////////////////////////////////////
+void change(char screen[ROWS][COLS],char image[2][2])
+{
+
+
+}
+//////////////////////////////////////
+/*
+                
+//https://www.text-image.com/convert/ascii.html
+//use this website cause theres no asterisks
+//also replace all slashes with l
+
+                      .l::`   
+            .--:lllllll+loo`  
+    ..`   `+llllo+llllllls+   
+   l::l::l++llll:++lllll+sol  
+  :l--loss+l:::::lo+++oooosol 
+ -lllo:lll:l:l+l:+oooooooosoo:
+.:+ll:loo:l:.+:o+++osssoooooo+
+l-ol:::ll::: sloo+++oyysysoool
+:+ll::l::::l:l+oo++++ossoosol 
+ `-+soo++++osoo+++lll+++l++:  
+   .l+oooosooooo:++:lo+oso++` 
+    +os+++o+oss+oll:+oloso+o` 
+    `+++++. .+so+:l+:l+++++l  
+     -.--`   `::ll:`  -:::-   
+
+
+
+
+*/
+
+
+/////////////////////////////////////
 int main()
 {
 printf("\e[2J\e[H");
+//32 rows, 64 columns
 char screen[ROWS][COLS] ={   
 "0123456789012345678901234567890123456789012345678901234567890123",
 "0123456789012345678901234567890123456789012345678901234567890123",
@@ -62,6 +98,31 @@ char screen[ROWS][COLS] ={
 "0123456789012345678901234567890123456789012345678901234567890123",
 "0123456789012345678901234567890123456789012345678901234567890123",
 "0123456789012345678901234567890123456789012345678901234567890123"};
+
+
+//test 16 lines height
+//30 char width
+char test[17][31]=
+{
+  "                              ",
+  "                              ",
+  "                      .l::`   ",
+  "            .--:lllllll+loo`  ",
+  "    ..`   `+llllo+llllllls+   ",
+  "   l::l::l++llll:++lllll+sol  ",
+  "  :l--loss+l:::::lo+++oooosol ",
+  " -lllo:lll:l:l+l:+oooooooosoo:",
+  ".:+ll:loo:l:.+:o+++osssoooooo+",
+  "l-ol:::ll::: sloo+++oyysysoool",
+  ":+ll::l::::l:l+oo++++ossoosol ",
+  " `-+soo++++osoo+++lll+++l++:  ",
+  "   .l+oooosooooo:++:lo+oso++` ",
+  "    +os+++o+oss+oll:+oloso+o` ",
+  "    `+++++. .+so+:l+:l+++++l  ",
+  "     -.--`   `::ll:`  -:::-   ",};
+
+
+
 
 int i;
 for(i=0;i<10;i++)

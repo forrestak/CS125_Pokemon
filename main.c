@@ -63,7 +63,7 @@ int main(){
     fflush(stdout);
     nanosleep(&tim , &tim2);
   }
-  sleep(2);
+  sleep(1);
   // Pokemon Choice
   int pokemonChoice;
   pokemonChoice = starter();

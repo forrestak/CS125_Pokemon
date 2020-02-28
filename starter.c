@@ -22,7 +22,7 @@ int starter(){
   char types2[] = "Water";
   char types3[] = "Grass";
   char text2[] = "and ";
-  char text3[] = "Each Pokemon type has its own strengths and weaknesses.\nFire is effective against Grass and weak against water,\nWater is effective against Fire and weak against Grass,\nand Grass is effective against Water and weak against Fire.";
+  char text3[] = "Each Pokemon type has its own strengths and weaknesses.\nFire is effective against Grass and weak against Water,\nWater is effective against Fire and weak against Grass,\nand Grass is effective against Water and weak against Fire.\n\nWe keep Pokemon in little homes called Pokeballs,\nlike this!\n";
 
   for (count=0;count<strlen(text1);count++){
     printf("%c", text1[count]);
@@ -55,7 +55,7 @@ int starter(){
     fflush(stdout);
     nanosleep(&tim , &tim2);
     if (count == strlen(types3)){
-      printf(".\n");
+      printf(".\n\n");
     }
   }
   for (count=0;count<strlen(text3);count++){

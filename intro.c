@@ -47,19 +47,19 @@ void intro(){
   nanosleep(&tim , &tim2);
   printf("                                   `'                            '-._|\n");
 
-  printf("               ___           _      __   __          _          \n");
+  printf("\e[0;34m               ___           _ \e[0;33m     __   __          _          \n");
   nanosleep(&tim , &tim2);
-  printf("              | __|__ _ __ _| |___  \\ \\ / /__ _ _ __(_)___ _ _\n");
+  printf("\e[0;34m              | __|__ _ __ _| |___  \e[0;33m\\ \\ / /__ _ _ __(_)___ _ _\n");
   nanosleep(&tim , &tim2);
-  printf("              | _|/ _` / _` | / -_)  \\ V / -_) '_(_-< / _ \\ ' \\ \n");
+  printf("\e[0;34m              | _|/ _` / _` | / -_)  \e[0;33m\\ V / -_) '_(_-< / _ \\ ' \\ \n");
   nanosleep(&tim , &tim2);
-  printf("              |___\\__,_\\__, |_\\___|   \\_/\\___|_| /__/_\\___/_||_|\n");
+  printf("\e[0;34m              |___\\__,_\\__, |_\\___|  \e[0;33m \\_/\\___|_| /__/_\\___/_||_|\n");
   nanosleep(&tim , &tim2);
-  printf("                       |___/  \n");
+  printf(" \e[0;34m                      |___/  \n");
   nanosleep(&tim , &tim2);
   printf("\n");
   nanosleep(&tim , &tim2);
   printf("\n");
   sleep(1);
-  printf("                            Press Enter to begin!\n");
+  printf("\e[0m                            Press Enter to begin!\n");
 }

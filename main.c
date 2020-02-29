@@ -5,7 +5,7 @@
 */
 #include "intro.c"
 #include "starter.c"
-#include "art.c"
+
 
 #include <string.h>
 #include <stdio.h>

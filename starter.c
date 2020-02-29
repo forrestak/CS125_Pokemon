@@ -3,9 +3,12 @@
     starter.c
     File for choosing starter Pokemon
 */
+#include "art.c"
 
 #include <stdio.h>
 #include <string.h>
+
+void asciiart(int);
 
 int starter(){
   int pokemonChoice=0;
@@ -63,6 +66,10 @@ int starter(){
     fflush(stdout);
     nanosleep(&tim , &tim2);
   }
+  // Printing Pokeball
+  printf("\n");
+  asciiart(1);
+  printf("\n");
 
   return pokemonChoice;
 }

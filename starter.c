@@ -68,7 +68,8 @@ int starter(){
   }
   // Printing Pokeball
   printf("\n");
-  asciiart(1);
+  sleep(1);
+  asciiart(2);
   printf("\n");
 
   return pokemonChoice;

@@ -7,13 +7,13 @@
 void asciiart(input){
   switch(input){
 
-    case 1: // Pokeball
+    case 1: // Pokeball large
       printf("\e[0;31m              (((((((((((((((\n");
       printf("          (((((((((((((((((((((((\n");
       printf("       (((((((((((((((((((((((((((((\n");
       printf("     (((((((((((((((((((((((((((((((((\n");
       printf("    (((((((((((((((((((((((((((((((((((\n");
-      printf("   ((((((((((((((((\e[0m$$$$$\e[0;31m((((((((((((((((\n");
+      printf("   ((((((((((((((((\e[0m$$$$$$\e[0;31m(((((((((((((((\n");
       printf("   ((((((((((((((\e[0m$        $\e[0;31m(((((((((((((\n");
       printf("   \e[0m$$$$$$$$$$$$$$          $$$$$$$$$$$$$\n");
       printf("   $             $        $            $\n");
@@ -23,10 +23,26 @@ void asciiart(input){
       printf("       $                           $\n");
       printf("          $                      $\n");
       printf("              $              $\n");
-      printf("                  $$$$$$$\n");
+      printf("                  $$$$$$$$\n");
       break;
 
-    case 2: // Charmander
+    case 2: // Pokeball small
+      printf("\e[0;31m          (((((((\n");
+      printf("       (((((((((((((\n");
+      printf("     (((((((((((((((((\n");
+      printf("    (((((((((((((((((((\n");
+      printf("   (((((((((\e[0m$$$\e[0;31m(((((((((\n");
+      printf("   (((((((\e[0m$     $\e[0;31m(((((((\n");
+      printf("   \e[0m$$$$$$$       $$$$$$$\n");
+      printf("   $      $     $      $\n");
+      printf("   $        $$$        $\n");
+      printf("    $                 $\n");
+      printf("     $               $\n");
+      printf("       $           $\n");
+      printf("           $$$$$\n");
+      break;
+
+    case 3: // Charmander
       printf("     ,.,,,,,*/                \n");
       printf("    ,,,,,,,, @*               \n");
       printf("   @&,,,,,,,$&/               \n");
@@ -42,7 +58,7 @@ void asciiart(input){
       printf("                *( , \n");
       break;
 
-    case 3: // Squirtle
+    case 4: // Squirtle
       printf("    @,.,,,,,***            \n");
       printf("   @*,,,,,@@.*//           \n");
       printf("   $,*,,,,,*////           \n");
@@ -56,7 +72,7 @@ void asciiart(input){
       printf(" ,////      **,*/#//////(  \n");
       printf("             */*/,\n");
 
-    case 4: // Bulbasaur
+    case 5: // Bulbasaur
       printf("                          .l::`   \n");
       printf("                .--:lllllll+loo`  \n");
       printf("        ..`   `+llllo+llllllls+   \n");

@@ -27,32 +27,112 @@ void run(char screen[ROWS][COLS])
     printf("%s\n",screen[x]);
 }
 ///////////////////////////////////////
-void change(char screen[ROWS][COLS],char image[2][2])
+void changeEnemy(char screen[ROWS][COLS],int pokemonIndex)
 {
 
+char enemyPokemon[17][31];
+
+
+
+
+
+
+char spare[COLS-30];
+strncpy(spare,screen[0],COLS-31);
+
+char spare2[COLS];
+strcat(spare2,spare);
+//strcat(spare2, image[0]);
+printf("%s",spare2);
+
+printf("\nhere\n");
 
 }
 //////////////////////////////////////
-/*
+char* getPokemon(int pokemonIndex,int lineNumber){
+int increment=0;
+char pokemon[17][31];
+char returnStatement[31]={};
+//you cant really return whole arrays, but you can return whole strings
+//so do like a for loop to get all of the lines of a bulbasaur out there :D
+//pokemonIndex is probably for choosing the pokemon
+char bulbasaur[17][31]=
+{
+  "                              ",
+  "                              ",
+  "                      .l::`   ",
+  "            .--:lllllll+loo`  ",
+  "    ..`   `+llllo+llllllls+   ",
+  "   l::l::l++llll:++lllll+sol  ",
+  "  :l--loss+l:::::lo+++oooosol ",
+  " -lllo:lll:l:l+l:+oooooooosoo:",
+  ".:+ll:loo:l:.+:o+++osssoooooo+",
+  "l-ol:::ll::: sloo+++oyysysoool",
+  ":+ll::l::::l:l+oo++++ossoosol ",
+  " `-+soo++++osoo+++lll+++l++:  ",
+  "   .l+oooosooooo:++:lo+oso++` ",
+  "    +os+++o+oss+oll:+oloso+o` ",
+  "    `+++++. .+so+:l+:l+++++l  ",
+  "     -.--`   `::ll:`  -:::-   ",};
 
+
+
+printf("location 1\n");
+for(increment;increment<17;increment++)
+{
+//printf("%d",increment);
+strncpy(pokemon[increment],bulbasaur[increment],31);
+printf("%s\n",pokemon[increment]);
+}
+
+printf("location 2\n");
+
+
+printf("you are here\n");
+printf("%s\n",pokemon[4]);
+
+printf("and here too\n");
+
+
+strncpy(returnStatement,pokemon[5],31);
+
+printf("location 3\n");
+
+
+printf("%s\n",pokemon[5]);
+printf("location 4\n");
+printf("%s\n",returnStatement);
+
+printf("location 5\n");
+
+//printf("^^^^^^^^^^^^^^%s^^^^^^^^^^^^^^^\n",returnStatement);
+return "sup bruh";
+
+}
+
+
+/////////////////////////////////////
+/////////////////////////////////////
+/*
+                
 //https://www.text-image.com/convert/ascii.html
 //use this website cause theres no asterisks
 //also replace all slashes with l
 
-                      .l::`
-            .--:lllllll+loo`
-    ..`   `+llllo+llllllls+
-   l::l::l++llll:++lllll+sol
-  :l--loss+l:::::lo+++oooosol
+                      .l::`   
+            .--:lllllll+loo`  
+    ..`   `+llllo+llllllls+   
+   l::l::l++llll:++lllll+sol  
+  :l--loss+l:::::lo+++oooosol 
  -lllo:lll:l:l+l:+oooooooosoo:
 .:+ll:loo:l:.+:o+++osssoooooo+
 l-ol:::ll::: sloo+++oyysysoool
-:+ll::l::::l:l+oo++++ossoosol
- `-+soo++++osoo+++lll+++l++:
-   .l+oooosooooo:++:lo+oso++`
-    +os+++o+oss+oll:+oloso+o`
-    `+++++. .+so+:l+:l+++++l
-     -.--`   `::ll:`  -:::-
+:+ll::l::::l:l+oo++++ossoosol 
+ `-+soo++++osoo+++lll+++l++:  
+   .l+oooosooooo:++:lo+oso++` 
+    +os+++o+oss+oll:+oloso+o` 
+    `+++++. .+so+:l+:l+++++l  
+     -.--`   `::ll:`  -:::-   
 
 
 
@@ -65,7 +145,7 @@ int main()
 {
 printf("\e[2J\e[H");
 //32 rows, 64 columns
-char screen[ROWS][COLS] ={
+char screen[ROWS][COLS] ={   
 "0123456789012345678901234567890123456789012345678901234567890123",
 "0123456789012345678901234567890123456789012345678901234567890123",
 "0123456789012345678901234567890123456789012345678901234567890123",
@@ -122,6 +202,15 @@ char test[17][31]=
   "     -.--`   `::ll:`  -:::-   ",};
 
 
+
+getPokemon(3,3);
+
+
+////////////////
+changeEnemy(screen,1);
+run(screen);
+return 0;
+//////////////
 
 
 int i;

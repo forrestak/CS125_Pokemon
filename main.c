@@ -12,7 +12,7 @@
 
 
 void intro();
-int starter();
+char starter();
 
 int main(){
   // Initializing Vars
@@ -33,7 +33,7 @@ int main(){
   // Printing Intro Text
   char text1[]="Hi! Sorry to keep you waiting! Welcome to the world of Pokemon!\nMy name is Heather Marriot. But everyone calls me the\nCoding Professor. This world is widely inhabited by creatures known\nas Pokemon. We humans live alongside Pokemon, at times\nas friendly playmates, and at times as cooperative workmates.\nAnd sometimes, we band together and battle others like us.\nBut despite our closeness, we don't know everything about Pokemon.\nIn fact, there are many, many secrets surrounding Pokémon.\nTo unravel Pokemon mysteries, I've been undertaking research.\nThat's what I do.\n";
   sleep(3);
-  /*
+
   for (count=0;count<strlen(text1);count++){
     printf("%c", text1[count]);
     fflush(stdout);
@@ -66,7 +66,7 @@ int main(){
     nanosleep(&tim , &tim2);
   }
   sleep(1);
-  */
+  
   // Pokemon Choice
   int pokemonChoice;
   pokemonChoice = starter();

@@ -10,8 +10,9 @@
 
 void asciiart(int);
 
-int starter(){
-  int pokemonChoice=0;
+char starter(){
+  char pokemonChoice[20];
+  //char starterName[20];
   int count;
   // Structure for changing sleep times
   struct timespec tim, tim2;
@@ -26,6 +27,10 @@ int starter(){
   char types3[] = "Grass";
   char text2[] = "and ";
   char text3[] = "Each Pokemon type has its own strengths and weaknesses.\nFire is effective against Grass and weak against Water,\nWater is effective against Fire and weak against Grass,\nand Grass is effective against Water and weak against Fire.\n\nWe keep Pokemon in little homes called Pokeballs,\nlike this!\n";
+  char text4[] = "To help you out with your adventure, I have 3 Pokemon\nfor you to choose from. One is a Fire type, one is a Water type,\nand one is a Grass type. Here is a picture of each one!\n\n";
+  char text5[] = "Which would you like to choose? Charmander, Squirtle, or Bulbasaur\n";
+  char text6[] = "Ah, so you've chosen ";
+  char text7[] = "! A very good choice! Now you are ready\nto start your adventure! A wonderous world awaits you!\nI predict many amazing things to come from this. Good luck!\n";
 
   for (count=0;count<strlen(text1);count++){
     printf("%c", text1[count]);
@@ -66,11 +71,73 @@ int starter(){
     fflush(stdout);
     nanosleep(&tim , &tim2);
   }
+
   // Printing Pokeball
   printf("\n");
   sleep(1);
   asciiart(2);
   printf("\n");
+  sleep(1);
 
-  return pokemonChoice;
+  // Starter Pokemon Printing
+  for (count=0;count<strlen(text4);count++){
+    printf("%c", text4[count]);
+    fflush(stdout);
+    nanosleep(&tim , &tim2);
+  }
+
+  asciiart(3);
+  printf("\n");
+  sleep(1);
+  asciiart(4);
+  printf("\n");
+  sleep(1);
+  asciiart(5);
+  printf("\n");
+  sleep(1);
+
+  // User Choice
+  for (count=0;count<strlen(text5);count++){
+    printf("%c", text5[count]);
+    fflush(stdout);
+    nanosleep(&tim , &tim2);
+  }
+  printf("\nType your choice here: ");
+  fgets(pokemonChoice, 20, stdin);
+  pokemonChoice[strcspn(pokemonChoice, "\n")]=0;
+  printf("\n");
+
+  for (count=0;count<strlen(text6);count++){
+    printf("%c", text6[count]);
+    fflush(stdout);
+    nanosleep(&tim , &tim2);
+  }
+  // Result of Choice
+  if (strcmp(pokemonChoice, "Charmander")==0){
+    for (count=0;count<strlen(pokemonChoice);count++){
+      printf("\e[0;31m%c", pokemonChoice[count]);
+      fflush(stdout);
+      nanosleep(&tim , &tim2);
+    }
+  }
+  if (strcmp(pokemonChoice, "Squirtle")==0){
+    for (count=0;count<strlen(pokemonChoice);count++){
+      printf("\e[0;34m%c", pokemonChoice[count]);
+      fflush(stdout);
+      nanosleep(&tim , &tim2);
+    }
+  }
+  if (strcmp(pokemonChoice, "Bulbasaur")==0){
+    for (count=0;count<strlen(pokemonChoice);count++){
+      printf("\e[0;32m%c", pokemonChoice[count]);
+      fflush(stdout);
+      nanosleep(&tim , &tim2);
+    }
+  }
+  for (count=0;count<strlen(text7);count++){
+    printf("\e[0m%c", text7[count]);
+    fflush(stdout);
+    nanosleep(&tim , &tim2);
+  }
+  return *pokemonChoice;
 }

@@ -19,5 +19,12 @@ so string screen is basically the gaming screen
 im gonna be changing each line
 basically with a function change enemy
 
+so by string earlier, I meant arrays xD
+but like only one array in a function has to be changed, so what i did
+was use a function that had the ascii art data and pulled data, line by line
+so this probably means separating all the ascii art for pokemon to be like useless
+but i found out how to return strings with char* name(blah blah)
+
+btw i have like tons of time during spring break since im not going anywhere ;P
 
 

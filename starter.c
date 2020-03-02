@@ -31,6 +31,9 @@ char starter(){
   char text5[] = "Which would you like to choose? Charmander, Squirtle, or Bulbasaur\n";
   char text6[] = "Ah, so you've chosen ";
   char text7[] = "! A very good choice! Now you are ready\nto start your adventure! A wonderous world awaits you!\nI predict many amazing things to come from this. Good luck!\n";
+  char text8[] = "Oops! I didn't get that. Please try again!\n";
+
+  char text150[] = "! You cheater pants! Your adventure won't\neven be a challenge! Cheaters don't learn anything.\nBut it's your choice. Your 'adventure' awaits... Good luck,\nas if you need it.\n";
 
   for (count=0;count<strlen(text1);count++){
     printf("%c", text1[count]);
@@ -105,7 +108,23 @@ char starter(){
   printf("\nType your choice here: ");
   fgets(pokemonChoice, 20, stdin);
   pokemonChoice[strcspn(pokemonChoice, "\n")]=0;
+  fflush(stdin);
   printf("\n");
+  /*do{
+
+    if ((strcmp(pokemonChoice, "Charmander")!=0) || (strcmp(pokemonChoice, "Squirtle")!=0) || (strcmp(pokemonChoice, "Bulbasaur")!=0) || (strcmp(pokemonChoice, "Mewtwo")!=0)){
+      for (count=0;count<strlen(text8);count++){
+        printf("%c", text8[count]);
+        fflush(stdout);
+        nanosleep(&tim , &tim2);
+      }
+      for (count=0;count<strlen(text5);count++){
+        printf("%c", text5[count]);
+        fflush(stdout);
+        nanosleep(&tim , &tim2);
+      }
+    }
+  } while ((strcmp(pokemonChoice, "Charmander")!=0) || (strcmp(pokemonChoice, "Squirtle")!=0) || (strcmp(pokemonChoice, "Bulbasaur")!=0) || (strcmp(pokemonChoice, "Mewtwo")!=0));*/
 
   for (count=0;count<strlen(text6);count++){
     printf("%c", text6[count]);
@@ -119,25 +138,53 @@ char starter(){
       fflush(stdout);
       nanosleep(&tim , &tim2);
     }
+    for (count=0;count<strlen(text7);count++){
+      printf("\e[0m%c", text7[count]);
+      fflush(stdout);
+      nanosleep(&tim , &tim2);
+    }
   }
-  if (strcmp(pokemonChoice, "Squirtle")==0){
+  else if (strcmp(pokemonChoice, "Squirtle")==0){
     for (count=0;count<strlen(pokemonChoice);count++){
       printf("\e[0;34m%c", pokemonChoice[count]);
       fflush(stdout);
       nanosleep(&tim , &tim2);
     }
+    for (count=0;count<strlen(text7);count++){
+      printf("\e[0m%c", text7[count]);
+      fflush(stdout);
+      nanosleep(&tim , &tim2);
+    }
   }
-  if (strcmp(pokemonChoice, "Bulbasaur")==0){
+  else if (strcmp(pokemonChoice, "Bulbasaur")==0){
     for (count=0;count<strlen(pokemonChoice);count++){
       printf("\e[0;32m%c", pokemonChoice[count]);
       fflush(stdout);
       nanosleep(&tim , &tim2);
     }
+    for (count=0;count<strlen(text7);count++){
+      printf("\e[0m%c", text7[count]);
+      fflush(stdout);
+      nanosleep(&tim , &tim2);
+    }
   }
-  for (count=0;count<strlen(text7);count++){
-    printf("\e[0m%c", text7[count]);
-    fflush(stdout);
-    nanosleep(&tim , &tim2);
+  else if (strcmp(pokemonChoice, "Mewtwo")==0){
+    for (count=0;count<strlen(pokemonChoice);count++){
+      printf("\e[0;35m%c", pokemonChoice[count]);
+      fflush(stdout);
+      nanosleep(&tim , &tim2);
+    }
+    for (count=0;count<strlen(text150);count++){
+      printf("\e[0m%c", text150[count]);
+      fflush(stdout);
+      nanosleep(&tim , &tim2);
+    }
   }
+
+
+
+
+
+
   return *pokemonChoice;
 }

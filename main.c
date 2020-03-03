@@ -39,6 +39,7 @@ int main(){
     fflush(stdout);
     nanosleep(&tim , &tim2);
   }
+  // Get user's name
   char text2[]="\nAnd you are? ";
   for (count=0;count<strlen(text2);count++){
     printf("\e[0;33m%c\e[0m", text2[count]);
@@ -48,6 +49,7 @@ int main(){
   fgets(userName, 50, stdin);
   userName[strcspn(userName, "\n")]=0;
 
+  // Reacting to username
   char text3[]="\nAh, okay! You're ";
   char text4[]=" who's moving to my hometown of Prescott. I get it now! All right, are you ready? Your very own adventure\nis about to unfold. Take courage, and leap into the world of Pokemon\nwhere dreams, adventure and friendships await!\nFirst, let's choose a Pokemon companion!\n";
   for (count=0;count<strlen(text3);count++){
@@ -66,7 +68,7 @@ int main(){
     nanosleep(&tim , &tim2);
   }
   sleep(1);
-  
+
   // Pokemon Choice
   int pokemonChoice;
   pokemonChoice = starter();

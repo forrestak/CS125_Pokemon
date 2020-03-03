@@ -161,6 +161,8 @@ void asciiart(input){
     printf("                          -o      -+            //                        -//:.```         `/o-:--:.\n");
     printf("                          /:     `/o-:::::::`   `s                           `-:::::::::--:-`       \n");
     printf("                           :/::://-        `:////-  \e[0m\n");
+    break;
+    
     default:
       break;
   }

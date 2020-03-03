@@ -35,6 +35,7 @@ char starter(){
 
   char text150[] = "! You cheater pants! Your adventure won't\neven be a challenge! Cheaters don't learn anything.\nBut it's your choice. Your 'adventure' awaits... Good luck,\nas if you need it.\n";
 
+  // Text 1
   for (count=0;count<strlen(text1);count++){
     printf("%c", text1[count]);
     fflush(stdout);
@@ -56,6 +57,7 @@ char starter(){
       printf(", ");
     }
   }
+  // Text 2
   for (count=0;count<strlen(text2);count++){
     printf("%c", text2[count]);
     fflush(stdout);
@@ -69,6 +71,7 @@ char starter(){
       printf(".\n\n");
     }
   }
+  // Text 3
   for (count=0;count<strlen(text3);count++){
     printf("%c", text3[count]);
     fflush(stdout);
@@ -89,6 +92,7 @@ char starter(){
     nanosleep(&tim , &tim2);
   }
 
+  // Printing Starter Pokemon
   asciiart(3);
   printf("\n");
   sleep(1);
@@ -180,11 +184,5 @@ char starter(){
       nanosleep(&tim , &tim2);
     }
   }
-
-
-
-
-
-
   return *pokemonChoice;
 }

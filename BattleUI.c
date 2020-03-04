@@ -49,8 +49,34 @@ char bulbasaur[17][31]=
   "    `+++++. .+so+:l+:l+++++l  ",
   "     -.--`   `::ll:`  -:::-   ",};
 
+
+
+char ivysaur[17][31]=
+{
+
+ "                               ",
+ "                               ",
+ "                               ",
+ "         ..----     ``         ",
+ "         .:ol::++:.--ool-.     ",
+ "   `    `l:o+l+++sososoool     ",
+ " .+ll+:-+o+s+++osssss++o+.`    ",
+ ":l+l+ooooosyssoyho++lll+sso:   ",
+ ".l+++oossysssysyh+l::oo+o+lll  ",
+ " `-l++ossyyyyssolll:-oo++++ls: ",
+ "   `.:oyyyyhyollll+o+ooooool.  ",
+ " :ooossoohh+:lll+oooooool.     ",
+ ".ll-oll+l+o::o++sssssss:       ",
+ "   osl+oss+lsysso+sssyy        ",
+ " `ooos+:l++ooos` :ssoo`        ",
+ " -ll:.   .ll+l.  .---`         ",
+
+
+};
+
 //https://stackoverflow.com/questions/12675800/how-to-copy-matrix-in-c
 memcpy(holder,bulbasaur,sizeof(bulbasaur));
+//memcpy(holder,ivysaur,sizeof(ivysaur));
 
 }
 ///////////////////////////////////////

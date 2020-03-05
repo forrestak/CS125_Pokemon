@@ -131,17 +131,74 @@ char charizard[17][31]=
 "                              ",
 "                              ",
 "                              ",
-"         ``:/-:-              ",
-"    .:/+/` -:/+/:.     :.     ",
-" `/+oooys.   `:/:     .syo:`  ",
-"`+o+++osoo/-` -:/. ``-ysyso+/ ",
-"oo.` `/so+yys:::://osyssyooos:",
-"/`     -.--.+:---:+--::o- /-oo",
-"       `-.--:.```.:. -:. `--./",
-"    `.:::-:::....--/.`   `-.` ",
-"   ./++++::/:-----::::..--.   ",
-"   `:+++///:--..-://///-.     ",
+"         ``:l-:-              ",
+"    .:l+l` -:/+l:.     :.     ",
+" `l+oooys.   `:l:     .syo:`  ",
+"`+o+++osool-` -:l. ``-ysyso+l ",
+"oo.` `lso+yys::::llosyssyooos:",
+"l`     -.--.+:---:+--::o- l-oo",
+"       `-.--:.```.:. -:. `--.l",
+"    `.:::-:::....--l.`   `-.` ",
+"   .l++++::l:-----::::..--.   ",
+"   `:+++lll:--..-:lllll-.     ",
 "       .:-.         `..`      ",};
+char squirtle[17][31]=
+{
+"                              ",
+"       `..-::::-`             ",
+"      -l::::lllll:`           ",
+"     `s:::::ymy+++l           ",
+"     :llll::+o++++o           ",
+"     -+++++++++o++:           ",
+"     `.l++++++++ol+-          ",
+" `.--:l:-:lll+l:l+sol         ",
+".++::l:..-:-ll::l+oo+-        ",
+".-::-l-...:-l++l++:ol:        ",
+"     -:---:-:l+ll+:o+l `.---. ",
+"    `:l.--:---llll:so-:llll++-",
+"    :-:l::l::ll::::oo+++o++++l",
+"   .lll++l-::+l::::lo+++oo+++.",
+"   :l++l:     .+ll++:--::::.  ",
+"     `         ::/+:.         ",};
+char wartortle[17][31]=
+{
+"                              ",
+"     ..           `..         ",
+"    -`-.        `---.         ",
+"    ..::.-::--..-...`         ",
+"    --:::::::::-....          ",
+"    `::::::::l::..`    `....  ",
+"     -ll:::ls-l+o:`  `.`---.- ",
+"   ``-l+::::oloooll:::::-:::` ",
+"`-l:::lol+oosslloll:::::l:--- ",
+"`ll++++:``-+-```-+o+oo:--:.-..",
+"     ``- ``-`````.::++l----..-",
+"       `.`..-`..--:++ol---..-`",
+"      .::-``-...-l+ooo+--.-.` ",
+"     `+l++o+---::+:::lol.`    ",
+"     .ssss+`   ` `:l++oo.     ",
+"      `-.-        .l:ll--     ",};
+char blastoise[17][31]=
+{
+"              .l-:l+ll..`     ",
+"              .y+l+lll+oo     ",
+"              .lllllll:-.     ",
+"  `.-.`...-::lll++++::-.``    ",
+"   .-lo++lll++lll+syo:```:+   ",
+"   .oo+ll+++oo+++oyo+l:---:   ",
+"  .ss+++o+oosyssssy+--o+ll-`  ",
+"  +yooossssssysyyyy+`:+oollo: ",
+"  :ssssssssssssssssl-looooooo.",
+"  syyssyyyssssssso--:l-  `.`` ",
+" :ysyyssyysssssl-`.:ll`       ",
+":+ssyysyyyyss+...:+++ll`      ",
+"lol::-l+so+l-..-+ooooo+l      ",
+"-+o:l+o+l-::::+ssooooos-      ",
+".lllooool-...`.ossssssl       ",
+"-l++l:-`      `-:l+ll:-.      ",};
+
+
+	
 
 
 
@@ -173,6 +230,18 @@ break;
 case 6:
 memcpy(pokemon,charizard,sizeof(pokemon));
 break;
+case 7:
+memcpy(pokemon,squirtle,sizeof(pokemon));
+break;
+case 8:
+memcpy(pokemon,wartortle,sizeof(pokemon));
+break;
+case 9:
+memcpy(pokemon,blastoise,sizeof(pokemon));
+break;
+
+
+
 
 default:
 break;

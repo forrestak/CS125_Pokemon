@@ -249,7 +249,7 @@ char test[17][31]=
 
 
 int ice;
-for(ice=1;ice<=6;ice++)
+for(ice=1;ice<=9;ice++)
 {
 
 

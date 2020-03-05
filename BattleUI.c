@@ -3,10 +3,14 @@
 #include <time.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "pokeFiles.c"
 
 #define ROWS 33
 #define COLS 65
 
+
+
+void getPokemon(char holder[17][31],int pokemonIndex);
 //https://www.geeksforgeeks.org/time-delay-c/
 void delay(int milliseconds)
 {
@@ -27,6 +31,9 @@ void run(char screen[ROWS][COLS])
     printf("%s\n",screen[x]);
 }
 ///////////////////////////////////
+
+/*
+
 void getPokemon(char holder[17][31],int pokemonIndex){
 int increment=0;
 char pokemon[17][31];
@@ -74,11 +81,17 @@ char ivysaur[17][31]=
 
 };
 
+
+
+
 //https://stackoverflow.com/questions/12675800/how-to-copy-matrix-in-c
 memcpy(holder,bulbasaur,sizeof(bulbasaur));
 //memcpy(holder,ivysaur,sizeof(ivysaur));
 
 }
+
+*/
+
 ///////////////////////////////////////
 void changeEnemy(char screen[ROWS][COLS],int pokemonIndex)
 {
@@ -89,7 +102,7 @@ char spare[COLS-30];
 char completeSpare[COLS];
 char cleanCompleteSpare[COLS];
 
-getPokemon(enemyPokemon,4);
+getPokemon(enemyPokemon,pokemonIndex);
 
 //printf("ur here \n%s\n%s\n%s\n%s\n",enemyPokemon[4],enemyPokemon[5],enemyPokemon[6],enemyPokemon[7]);
 
@@ -99,7 +112,7 @@ getPokemon(enemyPokemon,4);
 //strncpy(screen[0],completeSpare,COLS);
 
 
-for(count=0;count<17;count++)
+for(count=0;count<16;count++)
 {
 memcpy(spare,cleanSpare,sizeof(spare));
 memcpy(completeSpare,cleanCompleteSpare,sizeof(completeSpare));
@@ -235,22 +248,24 @@ char test[17][31]=
   "     -.--`   `::ll:`  -:::-   ",};
 
 
+int ice;
+for(ice=1;ice<=6;ice++)
+{
 
 
-
-////////////////
-changeEnemy(screen,1);
+changeEnemy(screen,ice);
 run(screen);
-return 0;
-//////////////
+delay(2000);
+clear();
+}
 
+return 0;
 
 int i;
 for(i=0;i<10;i++)
 {
 delay(500);
 run(screen);
-printf("whas\n sup");
 
 clear();
 }

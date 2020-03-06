@@ -12,7 +12,7 @@
 
 
 void intro();
-char starter();
+char* starter(char *pokemonChoiceptr);
 
 int main(){
   // Initializing Vars
@@ -70,8 +70,10 @@ int main(){
   sleep(1);
 
   // Pokemon Choice
-  int pokemonChoice;
-  pokemonChoice = starter();
+  char pokemonChoice[20];
+  char* pokemonChoiceptr = pokemonChoice;
+  pokemonChoiceptr = starter(pokemonChoiceptr);
+  //printf("%s", pokemonChoice);
 
   return 0;
 }

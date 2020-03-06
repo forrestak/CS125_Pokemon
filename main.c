@@ -26,6 +26,7 @@ int main(){
     tim.tv_nsec = 50000000;
 
   // Running Start Screen & looking for Enter input
+  
   intro();
   scanf("%c", &dummy);
   printf("\e[1;1H\e[2J");

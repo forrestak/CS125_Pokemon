@@ -109,14 +109,14 @@ char* starter(char *pokemonChoiceptr){
     fflush(stdout);
     nanosleep(&tim , &tim2);
   }
-  printf("\nType your choice here: ");
-  fgets(pokemonChoiceptr, 20, stdin);
-  pokemonChoiceptr[strcspn(pokemonChoiceptr, "\n")]=0;
-  fflush(stdin);
-  printf("\n");
-  /*do{
 
-    if ((strcmp(pokemonChoice, "Charmander")!=0) || (strcmp(pokemonChoice, "Squirtle")!=0) || (strcmp(pokemonChoice, "Bulbasaur")!=0) || (strcmp(pokemonChoice, "Mewtwo")!=0)){
+  do{
+    printf("\nType your choice here: ");
+    fgets(pokemonChoiceptr, 20, stdin);
+    pokemonChoiceptr[strcspn(pokemonChoiceptr, "\n")]=0;
+    fflush(stdin);
+    printf("\n");
+    if ((strcmp(pokemonChoiceptr, "Charmander")!=0) && (strcmp(pokemonChoiceptr, "Squirtle")!=0) && (strcmp(pokemonChoiceptr, "Bulbasaur")!=0) && (strcmp(pokemonChoiceptr, "Mewtwo")!=0)){
       for (count=0;count<strlen(text8);count++){
         printf("%c", text8[count]);
         fflush(stdout);
@@ -128,7 +128,7 @@ char* starter(char *pokemonChoiceptr){
         nanosleep(&tim , &tim2);
       }
     }
-  } while ((strcmp(pokemonChoice, "Charmander")!=0) || (strcmp(pokemonChoice, "Squirtle")!=0) || (strcmp(pokemonChoice, "Bulbasaur")!=0) || (strcmp(pokemonChoice, "Mewtwo")!=0));*/
+  }while ((strcmp(pokemonChoiceptr, "Charmander")!=0) && (strcmp(pokemonChoiceptr, "Squirtle")!=0) && (strcmp(pokemonChoiceptr, "Bulbasaur")!=0) && (strcmp(pokemonChoiceptr, "Mewtwo")!=0));
 
   for (count=0;count<strlen(text6);count++){
     printf("%c", text6[count]);

@@ -187,7 +187,7 @@ so bulbapedia, for the backs,gen 1, blue
 
 
 /////////////////////////////////////
-int main()
+int main() 
 {
 printf("\e[2J\e[H");
 //32 rows, 64 columns

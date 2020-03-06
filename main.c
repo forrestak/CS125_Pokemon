@@ -5,7 +5,7 @@
 */
 #include "intro.c"
 #include "starter.c"
-#include "BattleUI.c"
+//#include "BattleUI.c"
 
 
 #include <string.h>
@@ -14,6 +14,7 @@
 
 void intro();
 char* starter(char *pokemonChoiceptr);
+//void battleUI();
 
 int main(){
   // Initializing Vars
@@ -82,6 +83,6 @@ int main(){
     nanosleep(&tim , &tim2);
   }
 
-
+  //battleUI();
   return 0;
 }

@@ -32,7 +32,6 @@ char* starter(char *pokemonChoiceptr){
   char text6[] = "Ah, so you've chosen ";
   char text7[] = "! A very good choice! That is a strong\nPokemon! I'm sure you two will make a strong team!\nI predict many amazing things to come from this.\n";
   char text8[] = "Oops! I didn't get that. Please try again!\n";
-
   char text150[] = "! You cheater pants! Your adventure won't\neven be a challenge! Cheaters don't learn anything.\nBut it's your choice. Your 'adventure' awaits... Good luck,\nas if you need it.\n";
 
   // Text 1
@@ -110,6 +109,7 @@ char* starter(char *pokemonChoiceptr){
     nanosleep(&tim , &tim2);
   }
 
+  // Do while to catch fat fingering
   do{
     printf("\nType your choice here: ");
     fgets(pokemonChoiceptr, 20, stdin);

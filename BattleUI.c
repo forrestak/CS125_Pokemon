@@ -140,47 +140,47 @@ strncpy(screen[count],completeSpare,COLS);
 /////////////////////////////////////
 /////////////////////////////////////
 /*
-                
+
 //https://www.text-image.com/convert/ascii.html
 //30 width
 //use this website cause theres no asterisks
 //also replace all slashes with l
 
-                      .l::`   
-            .--:lllllll+loo`  
-    ..`   `+llllo+llllllls+   
-   l::l::l++llll:++lllll+sol  
-  :l--loss+l:::::lo+++oooosol 
+                      .l::`
+            .--:lllllll+loo`
+    ..`   `+llllo+llllllls+
+   l::l::l++llll:++lllll+sol
+  :l--loss+l:::::lo+++oooosol
  -lllo:lll:l:l+l:+oooooooosoo:
 .:+ll:loo:l:.+:o+++osssoooooo+
 l-ol:::ll::: sloo+++oyysysoool
-:+ll::l::::l:l+oo++++ossoosol 
- `-+soo++++osoo+++lll+++l++:  
-   .l+oooosooooo:++:lo+oso++` 
-    +os+++o+oss+oll:+oloso+o` 
-    `+++++. .+so+:l+:l+++++l  
-     -.--`   `::ll:`  -:::-   
+:+ll::l::::l:l+oo++++ossoosol
+ `-+soo++++osoo+++lll+++l++:
+   .l+oooosooooo:++:lo+oso++`
+    +os+++o+oss+oll:+oloso+o`
+    `+++++. .+so+:l+:l+++++l
+     -.--`   `::ll:`  -:::-
 
 
 
 https://bulbapedia.bulbagarden.net/wiki/File:Spr_b_g1_001.png
 so bulbapedia, for the backs,gen 1, blue
 
-                              
-                              
-                              
-                              
-                              
-        +                     
-      :h ++                   
-      N:h  yyN+o+:            
-      N:Ns:. .+:+:y:+   ++    
-    oNh.yhs::.    yy.+o+  N   
-  ohhh: :Ns+:::.   .h:N .y+   
- N+hhs:  sNs+:::    N:N:yooN  
- N.Nss:  :hhs+:::..:NNh+sNNho 
- N.hhss+. +hhss+++hNNs+hhhhs+ 
-  +y+hhhhhoyyNhhNNNhss++h+    
+
+
+
+
+
+        +
+      :h ++
+      N:h  yyN+o+:
+      N:Ns:. .+:+:y:+   ++
+    oNh.yhs::.    yy.+o+  N
+  ohhh: :Ns+:::.   .h:N .y+
+ N+hhs:  sNs+:::    N:N:yooN
+ N.Nss:  :hhs+:::..:NNh+sNNho
+ N.hhss+. +hhss+++hNNs+hhhhs+
+  +y+hhhhhoyyNhhNNNhss++h+
 
 
 */
@@ -191,7 +191,7 @@ int main()
 {
 printf("\e[2J\e[H");
 //32 rows, 64 columns
-char screen[ROWS][COLS] ={   
+char screen[ROWS][COLS] ={
 "0123456789012345678901234567890123456789012345678901234567890123",
 "0123456789012345678901234567890123456789012345678901234567890123",
 "0123456789012345678901234567890123456789012345678901234567890123",

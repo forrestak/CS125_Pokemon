@@ -74,6 +74,7 @@ int main(){
   char pokemonChoice[20];
   char* pokemonChoiceptr = pokemonChoice;
   pokemonChoiceptr = starter(pokemonChoiceptr);
+  sleep(1);
   printf("\e[1;1H\e[2J");
 
   // Start of simulation

@@ -81,10 +81,10 @@ void battleUI(){
   };
 
   int ice;
-  for(ice=1;ice<=9;ice++){
+  for(ice=1;ice<=151;ice++){
     changeEnemy(screen,ice);
     run(screen);
-    delay(2000);
+    delay(500);
     clear();
   }
 

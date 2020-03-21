@@ -13,7 +13,7 @@ void createNPCFile(float statsArray[7]);
 
 char *generatePokemonStats(int pokemonChoice) // pokemonChoice = '1'-Bulbasaur; '2'-Charmander; '3'-Squirtle; '4'-GrassNPC; '5'-FireNPC; '6'-WaterNPC
 {
-	srand(time(NULL)); 
+	srand(time(NULL));
 	int npcRandomize = rand()%2+1; // toggles between '1' and '2' to determine random opponent of given type
 	char pokemonName[10];
 //	printf("Randomize Value: %d\n", npcRandomize); // debugging; remove to finalize

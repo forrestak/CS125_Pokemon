@@ -2998,7 +2998,24 @@ char eternatus[17][31]=
 "           .-:l+-             ",
 "            .-`               ",};
 
-
+char invalidSelectionBlank[17][31]=
+{
+"                              ",
+"                              ",
+"                              ",
+"                              ",
+"                              ",
+"                              ",
+"                              ",
+"                              ",
+"                              ",
+"                              ",
+"                              ",
+"                              ",
+"                              ",
+"                              ",
+"                              ",
+"                              ",};
 
 
 
@@ -3501,6 +3518,7 @@ break;
 
 
 default:
+memcpy(pokemon,invalidSelectionBlank,sizeof(pokemon));
 break;
 }
 memcpy(holder,pokemon,sizeof(pokemon));

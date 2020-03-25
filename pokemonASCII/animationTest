@@ -139,18 +139,24 @@ char screen[33][65] ={
 //30 char width
 
 changeText(screen,1,1,"not pikachu");
-
+char testInput[100];
+int testInputInt=1;
 int ice;
 for(ice=1;ice<=151;ice++)
 {
-    changeEnemyPokemon(screen,ice);
-    changePlayerPokemon(screen,152-ice);
+    printf("here%d\n",testInputInt);
+    changeEnemyPokemon(screen,testInputInt);
+//    changeEnemyPokemon(screen,ice);
+//    changePlayerPokemon(screen,152-ice);
+    changePlayerPokemon(screen,152-testInputInt);
     run(screen);
     delay(100);
+    scanf("%s",testInput);
+    testInputInt=atoi(testInput);
     clear();
 }
 
-return 0;
+//return 0;
 
 
 }

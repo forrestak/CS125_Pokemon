@@ -8,38 +8,38 @@
 #include <time.h>
 #include <stdlib.h>
 
-void createPlayerFile(float statsArray[7]);
-void createNPCFile(float statsArray[7]);
+void createPlayerFile(float statsArray[9]);
+void createNPCFile(float statsArray[9]);
 
 char *generatePokemonStats(int pokemonChoice) // pokemonChoice = '1'-Bulbasaur; '2'-Charmander; '3'-Squirtle; '4'-GrassNPC; '5'-FireNPC; '6'-WaterNPC
 {
-	srand(time(NULL));
+	srand(time(NULL)); 
 	int npcRandomize = rand()%2+1; // toggles between '1' and '2' to determine random opponent of given type
-	char pokemonName[10];
+	char pokemonName[20];
 //	printf("Randomize Value: %d\n", npcRandomize); // debugging; remove to finalize
 	switch(pokemonChoice)
 	{
 		case 1 : // Bulbasaur default stats
 		{
-			float statsArray[7]={1, 45, 49, 49, 65, 65, 45};
+			float statsArray[9]={1, 1, 1000, 45, 49, 49, 65, 65, 45};
 			createPlayerFile(statsArray);
-			char pokemonName[10]="Bulbasaur";
+			char pokemonName[20]="Bulbasaur";
 			return pokemonName;
 			break;
 		}
 		case 2 : // Charmander default stats
 		{
-			float statsArray[7]={1, 39, 52, 43, 60, 50, 65};
+			float statsArray[9]={2, 1, 1000, 39, 52, 43, 60, 50, 65};
 			createPlayerFile(statsArray);
-			char pokemonName[10]="Charmander";
+			char pokemonName[20]="Charmander";
 			return pokemonName;
 			break;
 		}
 		case 3 : // Squirtle default stats
 		{
-			float statsArray[7]={1, 44, 48, 65, 50, 64, 43};
+			float statsArray[9]={3, 1, 1000, 44, 48, 65, 50, 64, 43};
 			createPlayerFile(statsArray);
-			char pokemonName[10]="Squirtle";
+			char pokemonName[20]="Squirtle";
 			return pokemonName;
 			break;
 		}
@@ -47,17 +47,21 @@ char *generatePokemonStats(int pokemonChoice) // pokemonChoice = '1'-Bulbasaur; 
 		{
 			if (npcRandomize == 1)
 			{
-				float statsArray[7]={1, 50, 75, 35, 70, 30, 40}; // Bellsprout
+				float statsArray[9]={4, 1, 1000, 50, 75, 35, 70, 30, 40}; // Bellsprout
 				createNPCFile(statsArray);
-				char pokemonName[10]="Bellsprout";
+				printf("debug: %s", pokemonName);
+				char pokemonName[20]="Bellsprout";
 				return pokemonName;
+				printf("debug: %s", pokemonName);
 			}
 			else
 			{
-				float statsArray[7]={1, 45, 50, 55, 75, 65, 30}; // Oddish
+				float statsArray[9]={4, 1, 1000, 45, 50, 55, 75, 65, 30}; // Oddish
 				createNPCFile(statsArray);
-				char pokemonName[10]="Oddish";
+				printf("debug: %s", pokemonName);
+				char pokemonName[20]="Oddish";
 				return pokemonName;
+				printf("debug: %s", pokemonName);
 			}
 			break;
 		}
@@ -65,16 +69,16 @@ char *generatePokemonStats(int pokemonChoice) // pokemonChoice = '1'-Bulbasaur; 
 		{
 			if (npcRandomize == 1)
 			{
-				float statsArray[7]={1, 55, 70, 45, 70, 50, 60}; // Growlithe
+				float statsArray[9]={5, 1, 1000, 55, 70, 45, 70, 50, 60}; // Growlithe
 				createNPCFile(statsArray);
-				char pokemonName[10]="Growlithe";
+				char pokemonName[20]="Growlithe";
 				return pokemonName;
 			}
 			else
 			{
-				float statsArray[7]={1, 50, 85, 55, 65, 65, 90}; // Ponyta
+				float statsArray[9]={5, 1, 1000, 50, 85, 55, 65, 65, 90}; // Ponyta
 				createNPCFile(statsArray);
-				char pokemonName[10]="Ponyta";
+				char pokemonName[20]="Ponyta";
 				return pokemonName;
 			}
 			break;
@@ -83,19 +87,18 @@ char *generatePokemonStats(int pokemonChoice) // pokemonChoice = '1'-Bulbasaur; 
 		{
 			if (npcRandomize == 1)
 			{
-				float statsArray[7]={1, 90, 65, 65, 40, 40, 15}; // Slowpoke
+				float statsArray[9]={6, 1, 1000, 90, 65, 65, 40, 40, 15}; // Slowpoke
 				createNPCFile(statsArray);
-				char pokemonName[10]="Slowpoke";
+				char pokemonName[20]="Slowpoke";
 				return pokemonName;
 			}
 			else
 			{
-				float statsArray[7]={1, 65, 45, 55, 45, 70, 45}; // Seel
+				float statsArray[9]={6, 1, 1000, 65, 45, 55, 45, 70, 45}; // Seel
 				createNPCFile(statsArray);
-				char pokemonName[10]="Seel";
+				char pokemonName[20]="Seel";
 				return pokemonName;
 			}
-
 			break;
 		}
 		default :
@@ -104,28 +107,32 @@ char *generatePokemonStats(int pokemonChoice) // pokemonChoice = '1'-Bulbasaur; 
 	}
 }
 
-void createPlayerFile(float statsArray[7])
+void createPlayerFile(float statsArray[9])
 {
 	FILE* playerStats = fopen("playerStats.txt", "w+"); // creates playerStats.txt, wiping contents with write permissions
-	fprintf(playerStats, "Level: %.0f\n", statsArray[0]);
-	fprintf(playerStats, "HP: %.2f\n", statsArray[1]);
-	fprintf(playerStats, "Attack: %.2f\n", statsArray[2]);
-	fprintf(playerStats, "Defense: %.2f\n", statsArray[3]);
-	fprintf(playerStats, "Sp. Attack: %.2f\n", statsArray[4]);
-	fprintf(playerStats, "Sp. Defense: %.2f\n", statsArray[5]);
-	fprintf(playerStats, "Speed: %.2f", statsArray[6]);
+	fprintf(playerStats, "Pokemon ID: %.0f\n", statsArray[0]);
+	fprintf(playerStats, "Level: %.0f\n", statsArray[1]);
+	fprintf(playerStats, "Experience: %.2f\n", statsArray[2]);
+	fprintf(playerStats, "HP: %.2f\n", statsArray[3]);
+	fprintf(playerStats, "Attack: %.2f\n", statsArray[4]);
+	fprintf(playerStats, "Defense: %.2f\n", statsArray[5]);
+	fprintf(playerStats, "Sp. Attack: %.2f\n", statsArray[6]);
+	fprintf(playerStats, "Sp. Defense: %.2f\n", statsArray[7]);
+	fprintf(playerStats, "Speed: %.2f", statsArray[8]);
 	fclose(playerStats);
 }
 
-void createNPCFile(float statsArray[7])
+void createNPCFile(float statsArray[9])
 {
 	FILE* npcStats = fopen("npcStats.txt", "w+"); // creates npcStats.txt, wiping contents with write permissions
-	fprintf(npcStats, "Level: %.0f\n", statsArray[0]);
-	fprintf(npcStats, "HP: %.2f\n", statsArray[1]);
-	fprintf(npcStats, "Attack: %.2f\n", statsArray[2]);
-	fprintf(npcStats, "Defense: %.2f\n", statsArray[3]);
-	fprintf(npcStats, "Sp. Attack: %.2f\n", statsArray[4]);
-	fprintf(npcStats, "Sp. Defense: %.2f\n", statsArray[5]);
-	fprintf(npcStats, "Speed: %.2f", statsArray[6]);
+	fprintf(npcStats, "Pokemon ID: %.0f\n", statsArray[0]);
+	fprintf(npcStats, "Level: %.0f\n", statsArray[1]);
+	fprintf(npcStats, "Experience: %.2f\n", statsArray[2]);
+	fprintf(npcStats, "HP: %.2f\n", statsArray[3]);
+	fprintf(npcStats, "Attack: %.2f\n", statsArray[4]);
+	fprintf(npcStats, "Defense: %.2f\n", statsArray[5]);
+	fprintf(npcStats, "Sp. Attack: %.2f\n", statsArray[6]);
+	fprintf(npcStats, "Sp. Defense: %.2f\n", statsArray[7]);
+	fprintf(npcStats, "Speed: %.2f", statsArray[8]);
 	fclose(npcStats);
 }

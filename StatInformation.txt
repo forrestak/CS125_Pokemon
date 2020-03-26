@@ -1,0 +1,42 @@
+/*	CS125 Group Project
+	File: StatInformation.txt
+	Description: Stores info regarding conceptual stat implementation
+	Authors: Colton Van Orsdel
+	References: N/A
+*/
+-Level Ups-
+All growth stats are linear relationships: base+growth per (1) level gained.
+
+Default stats and calculated growth rates sourced from https://pokemondb.net/pokedex
+
+Bulbasaur: 
+HP Growth: 1.55;
+Attack Growth: 0.43;
+Defense Growth: 0.43;
+Sp. Attack Growth: 0.56;
+Sp. Defense Growth: 0.56;
+Speed Growth: 0.4;
+
+Charmander: 
+HP Growth: 1.49;
+Attack Growth: 0.46;
+Defense Growth: 0.38;
+Sp. Attack Growth: 0.52;
+Sp. Defense Growth: 0.44;
+Speed Growth: 0.56;
+
+Squirtle: 
+HP Growth: 1.54;
+Attack Growth: 0.42;
+Defense Growth: 0.56;
+Sp. Attack Growth: 0.44;
+Sp. Defense Growth: 0.55;
+Speed Growth: 0.38;
+
+Randomized Pokemon (averages of above):
+HP Growth: 1.53
+Attack Growth: 0.44;
+Defense Growth: 0.45;
+Sp. Attack Growth: 0.51;
+Sp. Defense Growth: 0.52;
+Speed Growth: 0.45;

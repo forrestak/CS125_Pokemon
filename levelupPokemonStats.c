@@ -5,10 +5,15 @@
 	References: N/A
 */
 #include <stdio.h>
+#include <string.h>
+
+#include "levelupPokemonStats.h"
+#include "readPokemonStats.h"
+#include "generatePokemonStats.h"
 
 float getStatGrowth(int pokemonID, int stat);
 
-void levelupPokemonStats(char who[10], int pokemonID, int experience)
+void levelupPokemonStats(char who[7], int pokemonID, int experience)
 {
 	int i; // loop counter
 	float leveledStatsArray[9];

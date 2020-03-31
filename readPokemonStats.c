@@ -6,7 +6,12 @@
 */
 #include <stdio.h>
 #include <string.h>
-float readPokemonStats(char who[10], int stat)
+
+#include "levelupPokemonStats.h"
+#include "readPokemonStats.h"
+#include "generatePokemonStats.h"
+
+float readPokemonStats(char who[7], int stat)
 {
 	float statResult[9];
 	if (strcmp(who, "player")==0)

@@ -3,8 +3,10 @@
     art.c
     All ASCII art for the project
 */
+#include "art.h"
+#include <stdio.h>
 
-void asciiart(input){
+void asciiart(int input){
   switch(input){
 
     case 1: // Pokeball large
@@ -90,7 +92,20 @@ void asciiart(input){
       printf("        -.--`   `::ll:`  -:::- \e[0m\n");
       break;
 
-
+    case 6: // Trophy art
+      printf("\e[0;33m\t        .-=========-.\n");
+      printf("\t        \\'-=======-'/\n");
+      printf("\t\\|/     _|   .=.   |_\n");
+      printf("\t-.-    ((|  {{1}}  |))\n");
+      printf("\t/|\\     \\|   /|\\   |/   \\|/\n");
+      printf("\t         |   ‘`’   |    -.-\n");
+      printf("\t         | You are |    /|\\\n");
+      printf("\t         | amazing |\n");
+      printf("\t         \\__     __/\n");
+      printf("\t           _`) (`_\n");
+      printf("\t         _/_______\\_\n");
+      printf("\t        /___________\\\e[0m\n");
+      break;
 
     case 150: // Mewtwo
     printf("\e[0;35m                                               `/:+`                      ```                        \n");
@@ -162,7 +177,7 @@ void asciiart(input){
     printf("                          /:     `/o-:::::::`   `s                           `-:::::::::--:-`       \n");
     printf("                           :/::://-        `:////-  \e[0m\n");
     break;
-    
+
     default:
       break;
   }

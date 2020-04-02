@@ -29,7 +29,7 @@ void intro();
 // Starter
 char* starter(char*);
 //char* starter(char *pokemonChoiceptr);
-//void battleUI();
+void battleUI();
 void endGame(int);
 
 

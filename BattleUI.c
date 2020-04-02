@@ -18,19 +18,7 @@
 void getPokemon(char [][31],int);
 void delay(int);
 void clear();
-//get pokemon is fully defined in pokefiles btw
-// void delay(int milliseconds)
-// {
-//     milliseconds*=1000;
-//     clock_t start_time =clock();
-//     while(clock()<start_time + milliseconds);
-// }
-///////////////////////////////////
-// void clear()
-// {
-//     printf("\e[2J\e[H");
-// }
-//////////////////////////////////
+
 void run(char screen[33][65])
 {
     int x=0;
@@ -52,7 +40,6 @@ void changeText(char screen[33][65],int xScreenPos,int yScreenPos,char sentence[
     strncpy(screen[yScreenPos],completeSpareLine,65);
 
 }
-
 
 ///////////////////////////////////////
 void changeEnemyPokemon(char screen[33][65],int pokemonIndex)

@@ -8,6 +8,8 @@
 #include "util.h"
 #include "intro.h"
 #include "starter.h"
+#include "art.h"
+#include "endSim.h"
 //#include "battleUI2.c"
 //#include "endSim.c"
 
@@ -26,7 +28,7 @@ void intro();
 char* starter(char*);
 //char* starter(char *pokemonChoiceptr);
 //void battleUI();
-//void endGame(int);
+void endGame(int);
 
 
 int main(){
@@ -73,7 +75,7 @@ int main(){
   // Start of simulation
   readPrint(count, text5, "standard");
 
-  //endGame(win);
+  endGame(win);
   // battleUI();
   return 0;
 }

@@ -4,12 +4,11 @@
     File for choosing starter Pokemon
 */
 #include "starter.h"
-#include "util.h"
-#include "art.h"
 
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <ctype.h>
 
 void delay(int);
 void clear();
@@ -79,30 +78,33 @@ char* starter(char *pokemonChoiceptr){
     printf("\nType your choice here: ");
     fgets(pokemonChoiceptr, 20, stdin);
     pokemonChoiceptr[strcspn(pokemonChoiceptr, "\n")]=0;
+    for (count=0; count<=strlen(pokemonChoiceptr); count++){
+      pokemonChoiceptr[count] = tolower(pokemonChoiceptr[count]);
+    }
     fflush(stdin);
     printf("\n");
-    if ((strcmp(pokemonChoiceptr, "Charmander")!=0) && (strcmp(pokemonChoiceptr, "Squirtle")!=0) && (strcmp(pokemonChoiceptr, "Bulbasaur")!=0) && (strcmp(pokemonChoiceptr, "Mewtwo")!=0) && (strcmp(pokemonChoiceptr, "charmander")!=0) && (strcmp(pokemonChoiceptr, "squirtle")!=0) && (strcmp(pokemonChoiceptr, "bulbasaur")!=0) && (strcmp(pokemonChoiceptr, "mewtwo")!=0)){
+    if ((strcmp(pokemonChoiceptr, "charmander")!=0) && (strcmp(pokemonChoiceptr, "squirtle")!=0) && (strcmp(pokemonChoiceptr, "bulbasaur")!=0) && (strcmp(pokemonChoiceptr, "mewtwo")!=0)){
       readPrint(count, text8, "standard");
       readPrint(count, text5, "standard");
     }
-  }while ((strcmp(pokemonChoiceptr, "Charmander")!=0) && (strcmp(pokemonChoiceptr, "Squirtle")!=0) && (strcmp(pokemonChoiceptr, "Bulbasaur")!=0) && (strcmp(pokemonChoiceptr, "Mewtwo")!=0) && (strcmp(pokemonChoiceptr, "charmander")!=0) && (strcmp(pokemonChoiceptr, "squirtle")!=0) && (strcmp(pokemonChoiceptr, "bulbasaur")!=0) && (strcmp(pokemonChoiceptr, "mewtwo")!=0));
+  }while ((strcmp(pokemonChoiceptr, "charmander")!=0) && (strcmp(pokemonChoiceptr, "squirtle")!=0) && (strcmp(pokemonChoiceptr, "bulbasaur")!=0) && (strcmp(pokemonChoiceptr, "mewtwo")!=0));
 
   readPrint(count, text6, "standard");
 
   // Result of Choice
-  if ((strcmp(pokemonChoiceptr, "Charmander")==0) || (strcmp(pokemonChoiceptr, "charmander")==0)){
+  if (strcmp(pokemonChoiceptr, "charmander")==0){
     readPrint(count, "Charmander", "red");
     readPrint(count, text7, "standard");
   }
-  else if ((strcmp(pokemonChoiceptr, "Squirtle")==0) || (strcmp(pokemonChoiceptr, "squirtle")==0)){
+  else if (strcmp(pokemonChoiceptr, "squirtle")==0){
     readPrint(count, "Squirtle", "blue");
     readPrint(count, text7, "standard");
   }
-  else if ((strcmp(pokemonChoiceptr, "Bulbasaur")==0) || (strcmp(pokemonChoiceptr, "bulbasaur")==0)){
+  else if (strcmp(pokemonChoiceptr, "bulbasaur")==0){
     readPrint(count, "Bulbasaur", "green");
     readPrint(count, text7, "standard");
   }
-  else if ((strcmp(pokemonChoiceptr, "Mewtwo")==0) || (strcmp(pokemonChoiceptr, "mewtwo")==0)){
+  else if (strcmp(pokemonChoiceptr, "mewtwo")==0){
     readPrint(count, "Mewtwo", "purple");
     readPrint(count, text150, "standard");
   }

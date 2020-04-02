@@ -107,6 +107,20 @@ void asciiart(int input){
       printf("\t        /___________\\\e[0m\n");
       break;
 
+    case 7: // Frowny Face
+    printf("\n");
+      printf("         .-\"\"\"\"\"\"-.\n");
+      printf("       .'          '.\n");
+      printf("      /   O      O   \\\n");
+      printf("     :           `    :\n");
+      printf("     |                |\n");
+      printf("     :    .------.    :\n");
+      printf("      \\  '        '  /\n");
+      printf("       '.          .'\n");
+      printf("         '-......-'\n");
+      break;
+
+
     case 150: // Mewtwo
     printf("\e[0;35m                                               `/:+`                      ```                        \n");
     printf("                                              :- .+`     `....``        -+-:/:                      \n");

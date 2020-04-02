@@ -18,12 +18,13 @@
 #include <stdlib.h>
 #include <time.h>
 
-// Function to change pause time
+// utils functions
 void delay(int);
+void clear();
 
 void intro(){
   //Printing the Pokemon Logo
-  printf("\e[1;1H\e[2J");
+  clear();
   printf("                                     ,\'\\\n");
   delay(200);
   printf("       _.----.        ____         ,'  _\\   ___    ___     ____\n");

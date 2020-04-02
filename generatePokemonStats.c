@@ -1,107 +1,176 @@
 /*	CS125 Group Project
-	File: generatePokemonStats.h
+	File: generatePokemonStats.c
 	Description: Creates and fills Pokemon-specific stats to text files
 	Authors: Colton Van Orsdel
 	References: N/A
 */
+// Utilized libraries
+#include <string.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include <stdlib.h>
-#include <string.h>
 
+// Header files
+#include "generatePokemonStats.h"
 #include "levelupPokemonStats.h"
 #include "readPokemonStats.h"
-#include "generatePokemonStats.h"
+#include "combat.h"
 
 void createPlayerFile(float statsArray[9]);
 void createNPCFile(float statsArray[9]);
 
-char *generatePokemonStats(int pokemonChoice, char pokemonName[20]) // pokemonChoice = '1'-Bulbasaur; '2'-Charmander; '3'-Squirtle; '4'-GrassNPC; '5'-FireNPC; '6'-WaterNPC
+char *generatePokemonStats(int pokemonChoice, char pokemonName[20], int useOrCheck) // pokemonChoice = '1'-Bulbasaur; '2'-Charmander; '3'-Squirtle; '4'-GrassNPC; '5'-FireNPC; '6'-WaterNPC
 {
 	srand(time(NULL)); 
-	int npcRandomize = rand()%2+1; // toggles between '1' and '2' to determine random opponent of given type
-//	printf("Randomize Value: %d\n", npcRandomize); // debugging; remove to finalize
+	int npcRandomize;
+	if (useOrCheck == 0)
+	{
+		npcRandomize = rand()%2+1; // toggles between '1' and '2' to determine random opponent of given type
+	}
 	switch(pokemonChoice)
 	{
 		case 1 : // Bulbasaur default stats
 		{
-			float statsArray[9]={1, 1, 1000, 45, 49, 49, 65, 65, 45};
-			createPlayerFile(statsArray);
-			strcpy(pokemonName, "Bulbasaur");
-			return pokemonName;
+			if (useOrCheck == 1)
+			{
+				strcpy(pokemonName, "Bulbasaur");
+				return pokemonName;
+			}
+			else
+			{
+				float statsArray[9]={1, 1, 1000, 45, 49, 49, 65, 65, 45};
+				createPlayerFile(statsArray);
+				break;
+			}
 		}
 		case 2 : // Charmander default stats
 		{
-			float statsArray[9]={2, 1, 1000, 39, 52, 43, 60, 50, 65};
-			createPlayerFile(statsArray);
-			strcpy(pokemonName, "Charmander");
-			return pokemonName;
+			if (useOrCheck == 1)
+			{
+				strcpy(pokemonName, "Charmander");
+				return pokemonName;
+			}
+			else
+			{
+				float statsArray[9]={2, 1, 1000, 39, 52, 43, 60, 50, 65};
+				createPlayerFile(statsArray);
+				break;
+			}
 		}
 		case 3 : // Squirtle default stats
 		{
-			float statsArray[9]={3, 1, 1000, 44, 48, 65, 50, 64, 43};
-			createPlayerFile(statsArray);
-			strcpy(pokemonName, "Squirtle");
-			return pokemonName;
+			if (useOrCheck == 1)
+			{
+				strcpy(pokemonName, "Squirtle");
+				return pokemonName;
+			}
+			else
+			{
+				float statsArray[9]={3, 1, 1000, 44, 48, 65, 50, 64, 43};
+				createPlayerFile(statsArray);
+				break;
+			}
 		}
 		case 4 : // Bellsprout/Oddish NPC default stats
 		{
 			if (npcRandomize == 1)
 			{
-				float statsArray[9]={4, 1, 1000, 50, 75, 35, 70, 30, 40}; // Bellsprout
-				createNPCFile(statsArray);
-				strcpy(pokemonName, "Bellsprout");
-				return pokemonName;
+				if (useOrCheck == 1)
+				{
+					strcpy(pokemonName, "Bellsprout");
+					return pokemonName;
+				}
+				else
+				{
+					float statsArray[9]={4, 1, 1000, 50, 75, 35, 70, 30, 40}; // Bellsprout
+					createNPCFile(statsArray);
+					break;
+				}
 			}
 			else
 			{
-				float statsArray[9]={4, 1, 1000, 45, 50, 55, 75, 65, 30}; // Oddish
-				createNPCFile(statsArray);
-				strcpy(pokemonName, "Oddish");
-				return pokemonName;
+				if (useOrCheck == 1)
+				{
+					strcpy(pokemonName, "Oddish");
+					return pokemonName;
+				}
+				else
+				{
+					float statsArray[9]={4, 1, 1000, 45, 50, 55, 75, 65, 30}; // Oddish
+					createNPCFile(statsArray);
+					break;
+				}
 			}
 		}
 		case 5 : // Growlithe/Ponyta NPC default stats
 		{
 			if (npcRandomize == 1)
 			{
-				float statsArray[9]={5, 1, 1000, 55, 70, 45, 70, 50, 60}; // Growlithe
-				createNPCFile(statsArray);
-				strcpy(pokemonName, "Growlithe");
-				return pokemonName;
+				if (useOrCheck == 1)
+				{
+					strcpy(pokemonName, "Growlithe");
+					return pokemonName;
+				}
+				else
+				{
+					float statsArray[9]={5, 1, 1000, 55, 70, 45, 70, 50, 60}; // Growlithe
+					createNPCFile(statsArray);
+					break;
+				}
 			}
 			else
 			{
-				float statsArray[9]={5, 1, 1000, 50, 85, 55, 65, 65, 90}; // Ponyta
-				createNPCFile(statsArray);
-				strcpy(pokemonName, "Ponyta");
-				return pokemonName;
+				if (useOrCheck == 1)
+				{
+					strcpy(pokemonName, "Ponyta");
+					return pokemonName;
+				}
+				else
+				{
+					float statsArray[9]={5, 1, 1000, 50, 85, 55, 65, 65, 90}; // Ponyta
+					createNPCFile(statsArray);
+					break;
+				}
 			}
 		}
 		case 6 : // Slowpoke/Seel NPC default stats
 		{
 			if (npcRandomize == 1)
 			{
-				float statsArray[9]={6, 1, 1000, 90, 65, 65, 40, 40, 15}; // Slowpoke
-				createNPCFile(statsArray);
-				strcpy(pokemonName, "Slowpoke");
-				return pokemonName;
+				if (useOrCheck == 1)
+				{
+					strcpy(pokemonName, "Slowpoke");
+					return pokemonName;
+				}
+				else
+				{
+					float statsArray[9]={6, 1, 1000, 90, 65, 65, 40, 40, 15}; // Slowpoke
+					createNPCFile(statsArray);
+					break;
+				}
 			}
 			else
 			{
-				float statsArray[9]={6, 1, 1000, 65, 45, 55, 45, 70, 45}; // Seel
-				createNPCFile(statsArray);
-				strcpy(pokemonName, "Seel");
-				return pokemonName;
+				if (useOrCheck == 1)
+				{
+					strcpy(pokemonName, "Seel");
+					return pokemonName;
+				}
+				else
+				{
+					float statsArray[9]={6, 1, 1000, 65, 45, 55, 45, 70, 45}; // Seel
+					createNPCFile(statsArray);
+					break;
+				}
 			}
 		}
 		default :
 		{
 			printf("ERROR: generatePokemonStats() switch defaulted; debug"); // only occurs from developer error in implementation code
-			return 0;
+			return pokemonName;
 		}
-		return pokemonName;
 	}
+	return pokemonName;
 }
 
 void createPlayerFile(float statsArray[9])

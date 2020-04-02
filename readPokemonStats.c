@@ -4,12 +4,17 @@
 	Authors: Colton Van Orsdel
 	References: N/A
 */
-#include <stdio.h>
+// Utilized libraries
 #include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
 
+// Header files
+#include "generatePokemonStats.h"
 #include "levelupPokemonStats.h"
 #include "readPokemonStats.h"
-#include "generatePokemonStats.h"
+#include "combat.h"
 
 float readPokemonStats(char who[7], int stat)
 {

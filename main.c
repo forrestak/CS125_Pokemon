@@ -9,9 +9,11 @@
 #include "intro.h"
 #include "starter.h"
 #include "art.h"
+#include "battleUI.h"
+#include "pokeFiles.h"
 #include "endSim.h"
-//#include "battleUI2.c"
-//#include "endSim.c"
+
+
 
 // Standard Libraries
 #include <string.h>
@@ -75,6 +77,7 @@ int main(){
   // Start of simulation
   readPrint(count, text5, "standard");
 
+  battleUI();
   endGame(win);
   // battleUI();
   return 0;

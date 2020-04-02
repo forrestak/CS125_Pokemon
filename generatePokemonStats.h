@@ -8,5 +8,5 @@
 #define GENERATEPOKEMONSTATS
 void createPlayerFile(float statsArray[9]);
 void createNPCFile(float statsArray[9]);
-char *generatePokemonStats(int pokemonChoice, char pokemonName[20]);
+char *generatePokemonStats(int pokemonChoice, char pokemonName[20], int useOrCheck);
 #endif

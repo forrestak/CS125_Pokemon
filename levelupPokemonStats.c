@@ -4,12 +4,17 @@
 	Authors: Colton Van Orsdel
 	References: N/A
 */
-#include <stdio.h>
+// Utilized libraries
 #include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
 
+// Header files
+#include "generatePokemonStats.h"
 #include "levelupPokemonStats.h"
 #include "readPokemonStats.h"
-#include "generatePokemonStats.h"
+#include "combat.h"
 
 float getStatGrowth(int pokemonID, int stat);
 
@@ -25,6 +30,7 @@ void levelupPokemonStats(char who[7], int pokemonID, int experience)
 		{
 			previousStatStorage[i]=readPokemonStats("player", i); // store pre-levelup stats from playerStats.txt
 		}
+		leveledStatsArray[0] = previousStatStorage[0]; // repopulate pokemonID as it will not be updated
 		leveledStatsArray[2] = previousStatStorage[2] + experience; // update total XP by adding new gain to previous value
 		leveledStatsArray[1] = (int)(leveledStatsArray[2]/1000); // truncate new level to int and update 
 		
@@ -40,12 +46,13 @@ void levelupPokemonStats(char who[7], int pokemonID, int experience)
 		{
 			previousStatStorage[i]=readPokemonStats("npc", i); // store pre-levelup stats from npcStats.txt
 		}
+		leveledStatsArray[0] = previousStatStorage[0]; // repopulate pokemonID as it will not be updated
 		leveledStatsArray[2] = previousStatStorage[2] + experience; // update total XP by adding new gain to previous value
 		leveledStatsArray[1] = (int)(leveledStatsArray[2]/1000); // truncate new level to int and update 
 		
 		for(i = 3; i < 9; i++)
 		{
-			leveledStatsArray[i] = previousStatStorage[i] + (getStatGrowth(pokemonID, i-3) * (leveledStatsArray[1]-1)); // traverse each stat element and add calculated growth
+			leveledStatsArray[i] = previousStatStorage[i] + (getStatGrowth(3+pokemonID, i-3) * (leveledStatsArray[1]-1)); // traverse each stat element and add calculated growth
 		}
 		createNPCFile(leveledStatsArray); // generate new npcStats.txt with the new levelup stats
 	}

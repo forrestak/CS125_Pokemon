@@ -38,7 +38,7 @@ int main(){
   char dummy; // Dummy var
   int count; // Count for printing
   char userName[50]; // Username
-  int win = 0; // Win or lose variable; Set to 1 if the player wins
+  int* win = 0; // Win or lose variable; Set to 1 if the player wins
 
   char text1[]="Hi! Sorry to keep you waiting! Welcome to the world of Pokemon!\nMy name is Heather Marriot. But everyone calls me the\nCoding Professor. This world is widely inhabited by creatures known\nas Pokemon. We humans live alongside Pokemon, at times\nas friendly playmates, and at times as cooperative workmates.\nAnd sometimes, we band together and battle others like us.\nBut despite our closeness, we don't know everything about Pokemon.\nIn fact, there are many, many secrets surrounding Pokemon.\nTo unravel Pokemon mysteries, I've been undertaking research.\nThat's what I do.\n";
   char text2[]="\nAnd you are? ";

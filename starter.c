@@ -60,13 +60,13 @@ char* starter(char *pokemonChoiceptr){
   readPrint(count, text4, "standard");
 
   // Printing Starter Pokemon
-  asciiart(3);
+  asciiart(5);
   printf("\n");
   sleep(1);
   asciiart(4);
   printf("\n");
   sleep(1);
-  asciiart(5);
+  asciiart(3);
   printf("\n");
   sleep(1);
 

@@ -223,10 +223,12 @@ void battleUI()
     //test 16 lines height
     //30 char width
 
-    changeText(screen,1,1,"not pikachu");
     char testInput[100];
     int testInputInt=1;
     int ice;
+    changeText(screen,3,3,"wheee");
+    changeText(screen,0,0,"asparagus");
+    changeText(screen,8,3,"waffles");
     for(ice=1;ice<=151;ice++)
     {
       //printf("here%d\n",testInputInt);
@@ -234,6 +236,7 @@ void battleUI()
       //    changeEnemyPokemon(screen,ice);
       //    changePlayerPokemon(screen,152-ice);
       changePlayerPokemon(screen,152-testInputInt);
+
       run(screen,colorScreen);
       delay(100);
       scanf("%s",testInput);

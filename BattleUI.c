@@ -19,12 +19,53 @@ void getPokemon(char [][31],int);
 void delay(int);
 void clear();
 
-void run(char screen[33][65])
+
+//////$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+//changes made on 4/3/2020
+void printPixel(char screen[33][65],char colorScreen[33][65],int x, int y){
+//        printf("\033[0;31m");//red
+//        printf("\033[0m");//white
+//        printf("\e[0;34m");//blue
+//        printf("\e[0;32m");//green
+//        printf("\e[0;35m");//purple
+//        printf("\e[0;33m");//yellow
+if(colorScreen[x][y]=='r')
+        printf("\033[0;31m");
+if(colorScreen[x][y]=='w')
+        printf("\033[0m");
+if(colorScreen[x][y]=='b')
+        printf("\e[0;34m");
+if(colorScreen[x][y]=='g')
+        printf("\e[0;32m");
+if(colorScreen[x][y]=='p')
+        printf("\e[0;35m");
+if(colorScreen[x][y]=='y')
+        printf("\e[0;33m");
+
+
+
+
+printf("%c",screen[x][y]);
+}
+//////$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+void run(char screen[33][65],char colorScreen[33][65])
 {
     int x=0;
+    int y=0;
     for(x=0;x<33;x++)
-    printf("%s\n",screen[x]);
+    {
+
+        for(y=0;y<65;y++)
+        {
+        //printf("%c",screen[x][y]);
+        printPixel(screen,colorScreen,x,y);    
+    //printpixel will go here
+        }
+    printf("\n");
+    }   
 }
+//////$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 ///////////////////////////////////////
 void changeText(char screen[33][65],int xScreenPos,int yScreenPos,char sentence[])
 {
@@ -132,6 +173,41 @@ void battleUI()
     "|01234567890123456789012345678|numerical stuffh6789012345678901|",
     "|01234567890123456789012345678|graphical exp3456789012345678901|",
     "+-----------------------------+--------------------------------+",};
+    
+        char colorScreen[33][65]={
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+"wwwwwwwwwwwwwwwrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwgggggggggbbbbbgbgbgwwww",
+"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwpppppppppppwwwwwyyyywwwww",};
     //bot left pokemon 30 width
     //top right pokemon 32 width? wtf
     //test 16 lines height
@@ -143,12 +219,12 @@ void battleUI()
     int ice;
     for(ice=1;ice<=151;ice++)
     {
-      printf("here%d\n",testInputInt);
+      //printf("here%d\n",testInputInt);
       changeEnemyPokemon(screen,testInputInt);
       //    changeEnemyPokemon(screen,ice);
       //    changePlayerPokemon(screen,152-ice);
       changePlayerPokemon(screen,152-testInputInt);
-      run(screen);
+      run(screen,colorScreen);
       delay(100);
       scanf("%s",testInput);
       testInputInt=atoi(testInput);

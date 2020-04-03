@@ -69,16 +69,26 @@ void run(char screen[33][65], char colorScreen[33][65])
 ///////////////////////////////////////
 void changeText(char screen[33][65],int xScreenPos,int yScreenPos,char sentence[])
 {
-    char spareLine[65];
-    char secondSpareLine[65];
-    char completeSpareLine[65];
-
+    fflush(stdout);
+    char spareLine[65]="";
+    char secondSpareLine[65]="";
+    char completeSpareLine[65]="";
+    //literally had an issue because i didnt intialize the chars with an empty string
+    //printf("screenq%s\n",screen[yScreenPos]);
     strncpy(spareLine,screen[yScreenPos],xScreenPos);
+    //printf("spare q%s\n",spareLine);
     strncpy(secondSpareLine,screen[yScreenPos]+xScreenPos+strlen(sentence),65);
-    strcat(completeSpareLine,spareLine);
+    //printf("2ndsreq%s\n",secondSpareLine);
+    //next three functions are to put together the final result
+    strncpy(completeSpareLine,spareLine,strlen(spareLine));
+    //printf("final1q%s\n",completeSpareLine);
     strcat(completeSpareLine,sentence);
+    //printf("final2q%s\n",completeSpareLine);
     strcat(completeSpareLine,secondSpareLine);
+    //printf("final3q%s\n",completeSpareLine);
+    //copy the final result
     strncpy(screen[yScreenPos],completeSpareLine,65);
+    //printf("last  q%s\n",screen[yScreenPos]);
 
 }
 

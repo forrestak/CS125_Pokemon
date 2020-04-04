@@ -90,14 +90,73 @@ void changeText(char screen[33][65],int xScreenPos,int yScreenPos,char sentence[
     strncpy(screen[yScreenPos],completeSpareLine,65);
     //printf("last  q%s\n",screen[yScreenPos]);
 
-
 }
-void changeColor(char colorScreen[33][65],int x, int y,char input)
-{
+void changeColor(char colorScreen[33][65],int x, int y,char input){
     colorScreen[x][y]=input;
 }
-//^^^^^^^^^^^^^^^^^^more changes on 4/3/2020 evening
+void removeBackBlanks(char shift[]){
+    char copy[20]=""; //this is to right adjust the numbers
+    char copy2[20]=" ";
+    strncpy(copy,shift,strlen(shift)-1);
+    strcat(copy2,copy);
+    if(shift[strlen(shift)-1]==' ')
+    {
+        strncpy(shift,copy2,strlen(copy2));
+        removeBackBlanks(shift);//recursion baby
+    }
 
+}
+void changeEnemyName(char screen[33][65],char colorScreen[33][65],char enemyName[],char type){
+    //g is grass,r is fire, b is water
+    char emptyName[]="           ";//max name size is 11
+    int count=0;
+    strncpy(emptyName,enemyName,strlen(enemyName));
+    changeText(screen,1,1,emptyName);
+    for(count=0;count<11;count++)//also sorry,x isnt x and y isnt y
+        changeColor(colorScreen,1,1+count,type);
+}
+void changePlayerName(char screen[33][65],char colorScreen[33][65],char playerName[],char type){
+    char emptyName[]="           ";//max name size is 11
+    int count=0;
+    strncpy(emptyName,playerName,strlen(playerName));
+    changeText(screen,31,28,emptyName);
+    for(count=0;count<11;count++)//also sorry,x isnt x and y isnt y, must have mixed up somewhere
+        changeColor(colorScreen,28,31+count,type);
+}
+void changeEnemyHp(char screen[33][65],int currentHp,int maxHp){
+    fflush(stdin);
+    char emptyName[13]="HP:[";//max name size is 13
+    char emptyCurrentHp[]="    ";//max name size is 4(3 digits, 1 sign)
+    char emptyCurrentHp2[]="    ";//max name size is 4(3 digits, 1 sign)
+    char emptyMaxHp[]="   ";//max name size is 3(3 digits)
+    char emptyMaxHp2[]="   ";//max name size is 3(3 digits)
+    int spare1 = sprintf(emptyCurrentHp, "%d", currentHp);
+    int spare2 =sprintf(emptyMaxHp, "%d", maxHp);
+    strncpy(emptyCurrentHp2,emptyCurrentHp,strlen(emptyCurrentHp));
+    strncpy(emptyMaxHp2,emptyMaxHp,strlen(emptyMaxHp));
+    removeBackBlanks(emptyCurrentHp2);
+    removeBackBlanks(emptyMaxHp2);
+    strcat(emptyName,emptyCurrentHp2);
+    strcat(emptyName,"/");
+    strcat(emptyName,emptyMaxHp2);
+    strcat(emptyName,"]");
+    changeText(screen,13,1,emptyName);
+    
+}
+void changePlayerHp(){
+    char emptyName[]="           ";//max name size is 11
+
+}
+void changeEnemyLvl(){
+    char emptyName[]="           ";//max name size is 11
+
+}
+void changePlayerLvl(){
+    char emptyName[]="           ";//max name size is 11
+
+}
+
+//^^^^^^^^^^^^^^^^^
 ///////////////////////////////////////
 void changeEnemyPokemon(char screen[33][65],int pokemonIndex)
 {
@@ -237,6 +296,13 @@ void battleUI()
     //changeText(screen,0,0,"asparagus");
     //changeText(screen,8,3,"waffles");
     //changeColor(colorScreen,1,1,'b');
+    changeEnemyName(screen,colorScreen,"takoyaki",'g');
+    changeEnemyName(screen,colorScreen,"daifuku",'b');
+    changePlayerName(screen,colorScreen,"mirror cake",'r');
+    changePlayerName(screen,colorScreen,"leche",'p');
+    changeEnemyHp(screen,-100,420);
+    changeEnemyHp(screen,1,2);
+
     for(ice=1;ice<=151;ice++)
     {
       //printf("here%d\n",testInputInt);

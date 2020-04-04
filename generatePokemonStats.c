@@ -19,7 +19,7 @@
 void createPlayerFile(float statsArray[9]);
 void createNPCFile(float statsArray[9]);
 
-char *generatePokemonStats(int pokemonChoice, char pokemonName[20], int useOrCheck) // pokemonChoice = '1'-Bulbasaur; '2'-Charmander; '3'-Squirtle; '4'-GrassNPC; '5'-FireNPC; '6'-WaterNPC
+char *generatePokemonStats(int pokemonChoice, int useOrCheck) // pokemonChoice = '1'-Bulbasaur; '2'-Charmander; '3'-Squirtle; '4'-GrassNPC; '5'-FireNPC; '6'-WaterNPC
 {
 	srand(time(NULL)); 
 	int npcRandomize;
@@ -33,8 +33,8 @@ char *generatePokemonStats(int pokemonChoice, char pokemonName[20], int useOrChe
 		{
 			if (useOrCheck == 1)
 			{
-				strcpy(pokemonName, "Bulbasaur");
-				return pokemonName;
+				strcpy(POKEMONNAME, "Bulbasaur");
+				return POKEMONNAME;
 			}
 			else
 			{
@@ -47,8 +47,8 @@ char *generatePokemonStats(int pokemonChoice, char pokemonName[20], int useOrChe
 		{
 			if (useOrCheck == 1)
 			{
-				strcpy(pokemonName, "Charmander");
-				return pokemonName;
+				strcpy(POKEMONNAME, "Charmander");
+				return POKEMONNAME;
 			}
 			else
 			{
@@ -61,8 +61,8 @@ char *generatePokemonStats(int pokemonChoice, char pokemonName[20], int useOrChe
 		{
 			if (useOrCheck == 1)
 			{
-				strcpy(pokemonName, "Squirtle");
-				return pokemonName;
+				strcpy(POKEMONNAME, "Squirtle");
+				return POKEMONNAME;
 			}
 			else
 			{
@@ -77,8 +77,8 @@ char *generatePokemonStats(int pokemonChoice, char pokemonName[20], int useOrChe
 			{
 				if (useOrCheck == 1)
 				{
-					strcpy(pokemonName, "Bellsprout");
-					return pokemonName;
+					strcpy(POKEMONNAME, "Bellsprout");
+					return POKEMONNAME;
 				}
 				else
 				{
@@ -91,8 +91,8 @@ char *generatePokemonStats(int pokemonChoice, char pokemonName[20], int useOrChe
 			{
 				if (useOrCheck == 1)
 				{
-					strcpy(pokemonName, "Oddish");
-					return pokemonName;
+					strcpy(POKEMONNAME, "Oddish");
+					return POKEMONNAME;
 				}
 				else
 				{
@@ -108,8 +108,8 @@ char *generatePokemonStats(int pokemonChoice, char pokemonName[20], int useOrChe
 			{
 				if (useOrCheck == 1)
 				{
-					strcpy(pokemonName, "Growlithe");
-					return pokemonName;
+					strcpy(POKEMONNAME, "Growlithe");
+					return POKEMONNAME;
 				}
 				else
 				{
@@ -122,8 +122,8 @@ char *generatePokemonStats(int pokemonChoice, char pokemonName[20], int useOrChe
 			{
 				if (useOrCheck == 1)
 				{
-					strcpy(pokemonName, "Ponyta");
-					return pokemonName;
+					strcpy(POKEMONNAME, "Ponyta");
+					return POKEMONNAME;
 				}
 				else
 				{
@@ -139,8 +139,8 @@ char *generatePokemonStats(int pokemonChoice, char pokemonName[20], int useOrChe
 			{
 				if (useOrCheck == 1)
 				{
-					strcpy(pokemonName, "Slowpoke");
-					return pokemonName;
+					strcpy(POKEMONNAME, "Slowpoke");
+					return POKEMONNAME;
 				}
 				else
 				{
@@ -153,8 +153,8 @@ char *generatePokemonStats(int pokemonChoice, char pokemonName[20], int useOrChe
 			{
 				if (useOrCheck == 1)
 				{
-					strcpy(pokemonName, "Seel");
-					return pokemonName;
+					strcpy(POKEMONNAME, "Seel");
+					return POKEMONNAME;
 				}
 				else
 				{
@@ -167,10 +167,10 @@ char *generatePokemonStats(int pokemonChoice, char pokemonName[20], int useOrChe
 		default :
 		{
 			printf("ERROR: generatePokemonStats() switch defaulted; debug"); // only occurs from developer error in implementation code
-			return pokemonName;
+			return POKEMONNAME;
 		}
 	}
-	return pokemonName;
+	return POKEMONNAME;
 }
 
 void createPlayerFile(float statsArray[9])

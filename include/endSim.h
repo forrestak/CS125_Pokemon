@@ -8,6 +8,6 @@
 #define ENDSIM
 
 // int win = 1;
-void endSim(int);
+void endSim();
 
 #endif

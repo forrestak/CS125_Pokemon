@@ -23,8 +23,14 @@
 #include <stdio.h>
 #include <unistd.h>
 
-// Global Vars
-// int WINORLOSE = 1;
+// Global variables
+statStruct STATSTORAGE; 
+char TYPE[6];
+char MOVESELECTED[15];
+char POKEMONNAME[20];
+char EFFECTIVENESS[30];
+char POTIONSELECTED[15];
+int WINORLOSE;
 
 // Util
 void delay(int);
@@ -36,15 +42,16 @@ void intro();
 char* starter(char*);
 //char* starter(char *pokemonChoiceptr);
 void battleUI();
-void endSim(int);
+void endSim();
 
 
 int main(){
   // Initializing Vars
+  
   char dummy; // Dummy var
   int count; // Count for printing
   char userName[50]; // Username
-  int win = 1; // Win or lose variable; Set to 1 if the player wins
+  WINORLOSE = 0;
 
   char text1[]="Hi! Sorry to keep you waiting! Welcome to the world of Pokemon!\nMy name is Heather Marriot. But everyone calls me the\nCoding Professor. This world is widely inhabited by creatures known\nas Pokemon. We humans live alongside Pokemon, at times\nas friendly playmates, and at times as cooperative workmates.\nAnd sometimes, we band together and battle others like us.\nBut despite our closeness, we don't know everything about Pokemon.\nIn fact, there are many, many secrets surrounding Pokemon.\nTo unravel Pokemon mysteries, I've been undertaking research.\nThat's what I do.\n";
   char text2[]="\nAnd you are? ";
@@ -85,7 +92,8 @@ int main(){
 
   //battleUI();
   combatSandbox();
-  endSim(win);
+  endSim();
   // battleUI();
+  
   return 0;
 }

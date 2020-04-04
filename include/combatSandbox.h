@@ -8,6 +8,8 @@
 #ifndef COMBAT_SANDBOX
 #define COMBAT_SANDBOX
 
+#include "combat.h"
+
 void combatSandbox();
 
 #endif

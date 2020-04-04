@@ -17,8 +17,8 @@ int combatSandbox()
 	printf("-Playable Pokemon-\n'1'-Bulbasaur\n'2'-Charmander\n'3'-Squirtle\n");
 	printf("Choose your Pokemon: ");
 	scanf("%d", &pokemonChoice);
-	generatePokemonStats(pokemonChoice, pokemonName, 0);
-	printf("\nYou choose %s!\n", generatePokemonStats(pokemonChoice, pokemonName, 1));
+	generatePokemonStats(pokemonChoice, 0);
+	printf("\nYou choose %s!\n", generatePokemonStats(pokemonChoice, 1));
 	printf("Your Pokemon is Level %.0f\n", readPokemonStats("player", 1));
 	printf("Your Pokemon has:\n%.2f XP\n", readPokemonStats("player", 2));
 	printf("%.2f HP\n", readPokemonStats("player", 3));
@@ -30,8 +30,8 @@ int combatSandbox()
 	printf("\n\n-Opponent Type-\n'1'-Grass\n'2'-Fire\n'3'-Water\n");
 	printf("Choose an opponent Pokemon: ");
 	scanf("%d", &pokemonChoice);
-	generatePokemonStats(3+pokemonChoice, pokemonName, 0);
-	printf("\nYour opponent is %s!\n", generatePokemonStats(3+pokemonChoice, pokemonName, 1));
+	generatePokemonStats(3+pokemonChoice, 0);
+	printf("\nYour opponent is %s!\n", generatePokemonStats(3+pokemonChoice, 1));
 	printf("Your opponent is Level %.0f\n", readPokemonStats("npc", 1));
 	printf("Your opponent has:\n%.2f XP\n", readPokemonStats("npc", 2));
 	printf("%.2f HP\n", readPokemonStats("npc", 3));

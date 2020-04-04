@@ -6,6 +6,9 @@
 #ifndef BATTLEUI
 #define BATTLEUI
 
+// Global variables
+extern int WINORLOSE;
+
 void run(char [][65], char [][65]);
 void changeText(char [][65],int,int,char []);
 void changeEnemyPokemon(char [][65],int);

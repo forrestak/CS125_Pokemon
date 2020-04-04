@@ -69,26 +69,16 @@ void run(char screen[33][65], char colorScreen[33][65])
 ///////////////////////////////////////
 void changeText(char screen[33][65],int xScreenPos,int yScreenPos,char sentence[])
 {
-    fflush(stdout);
-    char spareLine[65]="";
-    char secondSpareLine[65]="";
-    char completeSpareLine[65]="";
-    //literally had an issue because i didnt intialize the chars with an empty string
-    //printf("screenq%s\n",screen[yScreenPos]);
+    char spareLine[65];
+    char secondSpareLine[65];
+    char completeSpareLine[65];
+
     strncpy(spareLine,screen[yScreenPos],xScreenPos);
-    //printf("spare q%s\n",spareLine);
     strncpy(secondSpareLine,screen[yScreenPos]+xScreenPos+strlen(sentence),65);
-    //printf("2ndsreq%s\n",secondSpareLine);
-    //next three functions are to put together the final result
-    strncpy(completeSpareLine,spareLine,strlen(spareLine));
-    //printf("final1q%s\n",completeSpareLine);
+    strcat(completeSpareLine,spareLine);
     strcat(completeSpareLine,sentence);
-    //printf("final2q%s\n",completeSpareLine);
     strcat(completeSpareLine,secondSpareLine);
-    //printf("final3q%s\n",completeSpareLine);
-    //copy the final result
     strncpy(screen[yScreenPos],completeSpareLine,65);
-    //printf("last  q%s\n",screen[yScreenPos]);
 
 }
 
@@ -223,12 +213,10 @@ void battleUI()
     //test 16 lines height
     //30 char width
 
+    changeText(screen,1,1,"not pikachu");
     char testInput[100];
     int testInputInt=1;
     int ice;
-    changeText(screen,3,3,"wheee");
-    changeText(screen,0,0,"asparagus");
-    changeText(screen,8,3,"waffles");
     for(ice=1;ice<=151;ice++)
     {
       //printf("here%d\n",testInputInt);
@@ -236,7 +224,6 @@ void battleUI()
       //    changeEnemyPokemon(screen,ice);
       //    changePlayerPokemon(screen,152-ice);
       changePlayerPokemon(screen,152-testInputInt);
-
       run(screen,colorScreen);
       delay(100);
       scanf("%s",testInput);

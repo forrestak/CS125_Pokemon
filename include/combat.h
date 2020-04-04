@@ -38,18 +38,18 @@ typedef struct {
 } statStruct;
 
 // Global variables
-statStruct statStorage; 
-char type[6];
-char moveSelected[15];
-char pokemonName[20];
-char effectiveness[30];
-char potionSelected[15];
+extern statStruct STATSTORAGE; 
+extern char TYPE[6];
+extern char MOVESELECTED[15];
+extern char POKEMONNAME[20];
+extern char EFFECTIVENESS[30];
+extern char POTIONSELECTED[15];
 
 // Function prototypes
 float readCombatStats(char who[7], int stat);
-char *getType(int pokemonID, char type[6]);
+char *getType(int pokemonID);
 float createTypeModifier(char who[7]);
-char* checkEffectiveness(float typeModifier, char effectiveness[30]);
+char* checkEffectiveness(float typeModifier);
 float createLevelModifier(char who[7]);
 float damageCalculation(int moveType, float power, float level, float attack, float spAttack, float defense, float spDefense, float abilityModifier, float typeModifier, float levelModifier);
 void combatScenario();
@@ -60,7 +60,7 @@ int npcAI();
 void useMoveOne(char who[7]);
 void useMoveTwo(char who[7]);
 float useAbility(char who[7]);
-char* useConsumable(char who[7], char potionSelected[15]);
+char* useConsumable(char who[7]);
 statStruct initializeStats();
-char *moveSelect(char who[7], int moveType, char moveSelected[15]);
+char *moveSelect(char who[7], int moveType);
 #endif

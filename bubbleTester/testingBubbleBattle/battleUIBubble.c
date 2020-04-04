@@ -246,9 +246,9 @@ void battleUI()
     char testInput[100];
     int testInputInt=1;
     int ice;
-    changeText(screen,3,3,"wheee");
-    changeText(screen,0,0,"asparagus");
-    changeText(screen,8,3,"waffles");
+    //changeText(screen,3,3,"wheee");
+    //changeText(screen,0,0,"asparagus");
+    //changeText(screen,8,3,"waffles");
     for(ice=1;ice<=151;ice++)
     {
       //printf("here%d\n",testInputInt);

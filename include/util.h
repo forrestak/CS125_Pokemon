@@ -1,13 +1,14 @@
-/*  CS125_Pokemon
-    CS125 Programming project
-    util.h
-    Utility File for useful functions - header file
-    Author: Forrest Mobley
+/*	CS125 Group Project
+	File: util.h
+	Description: Header file to include util.c functions
+	Authors: Forrest Mobley
+	References: N/A
 */
 
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef UTIL
+#define UTIL
 
+// Function prototypes
 void delay(int);
 void clear();
 void readPrint(int, char [], char []);

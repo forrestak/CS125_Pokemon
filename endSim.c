@@ -1,14 +1,18 @@
-/*  CS125_Pokemon
-    CS125 Programming Project
-    endSim.c
-    Animations and menus after completing the sim or losing
+/*  CS125 Group Project
+    File: endSim.c
+    Description: Animations and menus to play after sim win/loss
+    Authors: Forrest Mobley
+    References: N/A
 */
-#include "endSim.h"
-#include "battleUI.h"
 
+// Utilized libraries
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+
+// Header files
+#include "endSim.h"
+#include "battleUI.h"
 
 void delay(int);
 void clear();
@@ -18,9 +22,8 @@ void asciiart(int);
 void endSim(){
   clear();
   int count;
-
-  // Win Scenario
-  if (WINORLOSE == 1){
+  
+  if (WINORLOSE == 1){ // Win scenario
     char text1[] = "Congratulations! You have completed the tutorial simulator! You win!\n";
     char text2[] = "This is the end of the tutorial simulator. I hope you enjoyed it\nand learned the basics for your upcoming adventure. I look forward to\nhearing all of the amazing stories about you and your companions!\nSee ya!\n";
     readPrint(count, text1, "standard");
@@ -32,8 +35,8 @@ void endSim(){
     sleep(1);
     readPrint(count, text2, "standard");
   }
-  // Lose Scenario
-  else if (WINORLOSE == 0){
+  
+  else if (WINORLOSE == 0){ // Lose Scenario
     char text1[] = "Aww! That's too bad! You gave a good show though! I'm sure\nif you try again you'll win next time! Try again soon!\n";
     readPrint(count, text1, "standard");
     printf("\n");

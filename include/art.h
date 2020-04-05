@@ -1,12 +1,14 @@
-/*  CS125_Pokemon
-    CS125 Programming Project
-    art.h
-    All ASCII art for the project - header file
+/*  CS125 Group Project
+    File: art.h
+    Description: Header file to include art.c functions and global variables
+    Authors: Forrest Mobley
+    References: N/A
 */
 
-#ifndef ART_H
-#define ART_H
+#ifndef ART
+#define ART
 
+// Function prototypes
 void asciiart(int);
 
 #endif

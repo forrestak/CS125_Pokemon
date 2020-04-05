@@ -4,9 +4,13 @@
 	Authors: Colton Van Orsdel
 	References: N/A
 */
+
 #ifndef GENERATEPOKEMONSTATS
 #define GENERATEPOKEMONSTATS
+
+// Function prototypes
 void createPlayerFile(float statsArray[9]);
 void createNPCFile(float statsArray[9]);
 char *generatePokemonStats(int pokemonChoice, int useOrCheck);
+
 #endif

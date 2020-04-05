@@ -1,12 +1,14 @@
-/*  CS125_Pokemon
-    CS125 Programming Project
-    starter.h
-    File for choosing starter Pokemon - Header file
+/*	CS125 Group Project
+	File: starter.h
+	Description: Header file to include starter.c functions
+	Authors: Forrest Mobley
+	References: N/A
 */
 
 #ifndef STARTER
 #define STARTER
 
-char* starter(char*);
+// Function prototypes
+char* starter();
 
 #endif

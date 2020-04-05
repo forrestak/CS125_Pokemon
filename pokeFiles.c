@@ -1,17 +1,22 @@
-/*  CS125_Pokemon
-    CS125 Programming Project
-    pokeFiles.c
-    Battle UI pokemon art
+/*  CS125 Group Project
+    File: pokeFiles.c
+    Description: ASCII art for BattleUI usage
+    Authors: Vince Trance, Forrest Mobley
+    References: https://pokemondb.net/pokedex/national
+  				https://www.text-image.com/convert/ascii.html
+  				http://www.unit-conversion.info/texttools/replace-text/
 */
-// Header File
-#include "pokeFiles.h"
 
-// Included Libraries
+// Utilized libraries
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+// Header files
+#include "pokeFiles.h"
+
 // void getPokemon(char holder[17][31],int pokemonIndex);
 /*
 int main()
@@ -28,12 +33,10 @@ for(count=0;count<17;count++)
 }
 }
 */
-////////////////////////////////////////////////////////////////
+
 void getPokemon(char holder[17][31],int pokemonIndex){
   char pokemon[17][31];
-  //https://pokemondb.net/pokedex/national
-  //https://www.text-image.com/convert/ascii.html
-  //http://www.unit-conversion.info/texttools/replace-text/
+  //
   //make the width 30
   //height has to be 16
   //replace all slashes with l

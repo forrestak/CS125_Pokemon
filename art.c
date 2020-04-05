@@ -1,14 +1,18 @@
-/*  CS125_Pokemon
-    CS125 Programming Project
-    art.c
-    All ASCII art for the project
+/*  CS125 Group Project
+    File: art.c
+    Description: All ASCII art utilized in UI elements
+    Authors: Vince Trance, Forrest Mobley
+    References: N/A
 */
-#include "art.h"
+
+// Utilized libraries
 #include <stdio.h>
+
+// Header files
+#include "art.h"
 
 void asciiart(int input){
   switch(input){
-
     case 1: // Pokeball large
       printf("\e[0;31m              (((((((((((((((\n");
       printf("          (((((((((((((((((((((((\n");

@@ -4,8 +4,11 @@
 	Authors: Colton Van Orsdel
 	References: N/A
 */
+
+// Utilized libraries
 #include <stdio.h>
 
+// Header files
 #include "levelupPokemonStats.h"
 #include "readPokemonStats.h"
 #include "generatePokemonStats.h"

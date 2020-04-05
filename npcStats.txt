@@ -1,0 +1,9 @@
+Pokemon ID: 5
+Level: 1
+Experience: 1000.00
+HP: 55.00
+Attack: 70.00
+Defense: 45.00
+Sp. Attack: 70.00
+Sp. Defense: 50.00
+Speed: 60.00

@@ -4,6 +4,7 @@
 	Authors: Colton Van Orsdel
 	References: N/A
 */
+
 // Utilized libraries
 #include <string.h>
 #include <stdlib.h>

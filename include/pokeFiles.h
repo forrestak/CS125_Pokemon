@@ -3,9 +3,11 @@
     pokeFiles.c
     Battle UI pokemon art - Header file
 */
+
 #ifndef POKEFILES
 #define POKEFILES
 
+// Function prototypes
 void getPokemon(char [][31],int);
 
 #endif

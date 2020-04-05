@@ -5,6 +5,7 @@
 	References: https://www.cplusplus.com/reference/cstdlib/atof/
 				https://www.poftut.com/what-is-sleep-function-and-how-to-use-it-in-c-program/
 */
+
 // Cross-Platform library solution for sleep() function
 #ifdef _WIN32
 #include <Windows.h>
@@ -26,7 +27,6 @@
 
 void combatScenario() // combines primary combat functions to simulate combat until there is a victor
 {
-	initializeStats(); // populate STATSTORAGE struct with default values from files
 	printf("\nThe tournament has begun!\n");
 	if (STATSTORAGE.p_speed >= STATSTORAGE.n_speed)
 	{
@@ -54,13 +54,13 @@ void combatScenario() // combines primary combat functions to simulate combat un
 	}
 	if (STATSTORAGE.p_hp <= 0)
 	{
-		printf("%s has fainted...\n", generatePokemonStats(STATSTORAGE.p_pokemonID, 1));
-		printf("%s is victorious!\n", generatePokemonStats(STATSTORAGE.n_pokemonID, 1));
+		printf("%s has fainted...\n", PLAYERPOKEMONCHOICE);
+		printf("%s is victorious!\n", NPCPOKEMONCHOICE);
 	}
 	else if (STATSTORAGE.n_hp <= 0)
 	{
-		printf("%s has fainted...\n", generatePokemonStats(STATSTORAGE.n_pokemonID, 1));
-		printf("%s is victorious!\n", generatePokemonStats(STATSTORAGE.p_pokemonID, 1));
+		printf("%s has fainted...\n", NPCPOKEMONCHOICE);
+		printf("%s is victorious!\n", PLAYERPOKEMONCHOICE);
 	}
 	else
 	{
@@ -81,26 +81,26 @@ void playerTurn() // handles choice implementation for each of the player's four
 	{
 		case 1 : // Move One
 		{
-			printf("%s uses %s!\n", generatePokemonStats(STATSTORAGE.p_pokemonID, 1), moveSelect("player", 1));
+			printf("%s uses %s!\n", PLAYERPOKEMONCHOICE, moveSelect("player", 1));
 			printf("It's %s\n", checkEffectiveness(createTypeModifier("player")));
-			printf("\n%s HP: %.2f\n\n", generatePokemonStats(STATSTORAGE.n_pokemonID, 1), STATSTORAGE.n_hp);
+			printf("\n%s HP: %.2f\n\n", NPCPOKEMONCHOICE, STATSTORAGE.n_hp);
 			break;
 		}
 		case 2 : // Move Two
 		{
-			printf("%s uses %s!\n", generatePokemonStats(STATSTORAGE.p_pokemonID, 1), moveSelect("player", 2));
+			printf("%s uses %s!\n", PLAYERPOKEMONCHOICE, moveSelect("player", 2));
 			break;
 		}
 		case 3 : // Ability
 		{
-			printf("%s activates Overgrowth!\n", generatePokemonStats(STATSTORAGE.p_pokemonID, 1));
-			printf("%s now deals %.0f%% move damage.\n", generatePokemonStats(STATSTORAGE.p_pokemonID, 1), useAbility("player")*100);
+			printf("%s activates Overgrowth!\n", PLAYERPOKEMONCHOICE);
+			printf("%s now deals %.0f%% move damage.\n", PLAYERPOKEMONCHOICE, useAbility("player")*100);
 			break;
 		}
 		case 4 : // Consumable
 		{
-			printf("%s consumed %s!\n", generatePokemonStats(STATSTORAGE.p_pokemonID, 1), useConsumable("player"));
-			printf("\n%s HP: %.2f\n\n", generatePokemonStats(STATSTORAGE.p_pokemonID, 1), STATSTORAGE.p_hp);
+			printf("%s consumed %s!\n", PLAYERPOKEMONCHOICE, useConsumable("player"));
+			printf("\n%s HP: %.2f\n\n", PLAYERPOKEMONCHOICE, STATSTORAGE.p_hp);
 			break;
 		}
 		default :
@@ -119,26 +119,26 @@ void npcTurn(int npcChoice) // handles choice implementation for each of the NPC
 	{
 		case 1 : // Move One
 		{
-			printf("%s uses %s!\n", generatePokemonStats(STATSTORAGE.n_pokemonID, 1), moveSelect("npc", 1));
+			printf("%s uses %s!\n", NPCPOKEMONCHOICE, moveSelect("npc", 1));
 			printf("It's %s\n", checkEffectiveness(createTypeModifier("npc")));
-			printf("\n%s HP: %.2f\n\n", generatePokemonStats(STATSTORAGE.p_pokemonID, 1), STATSTORAGE.p_hp);
+			printf("\n%s HP: %.2f\n\n", PLAYERPOKEMONCHOICE, STATSTORAGE.p_hp);
 			break;
 		}
 		case 2 : // Move Two
 		{
-			printf("%s uses %s!\n", generatePokemonStats(STATSTORAGE.n_pokemonID, 1), moveSelect("npc", 2));
+			printf("%s uses %s!\n", NPCPOKEMONCHOICE, moveSelect("npc", 2));
 			break;
 		}
 		case 3 : // Ability
 		{
-			printf("%s activates Overgrowth!\n", generatePokemonStats(STATSTORAGE.n_pokemonID, 1));
-			printf("%s now deals %.0f%% move damage.\n", generatePokemonStats(STATSTORAGE.n_pokemonID, 1), useAbility("npc")*100);
+			printf("%s activates Overgrowth!\n", NPCPOKEMONCHOICE);
+			printf("%s now deals %.0f%% move damage.\n", NPCPOKEMONCHOICE, useAbility("npc")*100);
 			break;
 		}
 		case 4 : // Consumable
 		{
-			printf("%s consumed %s!\n", generatePokemonStats(STATSTORAGE.n_pokemonID, 1), useConsumable("npc"));
-			printf("\n%s HP: %.2f\n\n", generatePokemonStats(STATSTORAGE.n_pokemonID, 1), STATSTORAGE.n_hp);
+			printf("%s consumed %s!\n", NPCPOKEMONCHOICE, useConsumable("npc"));
+			printf("\n%s HP: %.2f\n\n", NPCPOKEMONCHOICE, STATSTORAGE.n_hp);
 			break;
 		}
 		default :
@@ -275,7 +275,7 @@ statStruct initializeStats() // populate STATSTORAGE struct with default values 
 	return STATSTORAGE;
 }
 
-float readCombatStats(char who[7], int stat) // used by other functions to pull updated combat stats during combatScenario() runtime 
+/*float readCombatStats(char who[7], int stat) // used by other functions to pull updated combat stats during combatScenario() runtime 
 {
 	char statResult[12];
 	if (strcmp(who, "player")==0)
@@ -313,7 +313,7 @@ float readCombatStats(char who[7], int stat) // used by other functions to pull 
 		printf("ERROR: readCombatStats() if defaulted; debug"); // only occurs from developer error in implementation code
 	}
 	return statResult[stat];
-}
+}*/
 
 char *getType(int pokemonID) // converts PokemonID to type string for use in printing and typeToInt()
 {

@@ -1,29 +1,24 @@
-/*  CS125_Pokemon
-    CS125 Programming project
-    intro.c
-    Introduction graphics and starting menu for the group project.
-    Author: Forrest Mobley
-    Sources:
-            - https://www.asciiart.eu/video-games/pokemon
-            - http://patorjk.com/software/taag/#p=testall&f=Graffiti&t=Eagle%20Version
-            - https://stackoverflow.com/questions/26063754/nanosleep-does-not-work-for-values-less-than-a-second
+/*  CS125 Group Project
+    File: intro.c
+    Description: Introduction graphics and starting menu
+    Authors: Forrest Mobley
+    References: https://www.asciiart.eu/video-games/pokemon
+                http://patorjk.com/software/taag/#p=testall&f=Graffiti&t=Eagle%20Version
+                https://stackoverflow.com/questions/26063754/nanosleep-does-not-work-for-values-less-than-a-second
 */
 
-// Header File
-#include "intro.h"
-
-// Included standard libraries
+// Utilized libraries
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <time.h>
 
-// utils functions
-void delay(int);
-void clear();
+// Header files
+#include "intro.h"
+#include "util.h"
 
 void intro(){
-  //Printing the Pokemon Logo
+  // Printing the Pokemon Logo
   clear();
   printf("                                     ,\'\\\n");
   delay(200);

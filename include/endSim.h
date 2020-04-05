@@ -1,13 +1,14 @@
-/*  CS125_Pokemon
-    CS125 Programming Project
-    endSim.h
-    Animations and menus after completing the sim or losing - header file
+/*	CS125 Group Project
+	File: endSim.h
+	Description: Header file to include endSim.c functions
+	Authors: Forrest Mobley
+	References: N/A
 */
 
 #ifndef ENDSIM
 #define ENDSIM
 
-// int win = 1;
+// Function prototypes
 void endSim();
 
 #endif

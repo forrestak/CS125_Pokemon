@@ -1,12 +1,13 @@
-/*  CS125_Pokemon
-    CS125 Programming project
-    util.c
-    Utility File for useful functions
-    Author: Forrest Mobley
+/*  CS125 Group Project
+    File: util.c
+    Description: Utility file to include useful functions
+    Authors: Forrest Mobley, Colton Van Orsdel
+    References: N/A
 */
 
 // Header File
 #include "util.h"
+#include "battleUI.h"
 
 // Standard libraries
 #include <stdio.h>
@@ -14,7 +15,7 @@
 #include <string.h>
 
 void delay(int milliseconds){
-  milliseconds*=1000;
+  milliseconds*=10; // DEBUG: sped up for testing purposes; SHOULD BE: 1000
   clock_t start_time =clock();
   while(clock()<start_time + milliseconds);
 }
@@ -66,4 +67,40 @@ void readPrint(int count, char text[], char color[]){
       delay(50);
     }
   }
+}
+
+int pokemonChoiceToInt(char who[7]) // converts choices from starter.c into usable pokemon IDs
+{
+  if (strcmp(who, "player")==0)
+  {
+    if (strcmp(PLAYERPOKEMONCHOICE, "bulbasaur")==0)
+    {
+      return 1;
+    }
+    else if (strcmp(PLAYERPOKEMONCHOICE, "charmander")==0)
+    {
+      return 2;
+    }
+    else if (strcmp(PLAYERPOKEMONCHOICE, "squirtle")==0)
+    {
+      return 3;
+    }
+  }
+  else if (strcmp(who, "npc")==0)
+  {
+    if (strcmp(NPCPOKEMONCHOICE, "grass")==0)
+    {
+      return 4;
+    }
+    else if (strcmp(NPCPOKEMONCHOICE, "fire")==0)
+    {
+      return 5;
+    }
+    else if (strcmp(NPCPOKEMONCHOICE, "water")==0)
+    {
+      return 6;
+    }
+  }
+
+
 }

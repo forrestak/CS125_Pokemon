@@ -1,9 +1,10 @@
 /*	CS125 Group Project
 	File: readPokemonStats.c
-	Description: Allows other functions to pull Pokemon stats directly from their file
+	Description: Enables other functions to pull Pokemon stats directly from their file
 	Authors: Colton Van Orsdel
 	References: N/A
 */
+
 // Utilized libraries
 #include <string.h>
 #include <stdlib.h>

@@ -1,26 +1,22 @@
-/*  CS125_Pokemon
-    CS125 Programming Project
-    battleui.c
-    Retry at battle UI File
+/*  CS125 Group Project
+    File: battleUI.c
+    Description: Generates ASCII/text-based UI
+    Authors: Vince Trance, Forrest Mobley
+    References: Unknown
 */
 
-// Header File
-#include "battleUI.h"
+// Utilized libraries
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
 #include <stdlib.h>
 #include <unistd.h>
-// #include "pokeFiles.c"
 
+// Header files
+#include "battleUI.h"
+#include "util.h"
+#include "pokeFiles.h"
 
-// void getPokemon(char holder[17][31],int pokemonIndex);
-void getPokemon(char [][31],int);
-void delay(int);
-void clear();
-
-
-//////$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 //changes made on 4/3/2020
 void printPixel(char screen[33][65],char colorScreen[33][65],int x, int y){
 //        printf("\033[0;31m");//red
@@ -42,12 +38,8 @@ if(colorScreen[x][y]=='p')
 if(colorScreen[x][y]=='y')
         printf("\e[0;33m");
 
-
-
-
 printf("%c",screen[x][y]);
 }
-//////$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 void run(char screen[33][65], char colorScreen[33][65])
 {
@@ -65,15 +57,13 @@ void run(char screen[33][65], char colorScreen[33][65])
     printf("\n");
     }
 }
-//////$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-///////////////////////////////////////
+
 void changeText(char screen[33][65],int xScreenPos,int yScreenPos,char sentence[])
 {
     fflush(stdout);
     char spareLine[65]="";
     char secondSpareLine[65]="";
     char completeSpareLine[65]="";
-    //literally had an issue because i didnt intialize the chars with an empty string
     //printf("screenq%s\n",screen[yScreenPos]);
     strncpy(spareLine,screen[yScreenPos],xScreenPos);
     //printf("spare q%s\n",spareLine);
@@ -89,11 +79,12 @@ void changeText(char screen[33][65],int xScreenPos,int yScreenPos,char sentence[
     //copy the final result
     strncpy(screen[yScreenPos],completeSpareLine,65);
     //printf("last  q%s\n",screen[yScreenPos]);
-
 }
+
 void changeColor(char colorScreen[33][65],int x, int y,char input){
     colorScreen[x][y]=input;
 }
+
 void removeBackBlanks(char shift[]){
     char copy[20]=""; //this is to right adjust the numbers
     char copy2[20]=" ";
@@ -102,10 +93,10 @@ void removeBackBlanks(char shift[]){
     if(shift[strlen(shift)-1]==' ')
     {
         strncpy(shift,copy2,strlen(copy2));
-        removeBackBlanks(shift);//recursion baby
+        removeBackBlanks(shift);
     }
-
 }
+
 void changeEnemyName(char screen[33][65],char colorScreen[33][65],char enemyName[],char type){
     //g is grass,r is fire, b is water
     char emptyName[]="           ";//max name size is 11
@@ -115,6 +106,7 @@ void changeEnemyName(char screen[33][65],char colorScreen[33][65],char enemyName
     for(count=0;count<11;count++)//also sorry,x isnt x and y isnt y
         changeColor(colorScreen,1,1+count,type);
 }
+
 void changePlayerName(char screen[33][65],char colorScreen[33][65],char playerName[],char type){
     char emptyName[]="           ";//max name size is 11
     int count=0;
@@ -123,6 +115,7 @@ void changePlayerName(char screen[33][65],char colorScreen[33][65],char playerNa
     for(count=0;count<11;count++)//also sorry,x isnt x and y isnt y, must have mixed up somewhere
         changeColor(colorScreen,28,31+count,type);
 }
+
 void changeEnemyHp(char screen[33][65],int currentHp,int maxHp){
     fflush(stdin);
     char emptyName[13]="HP:[";//max name size is 13
@@ -143,21 +136,19 @@ void changeEnemyHp(char screen[33][65],int currentHp,int maxHp){
     changeText(screen,13,1,emptyName);
     
 }
+
 void changePlayerHp(){
     char emptyName[]="           ";//max name size is 11
-
 }
+
 void changeEnemyLvl(){
     char emptyName[]="           ";//max name size is 11
-
 }
+
 void changePlayerLvl(){
     char emptyName[]="           ";//max name size is 11
-
 }
 
-//^^^^^^^^^^^^^^^^^
-///////////////////////////////////////
 void changeEnemyPokemon(char screen[33][65],int pokemonIndex)
 {
     int count;
@@ -178,13 +169,9 @@ void changeEnemyPokemon(char screen[33][65],int pokemonIndex)
     }
 }
 
-///////////////////////////////////////
 void changePlayerPokemon(char screen[33][65],int pokemonIndex)
 {
-
-//screen[33]="0123456789012345678901234567890123456789012345678901234567890123";
-
-
+    //screen[33]="0123456789012345678901234567890123456789012345678901234567890123";
     int count;
     int shift=16;//how down
     char enemyPokemon[17][31];
@@ -204,87 +191,81 @@ void changePlayerPokemon(char screen[33][65],int pokemonIndex)
         strncpy(screen[count],completeSpare,64);
     }
 }
-///////////////////////////////////////
-///////////////////////////////////////
-///////////////////////////////////////
-///////////////////////////////////////
-///////////////////////////////////////
-///////////////////////////////////////
+
 void battleUI()
 {
-  clear();
-  //32 rows, 64 columns
-  char screen[33][65] ={
-    "+--------------------------------+-----------------------------+",
-    "|insert name here6789012345678901|23456789012345678901234567890|",
-    "|graphical health6789012345678901|23456789012345678901234567890|",
-    "|numerical stuff56789012345678901|23456789012345678901234567890|",
-    "|graphical exp3456789012345678901|23456789012345678901234567890|",
-    "+--------------------------------+23456789012345678901234567890|",
-    "                                  34567890123456789012345678901|",
-    "                                  34567890123456789012345678901|",
-    "                                  34567890123456789012345678901|",
-    "                                  34567890123456789012345678901|",
-    "                                  34567890123456789012345678901|",
-    "                                  34567890123456789012345678901|",
-    "                                  34567890123456789012345678901|",
-    "                                  34567890123456789012345678901|",
-    "                                  34567890123456789012345678901|",
-    "                                  34567890123456789012345678901|",
-    "|01234567890123456789012345678                                  ",
-    "|01234567890123456789012345678                                  ",
-    "|01234567890123456789012345678                                  ",
-    "|01234567890123456789012345678                                  ",
-    "|01234567890123456789012345678                                  ",
-    "|01234567890123456789012345678                                  ",
-    "|01234567890123456789012345678                                  ",
-    "|01234567890123456789012345678                                  ",
-    "|01234567890123456789012345678                                  ",
-    "|01234567890123456789012345678                                  ",
-    "|01234567890123456789012345678                                  ",
-    "|01234567890123456789012345678+--------------------------------+",
-    "|01234567890123456789012345678|insert name here6789012345678901|",
-    "|01234567890123456789012345678|graphical hpalth6789012345678901|",
-    "|01234567890123456789012345678|numerical stuffh6789012345678901|",
-    "|01234567890123456789012345678|graphical exp3456789012345678901|",
-    "+-----------------------------+--------------------------------+",};
+    clear();
+    char screen[33][65] ={ //32 rows, 64 columns
+        "+--------------------------------+-----------------------------+",
+        "|insert name here6789012345678901|23456789012345678901234567890|",
+        "|graphical health6789012345678901|23456789012345678901234567890|",
+        "|numerical stuff56789012345678901|23456789012345678901234567890|",
+        "|graphical exp3456789012345678901|23456789012345678901234567890|",
+        "+--------------------------------+23456789012345678901234567890|",
+        "                                  34567890123456789012345678901|",
+        "                                  34567890123456789012345678901|",
+        "                                  34567890123456789012345678901|",
+        "                                  34567890123456789012345678901|",
+        "                                  34567890123456789012345678901|",
+        "                                  34567890123456789012345678901|",
+        "                                  34567890123456789012345678901|",
+        "                                  34567890123456789012345678901|",
+        "                                  34567890123456789012345678901|",
+        "                                  34567890123456789012345678901|",
+        "|01234567890123456789012345678                                  ",
+        "|01234567890123456789012345678                                  ",
+        "|01234567890123456789012345678                                  ",
+        "|01234567890123456789012345678                                  ",
+        "|01234567890123456789012345678                                  ",
+        "|01234567890123456789012345678                                  ",
+        "|01234567890123456789012345678                                  ",
+        "|01234567890123456789012345678                                  ",
+        "|01234567890123456789012345678                                  ",
+        "|01234567890123456789012345678                                  ",
+        "|01234567890123456789012345678                                  ",
+        "|01234567890123456789012345678+--------------------------------+",
+        "|01234567890123456789012345678|insert name here6789012345678901|",
+        "|01234567890123456789012345678|graphical hpalth6789012345678901|",
+        "|01234567890123456789012345678|numerical stuffh6789012345678901|",
+        "|01234567890123456789012345678|graphical exp3456789012345678901|",
+        "+-----------------------------+--------------------------------+",};
 
-        char colorScreen[33][65]={
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",};
+    char colorScreen[33][65]={
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",};
     //bot left pokemon 30 width
-    //top right pokemon 32 width? wtf
+    //top right pokemon 32 width?
     //test 16 lines height
     //30 char width
 

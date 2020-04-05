@@ -4,7 +4,11 @@
 	Authors: Colton Van Orsdel
 	References: N/A
 */
+
 #ifndef READPOKEMONSTATS
 #define READPOKEMONSTATS
+
+// Function prototypes
 float readPokemonStats(char who[7], int stat);
+
 #endif

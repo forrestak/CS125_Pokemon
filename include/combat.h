@@ -1,11 +1,14 @@
 /*	CS125 Group Project
 	File: combat.h
-	Description: Header file to include combat.c functions
+	Description: Header file to include combat.c functions and global variables
 	Authors: Colton Van Orsdel
 	References: N/A
 */
+
 #ifndef COMBAT
 #define COMBAT
+
+// Global variables
 typedef struct {
 	// Player stat storage
 	char p_type[6];
@@ -36,14 +39,17 @@ typedef struct {
 	float n_abilityCount;
 	float n_abilityStatus;
 } statStruct;
-
-// Global variables
 extern statStruct STATSTORAGE; 
 extern char TYPE[6];
 extern char MOVESELECTED[15];
 extern char POKEMONNAME[20];
 extern char EFFECTIVENESS[30];
 extern char POTIONSELECTED[15];
+extern int NPCRANDOMIZE;
+extern char USERNAME[50];
+extern char PLAYERPOKEMONCHOICE[20];
+extern char NPCPOKEMONCHOICE[20];
+extern int WINORLOSE;
 
 // Function prototypes
 float readCombatStats(char who[7], int stat);
@@ -63,4 +69,5 @@ float useAbility(char who[7]);
 char* useConsumable(char who[7]);
 statStruct initializeStats();
 char *moveSelect(char who[7], int moveType);
+
 #endif

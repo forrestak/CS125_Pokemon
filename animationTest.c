@@ -1,3 +1,11 @@
+/*  CS125 Group Project
+    File: animationTest.c
+    Description: Controls live-updating of battleUI elements
+    Authors: Vince Trance
+    References: N/A
+*/
+
+// Utilized libraries
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
@@ -6,26 +14,26 @@
 #include "pokeFiles.c"
 
 void getPokemon(char holder[17][31],int pokemonIndex);
-//get pokemon is fully defined in pokefiles btw
+
 void delay(int milliseconds)
 {
     milliseconds*=1000;
     clock_t start_time =clock();
     while(clock()<start_time + milliseconds);
 }
-///////////////////////////////////
+
 void clear()
 {
     printf("\e[2J\e[H");
 }
-//////////////////////////////////
+
 void run(char screen[33][65])
 {
     int x=0;
     for(x=0;x<33;x++)
     printf("%s\n",screen[x]);
 }
-///////////////////////////////////////
+
 void changeText(char screen[33][65],int xScreenPos,int yScreenPos,char sentence[])
 {
     char spareLine[65];
@@ -41,8 +49,6 @@ void changeText(char screen[33][65],int xScreenPos,int yScreenPos,char sentence[
 
 }
 
-
-///////////////////////////////////////
 void changeEnemyPokemon(char screen[33][65],int pokemonIndex)
 {
     int count;
@@ -63,13 +69,9 @@ void changeEnemyPokemon(char screen[33][65],int pokemonIndex)
     }    
 }
 
-///////////////////////////////////////
 void changePlayerPokemon(char screen[33][65],int pokemonIndex)
 {
-
-//screen[33]="0123456789012345678901234567890123456789012345678901234567890123";
-
-
+    //screen[33]="0123456789012345678901234567890123456789012345678901234567890123";
     int count;
     int shift=16;//how down
     char enemyPokemon[17][31];
@@ -89,17 +91,12 @@ void changePlayerPokemon(char screen[33][65],int pokemonIndex)
         strncpy(screen[count],completeSpare,64);
     }
 }
-///////////////////////////////////////
-///////////////////////////////////////
-///////////////////////////////////////
-///////////////////////////////////////
-///////////////////////////////////////
-///////////////////////////////////////
+
 int main()
 {
 clear();
-//32 rows, 64 columns
-char screen[33][65] ={   
+/
+char screen[33][65] ={ //32 rows, 64 columns
 "+--------------------------------+-----------------------------+",
 "|insert name here6789012345678901|23456789012345678901234567890|",
 "|graphical health6789012345678901|23456789012345678901234567890|",
@@ -134,7 +131,7 @@ char screen[33][65] ={
 "|01234567890123456789012345678|graphical exp3456789012345678901|",
 "+-----------------------------+--------------------------------+",};
 //bot left pokemon 30 width
-//top right pokemon 32 width? wtf
+//top right pokemon 32 width
 //test 16 lines height
 //30 char width
 
@@ -155,8 +152,5 @@ for(ice=1;ice<=151;ice++)
     testInputInt=atoi(testInput);
     clear();
 }
-
 //return 0;
-
-
 }

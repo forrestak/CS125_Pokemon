@@ -1,7 +1,7 @@
 /*  CS125 Group Project
     File: battleUI.c
     Description: Generates ASCII/text-based UI
-    Authors: Vince Trance, Forrest Mobley
+    Authors: Vince Tran, Forrest Mobley
     References: Unknown
 */
 
@@ -26,17 +26,17 @@ void printPixel(char screen[33][65],char colorScreen[33][65],int x, int y){
 //        printf("\e[0;35m");//purple
 //        printf("\e[0;33m");//yellow
 if(colorScreen[x][y]=='r')
-        printf("\033[0;31m");
+        printf("\033[0;31m");//red
 if(colorScreen[x][y]=='w')
-        printf("\033[0m");
+        printf("\033[0m");//white
 if(colorScreen[x][y]=='b')
-        printf("\e[0;34m");
+        printf("\e[0;34m");//blue
 if(colorScreen[x][y]=='g')
-        printf("\e[0;32m");
+        printf("\e[0;32m");//green
 if(colorScreen[x][y]=='p')
-        printf("\e[0;35m");
+        printf("\e[0;35m");//purple
 if(colorScreen[x][y]=='y')
-        printf("\e[0;33m");
+        printf("\e[0;33m");//yellow
 
 printf("%c",screen[x][y]);
 }
@@ -50,9 +50,7 @@ void run(char screen[33][65], char colorScreen[33][65])
 
         for(y=0;y<65;y++)
         {
-        //printf("%c",screen[x][y]);
-        printPixel(screen,colorScreen,x,y);
-    //printpixel will go here
+            printPixel(screen,colorScreen,x,y);
         }
     printf("\n");
     }
@@ -60,7 +58,7 @@ void run(char screen[33][65], char colorScreen[33][65])
 
 void changeText(char screen[33][65],int xScreenPos,int yScreenPos,char sentence[])
 {
-    fflush(stdout);
+    fflush(stdout);//lol the godly function that runs the machine
     char spareLine[65]="";
     char secondSpareLine[65]="";
     char completeSpareLine[65]="";
@@ -96,6 +94,7 @@ void removeBackBlanks(char shift[]){
         removeBackBlanks(shift);
     }
 }
+
 
 void changeEnemyName(char screen[33][65],char colorScreen[33][65],char enemyName[],char type){
     //g is grass,r is fire, b is water
@@ -133,22 +132,356 @@ void changeEnemyHp(char screen[33][65],int currentHp,int maxHp){
     strcat(emptyName,"/");
     strcat(emptyName,emptyMaxHp2);
     strcat(emptyName,"]");
-    changeText(screen,13,1,emptyName);
+    changeText(screen,14,1,emptyName); 
     
 }
 
-void changePlayerHp(){
-    char emptyName[]="           ";//max name size is 11
+
+void changePlayerHp(char screen[33][65],int currentHp,int maxHp){
+    fflush(stdin);
+    char emptyName[13]="HP:[";//max name size is 13
+    char emptyCurrentHp[]="    ";//max name size is 4(3 digits, 1 sign)
+    char emptyCurrentHp2[]="    ";//max name size is 4(3 digits, 1 sign)
+    char emptyMaxHp[]="   ";//max name size is 3(3 digits)
+    char emptyMaxHp2[]="   ";//max name size is 3(3 digits)
+    int spare1 = sprintf(emptyCurrentHp, "%d", currentHp);
+    int spare2 =sprintf(emptyMaxHp, "%d", maxHp);
+    strncpy(emptyCurrentHp2,emptyCurrentHp,strlen(emptyCurrentHp));
+    strncpy(emptyMaxHp2,emptyMaxHp,strlen(emptyMaxHp));
+    removeBackBlanks(emptyCurrentHp2);
+    removeBackBlanks(emptyMaxHp2);
+    strcat(emptyName,emptyCurrentHp2);//now its just putting the pieces together
+    strcat(emptyName,"/");
+    strcat(emptyName,emptyMaxHp2);
+    strcat(emptyName,"]");
+    changeText(screen,44,28,emptyName);
+    
 }
 
-void changeEnemyLvl(){
-    char emptyName[]="           ";//max name size is 11
+void changeEnemyType(char screen[33][65], char colorScreen[33][65],char enemyTypeChar)
+{
+    //g is grass,r is fire, b is water
+    char clearThisVariable[]="     ";
+    char emptyName[5]="     ";//max name size is 5//no idea why but this is causing an insane amount of problems
+    //maybe a memory leak or something, but this is taking data from previous functions, even if i change the variable names
+    strncpy(emptyName,clearThisVariable,30);//somehow this works to fix the mysterious bug .-.
+    char enemyType[5]="blank";
+
+    char ifWaterType[5]="Water";
+        if(enemyTypeChar=='b')strncpy(enemyType,ifWaterType,5);
+    char ifFireType[5]="Fire ";
+        if(enemyTypeChar=='r')strncpy(enemyType,ifFireType,5);
+    char ifGrassType[5]="Grass";    
+        if(enemyTypeChar=='g')strncpy(enemyType,ifGrassType,5);
+
+    //printf("%sbeep\n\nwww\n",emptyName);//this is the checker to see whats in the variable
+    //it should theoretically be empty, but nope, for some darn reason xD
+    
+    int count=0;
+    strncpy(emptyName,enemyType,5);
+    changeText(screen,28,1,emptyName);//changes appearance or text
+    for(count=0;count<5;count++)//also sorry,x isnt x and y isnt y
+        changeColor(colorScreen,1,28+count,enemyTypeChar);//this is just to change the color map
+
 }
 
-void changePlayerLvl(){
-    char emptyName[]="           ";//max name size is 11
+void changePlayerType(char screen[33][65], char colorScreen[33][65],char enemyTypeChar)
+{
+    //g is grass,r is fire, b is water
+    char clearThisVariable[]="     ";
+    char emptyName[5]="     ";//max name size is 5//no idea why but this is causing an insane amount of problems
+    //maybe a memory leak or something, but this is taking data from previous functions, even if i change the variable names
+    strncpy(emptyName,clearThisVariable,30);//somehow this works to fix the mysterious bug .-.
+    char enemyType[5]="blank";
+
+    char ifWaterType[5]="Water";
+        if(enemyTypeChar=='b')strncpy(enemyType,ifWaterType,5);
+    char ifFireType[5]="Fire ";
+        if(enemyTypeChar=='r')strncpy(enemyType,ifFireType,5);
+    char ifGrassType[5]="Grass";    
+        if(enemyTypeChar=='g')strncpy(enemyType,ifGrassType,5);
+    char ifPsychType[5]="Psych";    
+        if(enemyTypeChar=='p')strncpy(enemyType,ifPsychType,5);
+
+    //printf("%sbeep\n\nwww\n",emptyName);//this is the checker to see whats in the variable
+    //it should theoretically be empty, but nope, for some darn reason xD
+    
+    int count=0;
+    strncpy(emptyName,enemyType,5);
+    changeText(screen,58,28,emptyName);//changes appearance or text
+    for(count=0;count<5;count++)//also sorry,x isnt x and y isnt y
+        changeColor(colorScreen,28,58+count,enemyTypeChar);//this is just to change the color map
+
 }
 
+void changeEnemyLvl(char screen[33][65],int lvl){
+    fflush(stdin);
+    char emptyName[13]="Lvl:";//max name size is 13
+    char emptyCurrentLvl[]="    ";//max name size is 4(3 digits, 1 sign)
+    char emptyCurrentLvl2[]="    ";//max name size is 4(3 digits, 1 sign)
+    //char emptyMaxHp[]="   ";//max name size is 3(3 digits)
+    //char emptyMaxHp2[]="   ";//max name size is 3(3 digits)
+    int spare1 = sprintf(emptyCurrentLvl, "%d", lvl);
+    //int spare2 =sprintf(emptyMaxHp, "%d", maxHp);
+    strncpy(emptyCurrentLvl2,emptyCurrentLvl,strlen(emptyCurrentLvl));
+    //strncpy(emptyMaxHp2,emptyMaxHp,strlen(emptyMaxHp));
+    removeBackBlanks(emptyCurrentLvl2);
+    //removeBackBlanks(emptyMaxHp2);
+    strcat(emptyName,emptyCurrentLvl2);//now its just putting the pieces together
+    //strcat(emptyName,"/");
+    //strcat(emptyName,emptyMaxHp2);
+    //strcat(emptyName,"]");
+    changeText(screen,1,2,emptyName);
+}
+
+void changePlayerLvl(char screen[33][65],int lvl){
+    fflush(stdin);
+    char emptyName[13]="Lvl:";//max name size is 13
+    char emptyCurrentLvl[]="    ";//max name size is 4(3 digits, 1 sign)
+    char emptyCurrentLvl2[]="    ";//max name size is 4(3 digits, 1 sign)
+    //char emptyMaxHp[]="   ";//max name size is 3(3 digits)
+    //char emptyMaxHp2[]="   ";//max name size is 3(3 digits)
+    int spare1 = sprintf(emptyCurrentLvl, "%d", lvl);
+    //int spare2 =sprintf(emptyMaxHp, "%d", maxHp);
+    strncpy(emptyCurrentLvl2,emptyCurrentLvl,strlen(emptyCurrentLvl));
+    //strncpy(emptyMaxHp2,emptyMaxHp,strlen(emptyMaxHp));
+    removeBackBlanks(emptyCurrentLvl2);
+    //removeBackBlanks(emptyMaxHp2);
+    strcat(emptyName,emptyCurrentLvl2);//now its just putting the pieces together
+    //strcat(emptyName,"/");
+    //strcat(emptyName,emptyMaxHp2);
+    //strcat(emptyName,"]");
+    changeText(screen,31,29,emptyName);
+
+}
+
+void changeEnemyXp(char screen[33][65],int experience)
+{
+    fflush(stdin);
+    char emptyName[13]="EXP:";//max name size is 13
+    char emptyCurrentLvl[]="    ";//max name size is 4(3 digits, 1 sign)
+    char emptyCurrentLvl2[]="    ";//max name size is 4(3 digits, 1 sign)
+    //char emptyMaxHp[]="   ";//max name size is 3(3 digits)
+    //char emptyMaxHp2[]="   ";//max name size is 3(3 digits)
+    int spare1 = sprintf(emptyCurrentLvl, "%d", experience);
+    //int spare2 =sprintf(emptyMaxHp, "%d", maxHp);
+    strncpy(emptyCurrentLvl2,emptyCurrentLvl,strlen(emptyCurrentLvl));
+    //strncpy(emptyMaxHp2,emptyMaxHp,strlen(emptyMaxHp));
+    removeBackBlanks(emptyCurrentLvl2);
+    //removeBackBlanks(emptyMaxHp2);
+    strcat(emptyName,emptyCurrentLvl2);//now its just putting the pieces together
+    //strcat(emptyName,"/");
+    //strcat(emptyName,emptyMaxHp2);
+    //strcat(emptyName,"]");
+    changeText(screen,14,2,emptyName);
+
+
+}
+
+void changePlayerXp(char screen[33][65],int experience)
+{
+    fflush(stdin);
+    char emptyName[13]="EXP:";//max name size is 13
+    char emptyCurrentLvl[]="    ";//max name size is 4(3 digits, 1 sign)
+    char emptyCurrentLvl2[]="    ";//max name size is 4(3 digits, 1 sign)
+    //char emptyMaxHp[]="   ";//max name size is 3(3 digits)
+    //char emptyMaxHp2[]="   ";//max name size is 3(3 digits)
+    int spare1 = sprintf(emptyCurrentLvl, "%d", experience);
+    //int spare2 =sprintf(emptyMaxHp, "%d", maxHp);
+    strncpy(emptyCurrentLvl2,emptyCurrentLvl,strlen(emptyCurrentLvl));
+    //strncpy(emptyMaxHp2,emptyMaxHp,strlen(emptyMaxHp));
+    removeBackBlanks(emptyCurrentLvl2);
+    //removeBackBlanks(emptyMaxHp2);
+    strcat(emptyName,emptyCurrentLvl2);//now its just putting the pieces together
+    //strcat(emptyName,"/");
+    //strcat(emptyName,emptyMaxHp2);
+    //strcat(emptyName,"]");
+    changeText(screen,44,29,emptyName);
+
+}
+    
+void changeEnemyMove1(char screen[33][65],char move1[12])
+{
+    changeText(screen,1,3,"            ");//12 spaces
+    changeText(screen,1,3,move1);
+
+}
+
+void changeEnemyMove2(char screen[33][65],char move1[12])
+{
+    changeText(screen,1,4,"            ");//12 spaces
+    changeText(screen,1,4,move1);
+
+}
+
+void changePlayerMove1(char screen[33][65],char move1[12])
+{
+    changeText(screen,31,30,"            ");//12 spaces
+    changeText(screen,31,30,move1);
+
+}
+
+void changePlayerMove2(char screen[33][65],char move1[12])
+{
+    changeText(screen,31,31,"            ");//12 spaces
+    changeText(screen,31,31,move1);
+
+}
+
+void changeEnemyUltimate(char screen[33][65],char move1[12],int ultimateUsed){
+    changeText(screen,14,3,"              [ /1]");//19 spaces//careful if you shift everything over, might ruin the border
+    changeText(screen,14,3,move1);
+    char spareUlt[2]; 
+    sprintf(spareUlt, "%d", ultimateUsed);
+
+    changeText(screen,29,3,spareUlt);
+
+}
+
+void changePlayerUltimate(char screen[33][65],char move1[12],int ultimateUsed){
+    changeText(screen,44,30,"              [ /1]");//19 spaces//careful if you shift everything over, might ruin the border
+    changeText(screen,44,30,move1);
+    char spareUlt[2]; 
+    sprintf(spareUlt, "%d", ultimateUsed);
+
+    changeText(screen,59,30,spareUlt);
+
+
+}
+void changeEnemyConsumable(char screen[33][65],char consumableName[15],int consumableRemaining,int consumableMax)
+{
+    changeText(screen,14,4 ,"                   ");//20 spaces//this makes it so i dont have to size check stuff
+    changeText(screen,14,4,consumableName);
+
+    char spareRemains[2]; 
+    sprintf(spareRemains, "%d", consumableRemaining);
+    char spareMax[2]; 
+    sprintf(spareMax, "%d", consumableMax);
+
+    changeText(screen,28,4,"[");
+    changeText(screen,29,4,spareRemains);
+    changeText(screen,30,4,"/");
+    changeText(screen,31,4,spareMax);
+    changeText(screen,32,4,"]");
+
+}
+
+void changePlayerConsumable(char screen[33][65],char consumableName[15],int consumableRemaining,int consumableMax)
+{
+    changeText(screen,44,31 ,"                   ");//20 spaces//this makes it so i dont have to size check stuff
+    changeText(screen,44,31,consumableName);
+
+    char spareRemains[2]; 
+    sprintf(spareRemains, "%d", consumableRemaining);
+    char spareMax[2]; 
+    sprintf(spareMax, "%d", consumableMax);
+
+
+    changeText(screen,58,31,"[");
+    changeText(screen,59,31,spareRemains);
+    changeText(screen,60,31,"/");
+    changeText(screen,61,31,spareMax);
+    changeText(screen,62,31,"]");
+
+}
+
+void resetScreen(char screen[33][65])
+{
+
+
+
+    changeText(screen,0,0, "+--------------------------------+                              ");
+    changeText(screen,0,1, "|                                |                              ");
+    changeText(screen,0,2, "|                                |                              ");
+    changeText(screen,0,3, "|                                |                              ");
+    changeText(screen,0,4, "|                                |                              ");
+    changeText(screen,0,5, "+--------------------------------+                              ");
+    changeText(screen,0,6, "                                                                ");
+    changeText(screen,0,7, "                                                                ");
+    changeText(screen,0,8, "                                                                ");
+    changeText(screen,0,9, "                                                                ");
+    changeText(screen,0,10,"                                                                ");
+    changeText(screen,0,11,"                                                                ");
+    changeText(screen,0,12,"                                                                ");
+    changeText(screen,0,13,"                                                                ");
+    changeText(screen,0,14,"                                                                ");
+    changeText(screen,0,15,"                                                                ");
+    changeText(screen,0,16,"                                                                ");
+    changeText(screen,0,17,"                                                                ");
+    changeText(screen,0,18,"                                                                ");
+    changeText(screen,0,19,"                                                                ");
+    changeText(screen,0,20,"                                                                ");
+    changeText(screen,0,21,"                                                                ");
+    changeText(screen,0,22,"                                                                ");
+    changeText(screen,0,23,"                                                                ");
+    changeText(screen,0,24,"                                                                ");
+    changeText(screen,0,25,"                                                                ");
+    changeText(screen,0,26,"                                                                ");
+    changeText(screen,0,27,"                              +--------------------------------+");
+    changeText(screen,0,28,"                              |                                |");
+    changeText(screen,0,29,"                              |                                |");
+    changeText(screen,0,30,"                              |                                |");
+    changeText(screen,0,31,"                              |                                |");
+    changeText(screen,0,32,"                              +--------------------------------+");
+
+
+
+
+/* lol this array of array causes segmentation faults
+    char cleanScreen[33][65] ={ 
+        "+--------------------------------+                              ",
+        "|                                |                              ",
+        "|                                |                              ",
+        "|                                |                              ",
+        "|                                |                              ",
+        "+--------------------------------+                              ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                              +--------------------------------+",
+        "                              |                                |",
+        "                              |                                |",
+        "                              |                                |",
+        "                              |                                |",
+        "                              +--------------------------------+",};
+*/
+    //memcpy(screen,cleanScreen,sizeof(cleanScreen));//unforunately memcpy method wont work
+    //printf("%s",screen[2]);
+
+}
+
+void resetColorScreen(char colorScreen[33][65])
+{
+    int countColorScreen=0;
+    for(countColorScreen=0;countColorScreen<33;countColorScreen++)
+        changeText(colorScreen,0,countColorScreen,"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
+
+
+}
+
+
+
+
+
+//////////////////////////////////////////////////////////////////
 void changeEnemyPokemon(char screen[33][65],int pokemonIndex)
 {
     int count;
@@ -196,39 +529,39 @@ void battleUI()
 {
     clear();
     char screen[33][65] ={ //32 rows, 64 columns
-        "+--------------------------------+-----------------------------+",
-        "|insert name here6789012345678901|23456789012345678901234567890|",
-        "|graphical health6789012345678901|23456789012345678901234567890|",
-        "|numerical stuff56789012345678901|23456789012345678901234567890|",
-        "|graphical exp3456789012345678901|23456789012345678901234567890|",
-        "+--------------------------------+23456789012345678901234567890|",
-        "                                  34567890123456789012345678901|",
-        "                                  34567890123456789012345678901|",
-        "                                  34567890123456789012345678901|",
-        "                                  34567890123456789012345678901|",
-        "                                  34567890123456789012345678901|",
-        "                                  34567890123456789012345678901|",
-        "                                  34567890123456789012345678901|",
-        "                                  34567890123456789012345678901|",
-        "                                  34567890123456789012345678901|",
-        "                                  34567890123456789012345678901|",
-        "|01234567890123456789012345678                                  ",
-        "|01234567890123456789012345678                                  ",
-        "|01234567890123456789012345678                                  ",
-        "|01234567890123456789012345678                                  ",
-        "|01234567890123456789012345678                                  ",
-        "|01234567890123456789012345678                                  ",
-        "|01234567890123456789012345678                                  ",
-        "|01234567890123456789012345678                                  ",
-        "|01234567890123456789012345678                                  ",
-        "|01234567890123456789012345678                                  ",
-        "|01234567890123456789012345678                                  ",
-        "|01234567890123456789012345678+--------------------------------+",
-        "|01234567890123456789012345678|insert name here6789012345678901|",
-        "|01234567890123456789012345678|graphical hpalth6789012345678901|",
-        "|01234567890123456789012345678|numerical stuffh6789012345678901|",
-        "|01234567890123456789012345678|graphical exp3456789012345678901|",
-        "+-----------------------------+--------------------------------+",};
+        "+--------------------------------+                              ",
+        "|                                |                              ",
+        "|                                |                              ",
+        "|                                |                              ",
+        "|                                |                              ",
+        "+--------------------------------+                              ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                                                                ",
+        "                              +--------------------------------+",
+        "                              |                                |",
+        "                              |                                |",
+        "                              |                                |",
+        "                              |                                |",
+        "                              +--------------------------------+",};
 
     char colorScreen[33][65]={
         "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
@@ -273,16 +606,75 @@ void battleUI()
     char testInput[100];
     int testInputInt=1;
     int ice;
-    //changeText(screen,3,3,"wheee");
-    //changeText(screen,0,0,"asparagus");
-    //changeText(screen,8,3,"waffles");
-    //changeColor(colorScreen,1,1,'b');
-    changeEnemyName(screen,colorScreen,"takoyaki",'g');
-    changeEnemyName(screen,colorScreen,"daifuku",'b');
-    changePlayerName(screen,colorScreen,"mirror cake",'r');
-    changePlayerName(screen,colorScreen,"leche",'p');
-    changeEnemyHp(screen,-100,420);
-    changeEnemyHp(screen,1,2);
+    
+    //                                "
+    //charizard   hp:[23/33] Fire
+    //level 100  EXP:102
+    //earthquake  flash cannon
+    //ultimate attack hyper potion
+    //later replace these with actual stats
+    char enemyName[20]="Charizard";
+    char playerName[20]="Mewtwo";
+    int enemyHp=11;
+    int enemyTotalHp=20;
+    int playerHp=100;
+    int playerTotalHp=169;
+    char enemyType='r';
+    char playerType='p';
+    int playerLevel=55;
+    int enemyLevel=99;
+    int playerCurrentXp=222;
+    int enemyCurrentXp=696;
+    char playerMove1[12]="bullet seed";
+    char playerMove2[12]="intimidate";
+    char playerMoveUltimate[12]="superpower";
+    char enemyMove1[12]="rain dance";
+    char enemyMove2[12]="volt tackle";
+    char enemyMoveUltimate[12]="hyper beam";
+    int enemyUltimateUsed=0;
+    int playerUltimateUsed=1;
+    char playerConsumableName[15]="super potion";
+    char enemyConsumableName[15] ="full restore";
+    int playerConsumableCount=1;
+    int enemyConsumableCount=3;
+    int playerConsumableMaxCount=7;
+    int enemyConsumableMaxCount=4;
+
+    
+
+
+    changeEnemyName(screen,colorScreen,enemyName,enemyType);
+    changePlayerName(screen,colorScreen,playerName,playerType);
+    changeEnemyHp(screen,enemyHp,enemyTotalHp);
+    changePlayerHp(screen,playerHp,playerTotalHp);
+    changeEnemyType(screen,colorScreen,enemyType);
+    changePlayerType(screen,colorScreen,playerType);
+    changeEnemyLvl(screen,enemyLevel);
+    changePlayerLvl(screen,playerLevel);
+    changeEnemyXp(screen,enemyCurrentXp);
+    changePlayerXp(screen,playerCurrentXp);
+    changeEnemyMove1(screen,enemyMove1);
+    changeEnemyMove2(screen,enemyMove2);
+    changePlayerMove1(screen,playerMove1);
+    changePlayerMove2(screen,playerMove2);
+    changeEnemyUltimate(screen,enemyMoveUltimate,enemyUltimateUsed);
+    changePlayerUltimate(screen,playerMoveUltimate,playerUltimateUsed);
+    changeEnemyConsumable(screen,enemyConsumableName,enemyConsumableCount,enemyConsumableMaxCount);
+    changePlayerConsumable(screen,playerConsumableName,playerConsumableCount,playerConsumableMaxCount);
+
+
+
+    
+
+    //resetScreen(screen);
+    //resetColorScreen(colorScreen);
+
+
+
+
+
+
+
 
     for(ice=1;ice<=151;ice++)
     {

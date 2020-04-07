@@ -613,8 +613,12 @@ void battleUI()
     //earthquake  flash cannon
     //ultimate attack hyper potion
     //later replace these with actual stats
-    char enemyName[20]="Charizard";
-    char playerName[20]="Mewtwo";
+    
+    resetScreen(screen);
+    resetColorScreen(colorScreen);
+
+    char enemyName[20]="";
+    char playerName[20]="";
     int enemyHp=11;
     int enemyTotalHp=20;
     int playerHp=100;
@@ -623,7 +627,7 @@ void battleUI()
     char playerType='p';
     int playerLevel=55;
     int enemyLevel=99;
-    int playerCurrentXp=222;
+    int playerCurrentXp=222;//currently, the xp holds only 4 digits, tell me if you need more
     int enemyCurrentXp=696;
     char playerMove1[12]="bullet seed";
     char playerMove2[12]="intimidate";
@@ -640,9 +644,28 @@ void battleUI()
     int playerConsumableMaxCount=7;
     int enemyConsumableMaxCount=4;
 
-    
 
 
+//readPokemonStats("player", 3)
+float senate=readPokemonStats("player",1);
+int obi=readPokemonStats("player",1);
+printf("%s is Level %.0f with:\n", PLAYERPOKEMONCHOICE, readPokemonStats("player", 1));
+printf("the float is%f\n",senate);
+printf("the int is%d\n",obi);
+
+
+
+
+//playerLevel=(int)readPokemonStats("player", 1);
+//printf("player lvl is %d\n",playerLevel);
+
+
+    strncpy(playerName,PLAYERPOKEMONCHOICE,strlen(PLAYERPOKEMONCHOICE));
+    strncpy(enemyName,NPCPOKEMONCHOICE,strlen(NPCPOKEMONCHOICE));
+
+
+//i wonder if i should just make a function that does all of this at once
+//though it might be a bit confusion lmao
     changeEnemyName(screen,colorScreen,enemyName,enemyType);
     changePlayerName(screen,colorScreen,playerName,playerType);
     changeEnemyHp(screen,enemyHp,enemyTotalHp);
@@ -662,19 +685,25 @@ void battleUI()
     changeEnemyConsumable(screen,enemyConsumableName,enemyConsumableCount,enemyConsumableMaxCount);
     changePlayerConsumable(screen,playerConsumableName,playerConsumableCount,playerConsumableMaxCount);
 
-
-
     
 
-    //resetScreen(screen);
-    //resetColorScreen(colorScreen);
 
 
+//This would probably be the start of the while loop
+//like while win condition or something is -1
+//and then at the end, we can assign it something to exit the loop,thus the program as well
+
+    int winCondition=-1;
+    while(winCondition==-1)
+{
+    clear();
+    run(screen,colorScreen);
+    delay(1000000);
+    
+}
 
 
-
-
-
+    /* if you for some reason wanna test individual pokemon
 
     for(ice=1;ice<=151;ice++)
     {
@@ -690,4 +719,8 @@ void battleUI()
       testInputInt=atoi(testInput);
       clear();
     }
+
+    */
+
 }
+

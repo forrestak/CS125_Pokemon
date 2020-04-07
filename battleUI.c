@@ -16,6 +16,8 @@
 #include "battleUI.h"
 #include "util.h"
 #include "pokeFiles.h"
+#include "readPokemonStats.h"
+#include "combat.h"
 
 //changes made on 4/3/2020
 void printPixel(char screen[33][65],char colorScreen[33][65],int x, int y){
@@ -116,7 +118,6 @@ void changePlayerName(char screen[33][65],char colorScreen[33][65],char playerNa
 }
 
 void changeEnemyHp(char screen[33][65],int currentHp,int maxHp){
-    fflush(stdin);
     char emptyName[13]="HP:[";//max name size is 13
     char emptyCurrentHp[]="    ";//max name size is 4(3 digits, 1 sign)
     char emptyCurrentHp2[]="    ";//max name size is 4(3 digits, 1 sign)
@@ -138,7 +139,6 @@ void changeEnemyHp(char screen[33][65],int currentHp,int maxHp){
 
 
 void changePlayerHp(char screen[33][65],int currentHp,int maxHp){
-    fflush(stdin);
     char emptyName[13]="HP:[";//max name size is 13
     char emptyCurrentHp[]="    ";//max name size is 4(3 digits, 1 sign)
     char emptyCurrentHp2[]="    ";//max name size is 4(3 digits, 1 sign)
@@ -215,7 +215,6 @@ void changePlayerType(char screen[33][65], char colorScreen[33][65],char enemyTy
 }
 
 void changeEnemyLvl(char screen[33][65],int lvl){
-    fflush(stdin);
     char emptyName[13]="Lvl:";//max name size is 13
     char emptyCurrentLvl[]="    ";//max name size is 4(3 digits, 1 sign)
     char emptyCurrentLvl2[]="    ";//max name size is 4(3 digits, 1 sign)
@@ -235,7 +234,6 @@ void changeEnemyLvl(char screen[33][65],int lvl){
 }
 
 void changePlayerLvl(char screen[33][65],int lvl){
-    fflush(stdin);
     char emptyName[13]="Lvl:";//max name size is 13
     char emptyCurrentLvl[]="    ";//max name size is 4(3 digits, 1 sign)
     char emptyCurrentLvl2[]="    ";//max name size is 4(3 digits, 1 sign)
@@ -257,22 +255,13 @@ void changePlayerLvl(char screen[33][65],int lvl){
 
 void changeEnemyXp(char screen[33][65],int experience)
 {
-    fflush(stdin);
-    char emptyName[13]="EXP:";//max name size is 13
-    char emptyCurrentLvl[]="    ";//max name size is 4(3 digits, 1 sign)
-    char emptyCurrentLvl2[]="    ";//max name size is 4(3 digits, 1 sign)
-    //char emptyMaxHp[]="   ";//max name size is 3(3 digits)
-    //char emptyMaxHp2[]="   ";//max name size is 3(3 digits)
-    int spare1 = sprintf(emptyCurrentLvl, "%d", experience);
-    //int spare2 =sprintf(emptyMaxHp, "%d", maxHp);
-    strncpy(emptyCurrentLvl2,emptyCurrentLvl,strlen(emptyCurrentLvl));
-    //strncpy(emptyMaxHp2,emptyMaxHp,strlen(emptyMaxHp));
-    removeBackBlanks(emptyCurrentLvl2);
-    //removeBackBlanks(emptyMaxHp2);
-    strcat(emptyName,emptyCurrentLvl2);//now its just putting the pieces together
-    //strcat(emptyName,"/");
-    //strcat(emptyName,emptyMaxHp2);
-    //strcat(emptyName,"]");
+    char emptyClearance[20]= "EXP:               ";//max name size is 19 duh
+    changeText(screen,14,2,emptyClearance);//your customary clearance is here 
+    char emptyName[20]=  "EXP:";
+    char emptyCurrentLvl[]=  "                   ";//max name size is 15 digits :o
+    int spare1 = sprintf(emptyCurrentLvl, "%d", experience);//but technically you can only go up to 10 digits
+    removeBackBlanks(emptyCurrentLvl);//since like 2 billion is like the max integer number limit
+    strcat(emptyName,emptyCurrentLvl);//now its just putting the pieces together
     changeText(screen,14,2,emptyName);
 
 
@@ -280,22 +269,13 @@ void changeEnemyXp(char screen[33][65],int experience)
 
 void changePlayerXp(char screen[33][65],int experience)
 {
-    fflush(stdin);
-    char emptyName[13]="EXP:";//max name size is 13
-    char emptyCurrentLvl[]="    ";//max name size is 4(3 digits, 1 sign)
-    char emptyCurrentLvl2[]="    ";//max name size is 4(3 digits, 1 sign)
-    //char emptyMaxHp[]="   ";//max name size is 3(3 digits)
-    //char emptyMaxHp2[]="   ";//max name size is 3(3 digits)
-    int spare1 = sprintf(emptyCurrentLvl, "%d", experience);
-    //int spare2 =sprintf(emptyMaxHp, "%d", maxHp);
-    strncpy(emptyCurrentLvl2,emptyCurrentLvl,strlen(emptyCurrentLvl));
-    //strncpy(emptyMaxHp2,emptyMaxHp,strlen(emptyMaxHp));
-    removeBackBlanks(emptyCurrentLvl2);
-    //removeBackBlanks(emptyMaxHp2);
-    strcat(emptyName,emptyCurrentLvl2);//now its just putting the pieces together
-    //strcat(emptyName,"/");
-    //strcat(emptyName,emptyMaxHp2);
-    //strcat(emptyName,"]");
+    char emptyClearance[20]= "EXP:               ";//max name size is 19 duh
+    changeText(screen,44,29,emptyClearance);//your customary clearance is here 
+    char emptyName[20]=  "EXP:";
+    char emptyCurrentLvl[]=  "                   ";//max name size is 15 digits :o
+    int spare1 = sprintf(emptyCurrentLvl, "%d", experience);//but technically you can only go up to 10 digits
+    removeBackBlanks(emptyCurrentLvl);//since like 2 billion is like the max integer number limit
+    strcat(emptyName,emptyCurrentLvl);//now its just putting the pieces together
     changeText(screen,44,29,emptyName);
 
 }
@@ -384,6 +364,61 @@ void changePlayerConsumable(char screen[33][65],char consumableName[15],int cons
     changeText(screen,62,31,"]");
 
 }
+
+void subtractEnemyHp(char screen[33][65],int current, int max, int subtract)
+{   
+    current-=subtract;
+    if(current<0)current=0;
+    changeEnemyHp(screen,current,max);
+}
+
+void subtractPlayerHp(char screen[33][65],int current, int max, int subtract)
+{   
+    current-=subtract;
+    if(current<0)current=0;
+    changePlayerHp(screen,current,max);
+}
+
+char stringToCharType(char type[6])
+{
+    if(0==strcmp(type,"Grass"))
+        return 'g';//green
+    if(0==strcmp(type,"Fire"))
+        return 'r';//red
+    if(0==strcmp(type,"Water"))
+        return 'b';//blue
+    if(0==strcmp(type,"Psych"))
+        return 'p';//purple
+
+
+
+    return 'w';
+}
+
+int nameToNational(char name[12])
+{
+//if you add more pokemon, gotta add it here as well
+    if(0==strcmp(name,"Bulbasaur"))
+        return 1;
+    if(0==strcmp(name,"Charmander"))
+        return 4;
+    if(0==strcmp(name,"Squirtle"))
+        return 7;
+    if(0==strcmp(name,"Oddish"))
+        return 43;
+    if(0==strcmp(name,"Bellsprout"))
+        return 69;//nice
+    if(0==strcmp(name,"Growlithe"))
+        return 58;
+    if(0==strcmp(name,"Ponyta"))
+        return 77;
+    if(0==strcmp(name,"Slowpoke"))
+        return 79;
+    if(0==strcmp(name,"Seel"))
+        return 86;
+    return 816;//crying frog pokemon
+}
+
 
 void resetScreen(char screen[33][65])
 {
@@ -617,18 +652,18 @@ void battleUI()
     resetScreen(screen);
     resetColorScreen(colorScreen);
 
-    char enemyName[20]="";
-    char playerName[20]="";
-    int enemyHp=11;
-    int enemyTotalHp=20;
-    int playerHp=100;
-    int playerTotalHp=169;
-    char enemyType='r';
+    char enemyName[12]= "           ";
+    char playerName[12]="           ";
+    int enemyHp=1;
+    int enemyTotalHp=1;
+    int playerHp=1;
+    int playerTotalHp=1;//if i just intialize them, it might cause problems
+    char enemyType='r';//so thats why i assign values usually
     char playerType='p';
-    int playerLevel=55;
-    int enemyLevel=99;
-    int playerCurrentXp=222;//currently, the xp holds only 4 digits, tell me if you need more
-    int enemyCurrentXp=696;
+    int playerLevel=1;
+    int enemyLevel=1;
+    int playerCurrentXp=1;//currently, the xp holds only 4 digits, tell me if you need more
+    int enemyCurrentXp=1;
     char playerMove1[12]="bullet seed";
     char playerMove2[12]="intimidate";
     char playerMoveUltimate[12]="superpower";
@@ -643,29 +678,36 @@ void battleUI()
     int enemyConsumableCount=3;
     int playerConsumableMaxCount=7;
     int enemyConsumableMaxCount=4;
+    int playerPokemonNumber=1;
+    int enemyPokemonNumber=1;//p_pokemonID is cant be used if 5 can represent two pokemons at once xD
 
 
 
-//readPokemonStats("player", 3)
-float senate=readPokemonStats("player",1);
-int obi=readPokemonStats("player",1);
-printf("%s is Level %.0f with:\n", PLAYERPOKEMONCHOICE, readPokemonStats("player", 1));
-printf("the float is%f\n",senate);
-printf("the int is%d\n",obi);
-
-
-
-
-//playerLevel=(int)readPokemonStats("player", 1);
-//printf("player lvl is %d\n",playerLevel);
 
 
     strncpy(playerName,PLAYERPOKEMONCHOICE,strlen(PLAYERPOKEMONCHOICE));
     strncpy(enemyName,NPCPOKEMONCHOICE,strlen(NPCPOKEMONCHOICE));
+    playerType=stringToCharType(STATSTORAGE.p_type);
+    enemyType=stringToCharType(STATSTORAGE.n_type);
+    playerLevel=readPokemonStats("player",1);
+    enemyLevel=readPokemonStats("npc",1);
+    playerCurrentXp=readPokemonStats("player",2);
+    enemyCurrentXp=readPokemonStats("npc",2);
+    playerHp=readPokemonStats("player",3);
+    enemyHp=readPokemonStats("npc",3);
+    playerTotalHp=readPokemonStats("player",3);
+    enemyTotalHp=readPokemonStats("npc",3);
+    playerPokemonNumber=nameToNational(PLAYERPOKEMONCHOICE);
+    enemyPokemonNumber=nameToNational(NPCPOKEMONCHOICE);
+
+
+
 
 
 //i wonder if i should just make a function that does all of this at once
 //though it might be a bit confusion lmao
+
+
     changeEnemyName(screen,colorScreen,enemyName,enemyType);
     changePlayerName(screen,colorScreen,playerName,playerType);
     changeEnemyHp(screen,enemyHp,enemyTotalHp);
@@ -684,6 +726,8 @@ printf("the int is%d\n",obi);
     changePlayerUltimate(screen,playerMoveUltimate,playerUltimateUsed);
     changeEnemyConsumable(screen,enemyConsumableName,enemyConsumableCount,enemyConsumableMaxCount);
     changePlayerConsumable(screen,playerConsumableName,playerConsumableCount,playerConsumableMaxCount);
+    changeEnemyPokemon(screen,enemyPokemonNumber);
+    changePlayerPokemon(screen,playerPokemonNumber);
 
     
 
@@ -692,13 +736,13 @@ printf("the int is%d\n",obi);
 //This would probably be the start of the while loop
 //like while win condition or something is -1
 //and then at the end, we can assign it something to exit the loop,thus the program as well
-
+//battleUI would be id assume one battle at a time
     int winCondition=-1;
     while(winCondition==-1)
 {
     clear();
     run(screen,colorScreen);
-    delay(1000000);
+    delay(10000000);//made it extremely long for testing purposes :P
     
 }
 

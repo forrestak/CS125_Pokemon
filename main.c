@@ -123,10 +123,8 @@ int main(){
 
   // Start of simulation
   readPrint(count, text5, "standard");
-
-  battleUI();
+  combatScenario();
   endSim();
-  battleUI();
 
   // Clean up directory by deleting temporary files; will later implement an ask if player wants to "save" their game
   remove("playerStats.txt");

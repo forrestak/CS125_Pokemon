@@ -28,11 +28,13 @@
 void combatScenario() // combines primary combat functions to simulate combat until there is a victor
 {
 	printf("\nThe tournament has begun!\n");
+    displayScreen();
 	if (STATSTORAGE.p_speed >= STATSTORAGE.n_speed)
 	{
 		do 
 		{
 			playerTurn();
+            displayScreen();
 			if ((STATSTORAGE.p_hp > 0) && (STATSTORAGE.n_hp > 0))
 			{
 				npcTurn(npcAI());
@@ -45,6 +47,8 @@ void combatScenario() // combines primary combat functions to simulate combat un
 		do 
 		{
 			npcTurn(npcAI());
+            displayScreen();
+
 			if ((STATSTORAGE.p_hp > 0) && (STATSTORAGE.n_hp > 0))
 			{
 				playerTurn();
@@ -54,11 +58,13 @@ void combatScenario() // combines primary combat functions to simulate combat un
 	}
 	if (STATSTORAGE.p_hp <= 0)
 	{
+		STATSTORAGE.p_hp = 0;
 		printf("%s has fainted...\n", PLAYERPOKEMONCHOICE);
 		printf("%s is victorious!\n", NPCPOKEMONCHOICE);
 	}
 	else if (STATSTORAGE.n_hp <= 0)
 	{
+		STATSTORAGE.n_hp = 0;
 		printf("%s has fainted...\n", NPCPOKEMONCHOICE);
 		printf("%s is victorious!\n", PLAYERPOKEMONCHOICE);
 	}
@@ -81,14 +87,14 @@ void playerTurn() // handles choice implementation for each of the player's four
 	{
 		case 1 : // Move One
 		{
-			printf("%s uses %s!\n", PLAYERPOKEMONCHOICE, moveSelect("player", 1));
+			printf("%s uses %s!\n", PLAYERPOKEMONCHOICE, moveSelect("player", 1, 0));
 			printf("It's %s\n", checkEffectiveness(createTypeModifier("player")));
 			printf("\n%s HP: %.2f\n\n", NPCPOKEMONCHOICE, STATSTORAGE.n_hp);
 			break;
 		}
 		case 2 : // Move Two
 		{
-			printf("%s uses %s!\n", PLAYERPOKEMONCHOICE, moveSelect("player", 2));
+			printf("%s uses %s!\n", PLAYERPOKEMONCHOICE, moveSelect("player", 2, 0));
 			break;
 		}
 		case 3 : // Ability
@@ -99,7 +105,7 @@ void playerTurn() // handles choice implementation for each of the player's four
 		}
 		case 4 : // Consumable
 		{
-			printf("%s consumed %s!\n", PLAYERPOKEMONCHOICE, useConsumable("player"));
+			printf("%s consumed %s!\n", PLAYERPOKEMONCHOICE, useConsumable("player", 0));
 			printf("\n%s HP: %.2f\n\n", PLAYERPOKEMONCHOICE, STATSTORAGE.p_hp);
 			break;
 		}
@@ -119,14 +125,14 @@ void npcTurn(int npcChoice) // handles choice implementation for each of the NPC
 	{
 		case 1 : // Move One
 		{
-			printf("%s uses %s!\n", NPCPOKEMONCHOICE, moveSelect("npc", 1));
+			printf("%s uses %s!\n", NPCPOKEMONCHOICE, moveSelect("npc", 1, 0));
 			printf("It's %s\n", checkEffectiveness(createTypeModifier("npc")));
 			printf("\n%s HP: %.2f\n\n", PLAYERPOKEMONCHOICE, STATSTORAGE.p_hp);
 			break;
 		}
 		case 2 : // Move Two
 		{
-			printf("%s uses %s!\n", NPCPOKEMONCHOICE, moveSelect("npc", 2));
+			printf("%s uses %s!\n", NPCPOKEMONCHOICE, moveSelect("npc", 2, 0));
 			break;
 		}
 		case 3 : // Ability
@@ -137,7 +143,7 @@ void npcTurn(int npcChoice) // handles choice implementation for each of the NPC
 		}
 		case 4 : // Consumable
 		{
-			printf("%s consumed %s!\n", NPCPOKEMONCHOICE, useConsumable("npc"));
+			printf("%s consumed %s!\n", NPCPOKEMONCHOICE, useConsumable("npc", 0));
 			printf("\n%s HP: %.2f\n\n", NPCPOKEMONCHOICE, STATSTORAGE.n_hp);
 			break;
 		}
@@ -244,12 +250,11 @@ int npcAI() // creates psuedo-random choice weights for npcTurn() and checks whe
 statStruct initializeStats() // populate STATSTORAGE struct with default values from files
 {
 	// Assign player stat defaults from files
-	strcpy(STATSTORAGE.p_type, getType(readPokemonStats("player", 0)));
 	STATSTORAGE.p_pokemonID = readPokemonStats("player", 0);
 	STATSTORAGE.p_level = readPokemonStats("player", 1);
 	STATSTORAGE.p_experience = readPokemonStats("player", 2);
 	STATSTORAGE.p_hp = readPokemonStats("player", 3);
-	STATSTORAGE.p_attack = readPokemonStats("player", 4);
+	STATSTORAGE.p_attack = readPokemonStats("player", 4);	
 	STATSTORAGE.p_defense = readPokemonStats("player", 5);
 	STATSTORAGE.p_spAttack = readPokemonStats("player", 6);
 	STATSTORAGE.p_spDefense = readPokemonStats("player", 7);
@@ -257,8 +262,13 @@ statStruct initializeStats() // populate STATSTORAGE struct with default values 
 	STATSTORAGE.p_consumableCount = 1; // tracks remaining potions
 	STATSTORAGE.p_abilityCount = 1; // tracks remianing ability uses
 	STATSTORAGE.p_abilityStatus = 0; // tracks whether ability is currently active
+	strcpy(STATSTORAGE.p_type, getType(readPokemonStats("player", 0)));
+	strcpy(STATSTORAGE.p_moveOne, moveSelect("player", 1, 1));
+	strcpy(STATSTORAGE.p_moveTwo, moveSelect("player", 2, 1));
+	strcpy(STATSTORAGE.p_ability, "Overgrowth");
+	strcpy(STATSTORAGE.p_consumable, useConsumable("player", 1));
 	// Assign NPC stat defaults from files
-	strcpy(STATSTORAGE.n_type, getType(readPokemonStats("npc", 0)));
+	
 	STATSTORAGE.n_pokemonID = readPokemonStats("npc", 0);
 	STATSTORAGE.n_level = readPokemonStats("npc", 1);
 	STATSTORAGE.n_experience = readPokemonStats("npc", 2);
@@ -271,6 +281,11 @@ statStruct initializeStats() // populate STATSTORAGE struct with default values 
 	STATSTORAGE.n_consumableCount = 1; // tracks remaining potions
 	STATSTORAGE.n_abilityCount = 1; // tracks remianing ability uses
 	STATSTORAGE.n_abilityStatus = 0; // tracks whether ability is currently active
+	strcpy(STATSTORAGE.n_type, getType(readPokemonStats("npc", 0)));
+	strcpy(STATSTORAGE.n_moveOne, moveSelect("npc", 1, 1));
+	strcpy(STATSTORAGE.n_moveTwo, moveSelect("npc", 2, 1));
+	strcpy(STATSTORAGE.n_ability, "Overgrowth");
+	strcpy(STATSTORAGE.n_consumable, useConsumable("npc", 1));
 
 	return STATSTORAGE;
 }
@@ -463,7 +478,7 @@ float damageCalculation(int moveType, float power, float level, float attack, fl
 // --------------------------------------------------------COMBAT ACTION FUNCTIONS BELOW-------------------------------------------------------- //
 
 
-char *moveSelect(char who[7], int moveType)
+char *moveSelect(char who[7], int moveType, int useOrCheck)
 {
 	if (moveType == 1)
 	{
@@ -475,88 +490,133 @@ char *moveSelect(char who[7], int moveType)
 				{
 					if ((STATSTORAGE.p_level >= 1) && (STATSTORAGE.p_level < 20)) // Levels 1-20: Tackle
 					{	
-						STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 50, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
-						strcpy(MOVESELECTED, "Tackle");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 50, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
+						}
+						strcpy(STATSTORAGE.p_moveOne, "Tackle");
 					}
 					else if ((STATSTORAGE.p_level >= 20) && (STATSTORAGE.p_level < 40)) // Levels 21-40: Vine Whip
 					{
-						STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 55, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
-						strcpy(MOVESELECTED, "Vine Whip");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 55, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
+						}
+						strcpy(STATSTORAGE.p_moveOne, "Vine Whip");
 					}
 					else if ((STATSTORAGE.p_level >= 40) && (STATSTORAGE.p_level < 60)) // Levels 41-60: Razor Leaf
 					{
-						STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 60, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
-						strcpy(MOVESELECTED, "Razor Leaf");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 60, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
+						}
+						strcpy(STATSTORAGE.p_moveOne, "Razor Leaf");
 					}
 					else if ((STATSTORAGE.p_level >= 60) && (STATSTORAGE.p_level < 80)) // Levels 61-80: Bullet Seed
 					{
-						STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 65, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
-						strcpy(MOVESELECTED, "Bullet Seed");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 65, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
+						}
+						strcpy(STATSTORAGE.p_moveOne, "Bullet Seed");
 					}
 					else if ((STATSTORAGE.p_level >= 80) && (STATSTORAGE.p_level <= 100)) // Levels 81-100: Seed Bomb
 					{
-						STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 70, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
-						strcpy(MOVESELECTED, "Seed Bomb");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 70, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
+						}
+						strcpy(STATSTORAGE.p_moveOne, "Seed Bomb");
 					}
-					return MOVESELECTED;
+					return STATSTORAGE.p_moveOne;
 				}
 				case 2 : // Fire-type physical moves
 				{
 					if ((STATSTORAGE.p_level >= 1) && (STATSTORAGE.p_level < 20)) // Levels 1-20: Scratch
 					{	
-						STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 50, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
-						strcpy(MOVESELECTED, "Scratch");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 50, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
+						}
+						strcpy(STATSTORAGE.p_moveOne, "Scratch");
 					}
 					else if ((STATSTORAGE.p_level >= 20) && (STATSTORAGE.p_level < 40)) // Levels 21-40: Slash
 					{
-						STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 55, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
-						strcpy(MOVESELECTED, "Slash");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 55, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
+						}
+						strcpy(STATSTORAGE.p_moveOne, "Slash");
 					}
 					else if ((STATSTORAGE.p_level >= 40) && (STATSTORAGE.p_level < 60)) // Levels 41-60: Fire Fang
 					{
-						STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 60, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
-						strcpy(MOVESELECTED, "Fire Fang");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 60, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
+						}
+						strcpy(STATSTORAGE.p_moveOne, "Fire Fang");
 					}
 					else if ((STATSTORAGE.p_level >= 60) && (STATSTORAGE.p_level < 80)) // Levels 61-80: Flare Blitz
 					{
-						STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 65, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
-						strcpy(MOVESELECTED, "Flare Blitz");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 65, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
+						}
+						strcpy(STATSTORAGE.p_moveOne, "Flare Blitz");
 					}
 					else if ((STATSTORAGE.p_level >= 80) && (STATSTORAGE.p_level <= 100)) // Levels 81-100: Flamethrower
 					{
-						STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 70, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
-						strcpy(MOVESELECTED, "Flamethrower");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 70, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
+						}
+						strcpy(STATSTORAGE.p_moveOne, "Flamethrower");
 					}
-					return MOVESELECTED;
+					return STATSTORAGE.p_moveOne;
 				}
 				case 3 : // Water-type physical moves
 				{
 					if ((STATSTORAGE.p_level >= 1) && (STATSTORAGE.p_level < 20)) // Levels 1-20: Headbutt
 					{	
-						STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 50, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
-						strcpy(MOVESELECTED, "Headbutt");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 50, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
+						}
+						strcpy(STATSTORAGE.p_moveOne, "Headbutt");
 					}
 					else if ((STATSTORAGE.p_level >= 20) && (STATSTORAGE.p_level < 40)) // Levels 21-40: Water Gun
 					{
-						STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 55, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
-						strcpy(MOVESELECTED, "Water Gun");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 55, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
+						}
+						strcpy(STATSTORAGE.p_moveOne, "Water Gun");
 					}
 					else if ((STATSTORAGE.p_level >= 40) && (STATSTORAGE.p_level < 60)) // Levels 41-60: Aqua Tail
 					{
-						STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 60, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
-						strcpy(MOVESELECTED, "Aqua Tail");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 60, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
+						}
+						strcpy(STATSTORAGE.p_moveOne, "Aqua Tail");
 					}
 					else if ((STATSTORAGE.p_level >= 60) && (STATSTORAGE.p_level < 80)) // Levels 61-80: Water Spout
 					{
-						STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 65, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
-						strcpy(MOVESELECTED, "Water Spout");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 65, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
+						}
+						strcpy(STATSTORAGE.p_moveOne, "Water Spout");
 					}
 					else if ((STATSTORAGE.p_level >= 80) && (STATSTORAGE.p_level <= 100)) // Levels 81-100: Waterfall
 					{
-						STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 70, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
-						strcpy(MOVESELECTED, "Waterfall");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 70, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
+						}
+						strcpy(STATSTORAGE.p_moveOne, "Waterfall");
 					}
-					return MOVESELECTED;
+					return STATSTORAGE.p_moveOne;
 				}
 				default :
 				{
@@ -572,88 +632,133 @@ char *moveSelect(char who[7], int moveType)
 				{
 					if ((STATSTORAGE.n_level >= 1) && (STATSTORAGE.n_level < 20)) // Levels 1-20: Tackle
 					{	
-						STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 50, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
-						strcpy(MOVESELECTED, "Tackle");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 50, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
+						}
+						strcpy(STATSTORAGE.n_moveOne, "Tackle");
 					}
 					else if ((STATSTORAGE.n_level >= 20) && (STATSTORAGE.n_level < 40)) // Levels 21-40: Vine Whip
 					{
-						STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 55, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
-						strcpy(MOVESELECTED, "Vine Whip");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 55, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
+						}
+						strcpy(STATSTORAGE.n_moveOne, "Vine Whip");
 					}
 					else if ((STATSTORAGE.n_level >= 40) && (STATSTORAGE.n_level < 60)) // Levels 41-60: Razor Leaf
 					{
-						STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 60, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
-						strcpy(MOVESELECTED, "Razor Leaf");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 60, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
+						}
+						strcpy(STATSTORAGE.n_moveOne, "Razor Leaf");
 					}
 					else if ((STATSTORAGE.n_level >= 60) && (STATSTORAGE.n_level < 80)) // Levels 61-80: Bullet Seed
 					{
-						STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 65, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
-						strcpy(MOVESELECTED, "Bullet Seed");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 65, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
+						}
+						strcpy(STATSTORAGE.n_moveOne, "Bullet Seed");
 					}
 					else if ((STATSTORAGE.n_level >= 80) && (STATSTORAGE.n_level <= 100)) // Levels 81-100: Seed Bomb
 					{
-						STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 70, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
-						strcpy(MOVESELECTED, "Seed Bomb");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 70, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
+						}
+						strcpy(STATSTORAGE.n_moveOne, "Seed Bomb");
 					}
-					return MOVESELECTED;
+					return STATSTORAGE.n_moveOne;
 				}
 				case 2 : // Fire-type physical moves
 				{
 					if ((STATSTORAGE.n_level >= 1) && (STATSTORAGE.n_level < 20)) // Levels 1-20: Scratch
 					{	
-						STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 50, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
-						strcpy(MOVESELECTED, "Scratch");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 50, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
+						}
+						strcpy(STATSTORAGE.n_moveOne, "Scratch");
 					}
 					else if ((STATSTORAGE.n_level >= 20) && (STATSTORAGE.n_level < 40)) // Levels 21-40: Slash
 					{
-						STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 55, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
-						strcpy(MOVESELECTED, "Slash");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 55, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
+						}
+						strcpy(STATSTORAGE.n_moveOne, "Slash");
 					}
 					else if ((STATSTORAGE.n_level >= 40) && (STATSTORAGE.n_level < 60)) // Levels 41-60: Fire Fang
 					{
-						STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 60, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
-						strcpy(MOVESELECTED, "Fire Fang");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 60, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
+						}
+						strcpy(STATSTORAGE.n_moveOne, "Fire Fang");
 					}
 					else if ((STATSTORAGE.n_level >= 60) && (STATSTORAGE.n_level < 80)) // Levels 61-80: Flare Blitz
 					{
-						STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 65, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
-						strcpy(MOVESELECTED, "Flare Blitz");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 65, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
+						}
+						strcpy(STATSTORAGE.n_moveOne, "Flare Blitz");
 					}
 					else if ((STATSTORAGE.n_level >= 80) && (STATSTORAGE.n_level <= 100)) // Levels 81-100: Flamethrower
 					{
-						STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 70, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
-						strcpy(MOVESELECTED, "Flamethrower");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 70, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
+						}
+						strcpy(STATSTORAGE.n_moveOne, "Flamethrower");
 					}
-					return MOVESELECTED;
+					return STATSTORAGE.n_moveOne;
 				}
 				case 3 : // Water-type physical moves
 				{
 					if ((STATSTORAGE.n_level >= 1) && (STATSTORAGE.n_level < 20)) // Levels 1-20: Headbutt
 					{	
-						STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 50, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
-						strcpy(MOVESELECTED, "Headbutt");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 50, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
+						}
+						strcpy(STATSTORAGE.n_moveOne, "Headbutt");
 					}
 					else if ((STATSTORAGE.n_level >= 20) && (STATSTORAGE.n_level < 40)) // Levels 21-40: Water Gun
 					{
-						STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 55, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
-						strcpy(MOVESELECTED, "Water Gun");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 55, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
+						}
+						strcpy(STATSTORAGE.n_moveOne, "Water Gun");
 					}
 					else if ((STATSTORAGE.n_level >= 40) && (STATSTORAGE.n_level < 60)) // Levels 41-60: Aqua Tail
 					{
-						STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 60, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
-						strcpy(MOVESELECTED, "Aqua Tail");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 60, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
+						}
+						strcpy(STATSTORAGE.n_moveOne, "Aqua Tail");
 					}
 					else if ((STATSTORAGE.n_level >= 60) && (STATSTORAGE.n_level < 80)) // Levels 61-80: Water Spout
 					{
-						STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 65, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
-						strcpy(MOVESELECTED, "Water Spout");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 65, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
+						}
+						strcpy(STATSTORAGE.n_moveOne, "Water Spout");
 					}
 					else if ((STATSTORAGE.n_level >= 80) && (STATSTORAGE.n_level <= 100)) // Levels 81-100: Waterfall
 					{
-						STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 70, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
-						strcpy(MOVESELECTED, "Waterfall");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 70, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
+						}
+						strcpy(STATSTORAGE.n_moveOne, "Waterfall");
 					}
-					return MOVESELECTED;	
+					return STATSTORAGE.n_moveOne;	
 				}
 				default :
 				{
@@ -677,103 +782,148 @@ char *moveSelect(char who[7], int moveType)
 				{
 					if ((STATSTORAGE.p_level >= 1) && (STATSTORAGE.p_level < 20)) // Levels 1-20: Growth
 					{	
-						STATSTORAGE.p_attack = STATSTORAGE.p_attack + (0.45 * 2);
-						STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack + (0.51 * 2);
-						strcpy(MOVESELECTED, "Growth");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_attack = STATSTORAGE.p_attack + (0.45 * 2);
+							STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack + (0.51 * 2);
+						}
+						strcpy(STATSTORAGE.p_moveTwo, "Growth");
 					}
 					else if ((STATSTORAGE.p_level >= 20) && (STATSTORAGE.p_level < 40)) // Levels 21-40: Swell
 					{
-						STATSTORAGE.p_attack = STATSTORAGE.p_attack + (0.45 * 4);
-						STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack + (0.51 * 4);
-						strcpy(MOVESELECTED, "Swell");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_attack = STATSTORAGE.p_attack + (0.45 * 4);
+							STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack + (0.51 * 4);
+						}
+						strcpy(STATSTORAGE.p_moveTwo, "Swell");
 					}
 					else if ((STATSTORAGE.p_level >= 40) && (STATSTORAGE.p_level < 60)) // Levels 41-60: Engorge
 					{
-						STATSTORAGE.p_attack = STATSTORAGE.p_attack + (0.45 * 6);
-						STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack + (0.51 * 6);
-						strcpy(MOVESELECTED, "Engorge");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_attack = STATSTORAGE.p_attack + (0.45 * 6);
+							STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack + (0.51 * 6);
+						}
+						strcpy(STATSTORAGE.p_moveTwo, "Engorge");
 					}
 					else if ((STATSTORAGE.p_level >= 60) && (STATSTORAGE.p_level < 80)) // Levels 61-80: Sprout
 					{
-						STATSTORAGE.p_attack = STATSTORAGE.p_attack + (0.45 * 8);
-						STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack + (0.51 * 8);
-						strcpy(MOVESELECTED, "Sprout");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_attack = STATSTORAGE.p_attack + (0.45 * 8);
+							STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack + (0.51 * 8);
+						}
+						strcpy(STATSTORAGE.p_moveTwo, "Sprout");
 					}
 					else if ((STATSTORAGE.p_level >= 80) && (STATSTORAGE.p_level <= 100)) // Levels 81-100: Bloom
 					{
-						STATSTORAGE.p_attack = STATSTORAGE.p_attack + (0.45 * 10);
-						STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack + (0.51 * 10);
-						strcpy(MOVESELECTED, "Bloom");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_attack = STATSTORAGE.p_attack + (0.45 * 10);
+							STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack + (0.51 * 10);
+						}
+						strcpy(STATSTORAGE.p_moveTwo, "Bloom");
 					}
-					return MOVESELECTED;
+					return STATSTORAGE.p_moveTwo;
 				}
 				case 2 : // Fire-type special moves
 				{
 					if ((STATSTORAGE.p_level >= 1) && (STATSTORAGE.p_level < 20)) // Levels 1-20: Growl
 					{	
-						STATSTORAGE.n_attack = STATSTORAGE.n_attack - (0.45 * 2);
-						STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack - (0.51 * 2);
-						strcpy(MOVESELECTED, "Growl");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_attack = STATSTORAGE.n_attack - (0.45 * 2);
+							STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack - (0.51 * 2);
+						}
+						strcpy(STATSTORAGE.p_moveTwo, "Growl");
 					}
 					else if ((STATSTORAGE.p_level >= 20) && (STATSTORAGE.p_level < 40)) // Levels 21-40: Snarl
 					{
-						STATSTORAGE.n_attack = STATSTORAGE.n_attack - (0.45 * 4);
-						STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack - (0.51 * 4);
-						strcpy(MOVESELECTED, "Snarl");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_attack = STATSTORAGE.n_attack - (0.45 * 4);
+							STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack - (0.51 * 4);
+						}
+						strcpy(STATSTORAGE.p_moveTwo, "Snarl");
 					}
 					else if ((STATSTORAGE.p_level >= 40) && (STATSTORAGE.p_level < 60)) // Levels 41-60: Howl
 					{
-						STATSTORAGE.n_attack = STATSTORAGE.n_attack - (0.45 * 6);
-						STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack - (0.51 * 6);
-						strcpy(MOVESELECTED, "Howl");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_attack = STATSTORAGE.n_attack - (0.45 * 6);
+							STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack - (0.51 * 6);
+						}
+						strcpy(STATSTORAGE.p_moveTwo, "Howl");
 					}
 					else if ((STATSTORAGE.p_level >= 60) && (STATSTORAGE.p_level < 80)) // Levels 61-80: Roar
 					{
-						STATSTORAGE.n_attack = STATSTORAGE.n_attack - (0.45 * 8);
-						STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack - (0.51 * 8);
-						strcpy(MOVESELECTED, "Roar");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_attack = STATSTORAGE.n_attack - (0.45 * 8);
+							STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack - (0.51 * 8);
+						}
+						strcpy(STATSTORAGE.p_moveTwo, "Roar");
 					}
 					else if ((STATSTORAGE.p_level >= 80) && (STATSTORAGE.p_level <= 100)) // Levels 81-100: Initimidate
 					{
-						STATSTORAGE.n_attack = STATSTORAGE.n_attack - (0.45 * 10);
-						STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack - (0.51 * 10);
-						strcpy(MOVESELECTED, "Initimidate");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_attack = STATSTORAGE.n_attack - (0.45 * 10);
+							STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack - (0.51 * 10);
+						}
+						strcpy(STATSTORAGE.p_moveTwo, "Initimidate");
 					}
-					return MOVESELECTED;
+					return STATSTORAGE.p_moveTwo;
 				}
 				case 3 : // Water-type special moves
 				{
 					if ((STATSTORAGE.p_level >= 1) && (STATSTORAGE.p_level < 20)) // Levels 1-20: Tail Wag
 					{	
-						STATSTORAGE.n_defense = STATSTORAGE.n_defense - (0.45 * 2);
-						STATSTORAGE.n_spDefense = STATSTORAGE.n_spDefense - (0.52 * 2);
-						strcpy(MOVESELECTED, "Tail Wag");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_defense = STATSTORAGE.n_defense - (0.45 * 2);
+							STATSTORAGE.n_spDefense = STATSTORAGE.n_spDefense - (0.52 * 2);
+						}
+						strcpy(STATSTORAGE.p_moveTwo, "Tail Wag");
 					}
 					else if ((STATSTORAGE.p_level >= 20) && (STATSTORAGE.p_level < 40)) // Levels 21-40: Confusion
 					{
-						STATSTORAGE.n_defense = STATSTORAGE.n_defense - (0.45 * 4);
-						STATSTORAGE.n_spDefense = STATSTORAGE.n_spDefense - (0.52 * 4);
-						strcpy(MOVESELECTED, "Confusion");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_defense = STATSTORAGE.n_defense - (0.45 * 4);
+							STATSTORAGE.n_spDefense = STATSTORAGE.n_spDefense - (0.52 * 4);
+						}
+						strcpy(STATSTORAGE.p_moveTwo, "Confusion");
 					}
 					else if ((STATSTORAGE.p_level >= 40) && (STATSTORAGE.p_level < 60)) // Levels 41-60: Spit
 					{
-						STATSTORAGE.n_defense = STATSTORAGE.n_defense - (0.45 * 6);
-						STATSTORAGE.n_spDefense = STATSTORAGE.n_spDefense - (0.52 * 6);
-						strcpy(MOVESELECTED, "Spit");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_defense = STATSTORAGE.n_defense - (0.45 * 6);
+							STATSTORAGE.n_spDefense = STATSTORAGE.n_spDefense - (0.52 * 6);
+						}
+						strcpy(STATSTORAGE.p_moveTwo, "Spit");
 					}
 					else if ((STATSTORAGE.p_level >= 60) && (STATSTORAGE.p_level < 80)) // Levels 61-80: Cold Front
 					{
-						STATSTORAGE.n_defense = STATSTORAGE.n_defense - (0.45 * 8);
-						STATSTORAGE.n_spDefense = STATSTORAGE.n_spDefense - (0.52 * 8);
-						strcpy(MOVESELECTED, "Cold Front");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_defense = STATSTORAGE.n_defense - (0.45 * 8);
+							STATSTORAGE.n_spDefense = STATSTORAGE.n_spDefense - (0.52 * 8);
+						}
+						strcpy(STATSTORAGE.p_moveTwo, "Cold Front");
 					}
 					else if ((STATSTORAGE.p_level >= 80) && (STATSTORAGE.p_level <= 100)) // Levels 81-100: Rainstorm
 					{
-						STATSTORAGE.n_defense = STATSTORAGE.n_defense - (0.45 * 10);
-						STATSTORAGE.n_spDefense = STATSTORAGE.n_spDefense - (0.52 * 10);
-						strcpy(MOVESELECTED, "Rainstorm");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_defense = STATSTORAGE.n_defense - (0.45 * 10);
+							STATSTORAGE.n_spDefense = STATSTORAGE.n_spDefense - (0.52 * 10);
+						}
+						strcpy(STATSTORAGE.p_moveTwo, "Rainstorm");
 					}
-					return MOVESELECTED;
+					return STATSTORAGE.p_moveTwo;
 				}
 				default :
 				{
@@ -789,103 +939,148 @@ char *moveSelect(char who[7], int moveType)
 				{
 					if ((STATSTORAGE.n_level >= 1) && (STATSTORAGE.n_level < 20)) // Levels 1-20: Growth
 					{	
-						STATSTORAGE.n_attack = STATSTORAGE.n_attack + (0.45 * 2);
-						STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack + (0.51 * 2);
-						strcpy(MOVESELECTED, "Growth");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_attack = STATSTORAGE.n_attack + (0.45 * 2);
+							STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack + (0.51 * 2);
+						}
+						strcpy(STATSTORAGE.n_moveTwo, "Growth");
 					}
 					else if ((STATSTORAGE.n_level >= 20) && (STATSTORAGE.n_level < 40)) // Levels 21-40: Swell
 					{
-						STATSTORAGE.n_attack = STATSTORAGE.n_attack + (0.45 * 4);
-						STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack + (0.51 * 4);
-						strcpy(MOVESELECTED, "Swell");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_attack = STATSTORAGE.n_attack + (0.45 * 4);
+							STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack + (0.51 * 4);
+						}
+						strcpy(STATSTORAGE.n_moveTwo, "Swell");
 					}
 					else if ((STATSTORAGE.n_level >= 40) && (STATSTORAGE.n_level < 60)) // Levels 41-60: Engorge
 					{
-						STATSTORAGE.n_attack = STATSTORAGE.n_attack + (0.45 * 6);
-						STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack + (0.51 * 6);
-						strcpy(MOVESELECTED, "Engorge");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_attack = STATSTORAGE.n_attack + (0.45 * 6);
+							STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack + (0.51 * 6);
+						}
+						strcpy(STATSTORAGE.n_moveTwo, "Engorge");
 					}
 					else if ((STATSTORAGE.n_level >= 60) && (STATSTORAGE.n_level < 80)) // Levels 61-80: Sprout
 					{
-						STATSTORAGE.n_attack = STATSTORAGE.n_attack + (0.45 * 8);
-						STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack + (0.51 * 8);
-						strcpy(MOVESELECTED, "Sprout");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_attack = STATSTORAGE.n_attack + (0.45 * 8);
+							STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack + (0.51 * 8);
+						}
+						strcpy(STATSTORAGE.n_moveTwo, "Sprout");
 					}
 					else if ((STATSTORAGE.n_level >= 80) && (STATSTORAGE.n_level <= 100)) // Levels 81-100: Bloom
 					{
-						STATSTORAGE.n_attack = STATSTORAGE.n_attack + (0.45 * 10);
-						STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack + (0.51 * 10);
-						strcpy(MOVESELECTED, "Bloom");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.n_attack = STATSTORAGE.n_attack + (0.45 * 10);
+							STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack + (0.51 * 10);
+						}
+						strcpy(STATSTORAGE.n_moveTwo, "Bloom");
 					}
-					return MOVESELECTED;
+					return STATSTORAGE.n_moveTwo;
 				}
 				case 2 : // Fire-type special moves
 				{
 					if ((STATSTORAGE.n_level >= 1) && (STATSTORAGE.n_level < 20)) // Levels 1-20: Growl
 					{	
-						STATSTORAGE.p_attack = STATSTORAGE.p_attack - (0.45 * 2);
-						STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack - (0.51 * 2);
-						strcpy(MOVESELECTED, "Growl");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_attack = STATSTORAGE.p_attack - (0.45 * 2);
+							STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack - (0.51 * 2);
+						}
+						strcpy(STATSTORAGE.n_moveTwo, "Growl");
 					}
 					else if ((STATSTORAGE.n_level >= 20) && (STATSTORAGE.n_level < 40)) // Levels 21-40: Snarl
 					{
-						STATSTORAGE.p_attack = STATSTORAGE.p_attack - (0.45 * 4);
-						STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack - (0.51 * 4);
-						strcpy(MOVESELECTED, "Snarl");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_attack = STATSTORAGE.p_attack - (0.45 * 4);
+							STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack - (0.51 * 4);
+						}
+						strcpy(STATSTORAGE.n_moveTwo, "Snarl");
 					}
 					else if ((STATSTORAGE.n_level >= 40) && (STATSTORAGE.n_level < 60)) // Levels 41-60: Howl
 					{
-						STATSTORAGE.p_attack = STATSTORAGE.p_attack - (0.45 * 6);
-						STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack - (0.51 * 6);
-						strcpy(MOVESELECTED, "Howl");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_attack = STATSTORAGE.p_attack - (0.45 * 6);
+							STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack - (0.51 * 6);
+						}
+						strcpy(STATSTORAGE.n_moveTwo, "Howl");
 					}
 					else if ((STATSTORAGE.n_level >= 60) && (STATSTORAGE.n_level < 80)) // Levels 61-80: Roar
 					{
-						STATSTORAGE.p_attack = STATSTORAGE.p_attack - (0.45 * 8);
-						STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack - (0.51 * 8);
-						strcpy(MOVESELECTED, "Roar");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_attack = STATSTORAGE.p_attack - (0.45 * 8);
+							STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack - (0.51 * 8);
+						}
+						strcpy(STATSTORAGE.n_moveTwo, "Roar");
 					}
 					else if ((STATSTORAGE.n_level >= 80) && (STATSTORAGE.n_level <= 100)) // Levels 81-100: Initimidate
 					{
-						STATSTORAGE.p_attack = STATSTORAGE.p_attack - (0.45 * 10);
-						STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack - (0.51 * 10);
-						strcpy(MOVESELECTED, "Initimidate");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_attack = STATSTORAGE.p_attack - (0.45 * 10);
+							STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack - (0.51 * 10);
+						}
+						strcpy(STATSTORAGE.n_moveTwo, "Initimidate");
 					}
-					return MOVESELECTED;
+					return STATSTORAGE.n_moveTwo;
 				}
 				case 3 : // Water-type special moves
 				{
 					if ((STATSTORAGE.n_level >= 1) && (STATSTORAGE.n_level < 20)) // Levels 1-20: Tail Wag
 					{	
-						STATSTORAGE.p_defense = STATSTORAGE.p_defense - (0.45 * 2);
-						STATSTORAGE.p_spDefense = STATSTORAGE.p_spDefense - (0.52 * 2);
-						strcpy(MOVESELECTED, "Tail Wag");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_defense = STATSTORAGE.p_defense - (0.45 * 2);
+							STATSTORAGE.p_spDefense = STATSTORAGE.p_spDefense - (0.52 * 2);
+						}
+						strcpy(STATSTORAGE.n_moveTwo, "Tail Wag");
 					}
 					else if ((STATSTORAGE.n_level >= 20) && (STATSTORAGE.n_level < 40)) // Levels 21-40: Confusion
 					{
-						STATSTORAGE.p_defense = STATSTORAGE.p_defense - (0.45 * 4);
-						STATSTORAGE.p_spDefense = STATSTORAGE.p_spDefense - (0.52 * 4);
-						strcpy(MOVESELECTED, "Confusion");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_defense = STATSTORAGE.p_defense - (0.45 * 4);
+							STATSTORAGE.p_spDefense = STATSTORAGE.p_spDefense - (0.52 * 4);
+						}
+						strcpy(STATSTORAGE.n_moveTwo, "Confusion");
 					}
 					else if ((STATSTORAGE.n_level >= 40) && (STATSTORAGE.n_level < 60)) // Levels 41-60: Spit
 					{
-						STATSTORAGE.p_defense = STATSTORAGE.p_defense - (0.45 * 6);
-						STATSTORAGE.p_spDefense = STATSTORAGE.p_spDefense - (0.52 * 6);
-						strcpy(MOVESELECTED, "Spit");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_defense = STATSTORAGE.p_defense - (0.45 * 6);
+							STATSTORAGE.p_spDefense = STATSTORAGE.p_spDefense - (0.52 * 6);
+						}
+						strcpy(STATSTORAGE.n_moveTwo, "Spit");
 					}
 					else if ((STATSTORAGE.n_level >= 60) && (STATSTORAGE.n_level < 80)) // Levels 61-80: Cold Front
 					{
-						STATSTORAGE.p_defense = STATSTORAGE.p_defense - (0.45 * 8);
-						STATSTORAGE.p_spDefense = STATSTORAGE.p_spDefense - (0.52 * 8);
-						strcpy(MOVESELECTED, "Cold Front");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_defense = STATSTORAGE.p_defense - (0.45 * 8);
+							STATSTORAGE.p_spDefense = STATSTORAGE.p_spDefense - (0.52 * 8);
+						}
+						strcpy(STATSTORAGE.n_moveTwo, "Cold Front");
 					}
 					else if ((STATSTORAGE.n_level >= 80) && (STATSTORAGE.n_level <= 100)) // Levels 81-100: Rainstorm
 					{
-						STATSTORAGE.p_defense = STATSTORAGE.p_defense - (0.45 * 10);
-						STATSTORAGE.p_spDefense = STATSTORAGE.p_spDefense - (0.52 * 10);
-						strcpy(MOVESELECTED, "Rainstorm");
+						if (useOrCheck != 1)
+						{
+							STATSTORAGE.p_defense = STATSTORAGE.p_defense - (0.45 * 10);
+							STATSTORAGE.p_spDefense = STATSTORAGE.p_spDefense - (0.52 * 10);
+						}
+						strcpy(STATSTORAGE.n_moveTwo, "Rainstorm");
 					}
-					return MOVESELECTED;
+					return STATSTORAGE.n_moveTwo;
 				}
 				default :
 				{
@@ -902,7 +1097,7 @@ char *moveSelect(char who[7], int moveType)
 	{
 		printf("ERROR: moveSelect() if-1 defaulted; debug"); // only occurs from developer error in implementation code
 	}
-	return MOVESELECTED;
+	return "ERROR: moveSelected() return defaulted; debug";
 }
 
 float useAbility(char who[7])
@@ -941,39 +1136,54 @@ float useAbility(char who[7])
 	return abilityModifier;
 }
 
-char* useConsumable(char who[7]) 
+char* useConsumable(char who[7], int useOrCheck) 
 {
 	if (strcmp(who, "player")==0)
 	{
 		if ((STATSTORAGE.p_level >= 1) && (STATSTORAGE.p_level < 20) && (STATSTORAGE.p_consumableCount > 0)) // Levels 1-20: Potion
 		{
-			STATSTORAGE.p_hp += 20;
-			STATSTORAGE.p_consumableCount = STATSTORAGE.p_consumableCount - 1;
-			strcpy(POTIONSELECTED, "Potion");
+			if (useOrCheck != 1)
+			{
+				STATSTORAGE.p_hp += 20;
+				STATSTORAGE.p_consumableCount = STATSTORAGE.p_consumableCount - 1;
+			}
+			strcpy(STATSTORAGE.p_consumable, "Potion");
 		}
 		else if ((STATSTORAGE.p_level >= 20) && (STATSTORAGE.p_level < 40) && (STATSTORAGE.p_consumableCount > 0)) // Levels 21-40: Super Potion
 		{
-			STATSTORAGE.p_hp += 60;
-			STATSTORAGE.p_consumableCount = STATSTORAGE.p_consumableCount - 1;
-			strcpy(POTIONSELECTED, "Super Potion");
+			if (useOrCheck != 1)
+			{
+				STATSTORAGE.p_hp += 60;
+				STATSTORAGE.p_consumableCount = STATSTORAGE.p_consumableCount - 1;
+			}
+			strcpy(STATSTORAGE.p_consumable, "Super Potion");
 		}
 		else if ((STATSTORAGE.p_level >= 40) && (STATSTORAGE.p_level < 60) && (STATSTORAGE.p_consumableCount > 0)) // Levels 41-60: Hyper Potion
 		{
-			STATSTORAGE.p_hp += 100;
-			STATSTORAGE.p_consumableCount = STATSTORAGE.p_consumableCount - 1;
-			strcpy(POTIONSELECTED, "Hyper Potion");
+			if (useOrCheck != 1)
+			{
+				STATSTORAGE.p_hp += 100;
+				STATSTORAGE.p_consumableCount = STATSTORAGE.p_consumableCount - 1;
+			}
+			strcpy(STATSTORAGE.p_consumable, "Hyper Potion");
 		}
 		else if ((STATSTORAGE.p_level >= 60) && (STATSTORAGE.p_level < 80) && (STATSTORAGE.p_consumableCount > 0)) // Levels 61-80: Max Potion
 		{
-			STATSTORAGE.p_hp += 140;
-			STATSTORAGE.p_consumableCount = STATSTORAGE.p_consumableCount - 1;
-			strcpy(POTIONSELECTED, "Max Potion");
+			if (useOrCheck != 1)
+			{
+				STATSTORAGE.p_hp += 140;
+				STATSTORAGE.p_consumableCount = STATSTORAGE.p_consumableCount - 1;
+			}
+			strcpy(STATSTORAGE.p_consumable, "Max Potion");
 		}
 		else if ((STATSTORAGE.p_level >= 80) && (STATSTORAGE.p_level <= 100) && (STATSTORAGE.p_consumableCount > 0)) // Levels 81-100: Full Restore
 		{
-			STATSTORAGE.p_hp = readPokemonStats("player", 3);
-			STATSTORAGE.p_consumableCount = STATSTORAGE.p_consumableCount - 1;
-			strcpy(POTIONSELECTED, "Full Restore");
+			if (useOrCheck != 1)
+			{
+				STATSTORAGE.p_hp = readPokemonStats("player", 3);
+				STATSTORAGE.p_consumableCount = STATSTORAGE.p_consumableCount - 1;
+			}
+			strcpy(STATSTORAGE.p_consumable, "Full Restore");
 		}
 		else
 		{
@@ -983,43 +1193,60 @@ char* useConsumable(char who[7])
 		{
 			STATSTORAGE.p_hp = readPokemonStats("npc", 3);
 		}
+		return STATSTORAGE.p_consumable;
 	}
 	else if (strcmp(who, "npc")==0)
 	{
 		if ((STATSTORAGE.n_level >= 1) && (STATSTORAGE.n_level < 20) && (STATSTORAGE.n_consumableCount > 0)) // Levels 1-20: Potion
 		{
-			STATSTORAGE.n_hp += 20;
-			STATSTORAGE.n_consumableCount = STATSTORAGE.n_consumableCount - 1;
-			strcpy(POTIONSELECTED, "Potion");
+			if (useOrCheck != 1)
+			{
+				STATSTORAGE.n_hp += 20;
+				STATSTORAGE.n_consumableCount = STATSTORAGE.n_consumableCount - 1;
+			}
+			strcpy(STATSTORAGE.n_consumable, "Potion");
 		}
 		else if ((STATSTORAGE.n_level >= 20) && (STATSTORAGE.n_level < 40) && (STATSTORAGE.n_consumableCount > 0)) // Levels 21-40: Super Potion
 		{
-			STATSTORAGE.n_hp += 60;
-			STATSTORAGE.n_consumableCount = STATSTORAGE.n_consumableCount - 1;
-			strcpy(POTIONSELECTED, "Super Potion");
+			if (useOrCheck != 1)
+			{
+				STATSTORAGE.n_hp += 60;
+				STATSTORAGE.n_consumableCount = STATSTORAGE.n_consumableCount - 1;
+			}
+			strcpy(STATSTORAGE.n_consumable, "Super Potion");
 		}
 		else if ((STATSTORAGE.n_level >= 40) && (STATSTORAGE.n_level < 60) && (STATSTORAGE.n_consumableCount > 0)) // Levels 41-60: Hyper Potion
 		{
-			STATSTORAGE.n_hp += 100;
-			STATSTORAGE.n_consumableCount = STATSTORAGE.n_consumableCount - 1;
-			strcpy(POTIONSELECTED, "Hyper Potion");
+			if (useOrCheck != 1)
+			{
+				STATSTORAGE.n_hp += 100;
+				STATSTORAGE.n_consumableCount = STATSTORAGE.n_consumableCount - 1;
+			}
+			strcpy(STATSTORAGE.n_consumable, "Hyper Potion");
 		}
 		else if ((STATSTORAGE.n_level >= 60) && (STATSTORAGE.n_level < 80) && (STATSTORAGE.n_consumableCount > 0)) // Levels 61-80: Max Potion
 		{
+			if (useOrCheck != 1)
+			{
 			STATSTORAGE.n_hp += 140;
 			STATSTORAGE.n_consumableCount = STATSTORAGE.n_consumableCount - 1;
-			strcpy(POTIONSELECTED, "Max Potion");
+			}
+			strcpy(STATSTORAGE.n_consumable, "Max Potion");
 		}
 		else if ((STATSTORAGE.n_level >= 80) && (STATSTORAGE.n_level <= 100) && (STATSTORAGE.n_consumableCount > 0)) // Levels 81-100: Full Restore
 		{
-			STATSTORAGE.n_hp = readPokemonStats("npc", 3);
-			STATSTORAGE.n_consumableCount = STATSTORAGE.n_consumableCount - 1;
-			strcpy(POTIONSELECTED, "Full Restore");
+			if (useOrCheck != 1)
+			{
+				STATSTORAGE.n_hp = readPokemonStats("npc", 3);
+				STATSTORAGE.n_consumableCount = STATSTORAGE.n_consumableCount - 1;
+			}
+			strcpy(STATSTORAGE.n_consumable, "Full Restore");
 		}
 		else
 		{
 			printf("ERROR: useConsumable() if-1-2 defaulted; debug"); // only occurs from developer error in implementation code
 		}
+		return STATSTORAGE.n_consumable;
 	}
 	else
 	{
@@ -1029,5 +1256,5 @@ char* useConsumable(char who[7])
 	{
 		STATSTORAGE.n_hp = readPokemonStats("npc", 3);
 	}
-	return POTIONSELECTED;
+	return "ERROR: useConsumable() return defaulted; debug";
 }

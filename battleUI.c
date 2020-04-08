@@ -419,6 +419,14 @@ int nameToNational(char name[12])
     return 816;//crying frog pokemon
 }
 
+char* emptyString(char objectToEmpty[])
+{
+    char blank[]="                                                                  ";//idk how long this is
+    strncpy(objectToEmpty,blank,strlen(objectToEmpty));
+    return objectToEmpty;
+}
+
+
 
 void resetScreen(char screen[33][65])
 {
@@ -519,12 +527,12 @@ void resetColorScreen(char colorScreen[33][65])
 //////////////////////////////////////////////////////////////////
 void changeEnemyPokemon(char screen[33][65],int pokemonIndex)
 {
-    int count;
+    int count=0;
     char enemyPokemon[17][31];
-    char cleanSpare[65-30];
-    char spare[65-30];
-    char completeSpare[65];
-    char cleanCompleteSpare[65];
+    char cleanSpare[65-30]="";
+    char spare[65-30]="";
+    char completeSpare[65]="";
+    char cleanCompleteSpare[65]="";
     getPokemon(enemyPokemon,pokemonIndex);
     for(count=0;count<16;count++)
     {
@@ -560,9 +568,146 @@ void changePlayerPokemon(char screen[33][65],int pokemonIndex)
     }
 }
 
-void battleUI()
+int floatToInt(float number)
 {
-    clear();
+    return ((int)number);
+}
+
+void initializeScreen(char screen[33][65],char colorScreen[33][65])
+{
+
+
+/*remove these slashes if you want to try to optimize
+    changeEnemyName(screen,colorScreen,NPCPOKEMONCHOICE,stringToCharType(STATSTORAGE.n_type));
+    changePlayerName(screen,colorScreen,PLAYERPOKEMONCHOICE,stringToCharType(STATSTORAGE.p_type));
+    //changeEnemyHp(screen,3,5);
+    //changeEnemyHp(screen,(int)readPokemonStats("npc",3),5);
+    printf("%d",floatToInt(readPokemonStats("npc",3)));//this read pokemon stats seems to be the main culprit
+    //printf("%f",readPokemonStats("npc",3));
+    //changeEnemyHp(screen,((int)readPokemonStats("npc",3)+0),((int)readPokemonStats("npc",3)+0));
+    //changePlayerHp(screen,((int)readPokemonStats("player",3)+0),((int)readPokemonStats("player",3)+0));
+slashstar//and change these too
+    changeEnemyType(screen,colorScreen,stringToCharType(STATSTORAGE.n_type));
+    changePlayerType(screen,colorScreen,stringToCharType(STATSTORAGE.p_type));
+    changeEnemyLvl(screen,readPokemonStats("npc",1));
+    changePlayerLvl(screen,readPokemonStats("player",1));
+    changeEnemyXp(screen,readPokemonStats("npc",2));
+    changePlayerXp(screen,readPokemonStats("player",2));
+
+
+    changeEnemyMove1(screen,STATSTORAGE.n_moveOne);
+    changeEnemyMove2(screen,STATSTORAGE.n_moveTwo);
+    changePlayerMove1(screen,STATSTORAGE.p_moveOne);
+    changePlayerMove2(screen,STATSTORAGE.p_moveTwo);
+    changeEnemyUltimate(screen,STATSTORAGE.n_ability,STATSTORAGE.n_abilityCount);
+    changePlayerUltimate(screen,STATSTORAGE.p_ability,STATSTORAGE.p_abilityCount);
+
+    changeEnemyConsumable(screen,STATSTORAGE.n_consumable,STATSTORAGE.n_consumableCount,1);
+    changePlayerConsumable(screen,STATSTORAGE.p_consumable,STATSTORAGE.p_consumableCount,1);
+starslash//and change these too
+    changeEnemyPokemon(screen,nameToNational(NPCPOKEMONCHOICE));//this is to visualize if it actually works
+    changePlayerPokemon(screen,nameToNational(PLAYERPOKEMONCHOICE));
+
+*///remove these slashes if you want to try to optimize
+
+//sorry for horribly optimized code
+    char enemyName[12]= "           ";
+    char playerName[12]="           ";
+    int enemyHp=1;
+    int enemyTotalHp=1;
+    int playerHp=1;
+    int playerTotalHp=1;//if i just intialize them, it might cause problems
+    char enemyType='w';//so thats why i assign values usually
+    char playerType='w';
+    int playerLevel=1;
+    int enemyLevel=1;
+    int playerCurrentXp=1;//holds max int value digits :D
+    int enemyCurrentXp=1;
+    char playerMove1[12]="";
+    char playerMove2[12]="";
+    char playerMoveUltimate[12]="";
+    char enemyMove1[12]="";
+    char enemyMove2[12]="";
+    char enemyMoveUltimate[12]="";
+    int enemyUltimateUsed=1;
+    int playerUltimateUsed=1;
+    char playerConsumableName[15]="";
+    char enemyConsumableName[15] ="";
+    int playerConsumableCount=1;
+    int enemyConsumableCount=1;
+    int playerConsumableMaxCount=1;
+    int enemyConsumableMaxCount=1;
+    int playerPokemonNumber=1;
+    int enemyPokemonNumber=1;//p_pokemonID is cant be used if 5 can represent two pokemons at once xD
+
+
+
+    strncpy(emptyString(playerName),PLAYERPOKEMONCHOICE,strlen(PLAYERPOKEMONCHOICE));
+    strncpy(emptyString(enemyName),NPCPOKEMONCHOICE,strlen(NPCPOKEMONCHOICE));
+    playerHp=(int)STATSTORAGE.p_hp;
+    enemyHp=(int)STATSTORAGE.n_hp;
+    playerTotalHp=readPokemonStats("player",3);
+    enemyTotalHp=readPokemonStats("npc",3);
+    playerType=stringToCharType(STATSTORAGE.p_type);
+    enemyType=stringToCharType(STATSTORAGE.n_type);
+    playerLevel=readPokemonStats("player",1);
+    enemyLevel=readPokemonStats("npc",1);
+    playerCurrentXp=readPokemonStats("player",2);
+    enemyCurrentXp=readPokemonStats("npc",2);
+    strncpy(emptyString(playerMove1),STATSTORAGE.p_moveOne,strlen(STATSTORAGE.p_moveOne));
+    strncpy(emptyString(playerMove2),STATSTORAGE.p_moveTwo,strlen(STATSTORAGE.p_moveTwo));
+    strncpy(emptyString(playerMoveUltimate),STATSTORAGE.p_ability,strlen(STATSTORAGE.p_ability));
+    strncpy(emptyString(enemyMove1),STATSTORAGE.n_moveOne,strlen(STATSTORAGE.n_moveOne));
+    strncpy(emptyString(enemyMove2),STATSTORAGE.n_moveTwo,strlen(STATSTORAGE.n_moveTwo));
+    strncpy(emptyString(enemyMoveUltimate),STATSTORAGE.n_ability,strlen(STATSTORAGE.n_ability));
+    strncpy(emptyString(playerConsumableName),STATSTORAGE.p_consumable,strlen(STATSTORAGE.p_consumable));
+    strncpy(emptyString(enemyConsumableName),STATSTORAGE.n_consumable,strlen(STATSTORAGE.n_consumable));
+    playerConsumableCount=STATSTORAGE.p_consumableCount;
+    enemyConsumableCount=STATSTORAGE.n_consumableCount;
+    playerUltimateUsed=STATSTORAGE.p_abilityCount;
+    enemyUltimateUsed=STATSTORAGE.n_abilityCount;
+    playerConsumableMaxCount=1;
+    enemyConsumableMaxCount=1;
+    playerPokemonNumber=nameToNational(PLAYERPOKEMONCHOICE);
+    enemyPokemonNumber=nameToNational(NPCPOKEMONCHOICE);
+
+
+
+
+
+    changeEnemyName(screen,colorScreen,enemyName,enemyType);
+    changePlayerName(screen,colorScreen,playerName,playerType);
+    changeEnemyHp(screen,enemyHp,enemyTotalHp);
+    changePlayerHp(screen,playerHp,playerTotalHp);
+    changeEnemyType(screen,colorScreen,enemyType);
+    changePlayerType(screen,colorScreen,playerType);
+    changeEnemyLvl(screen,enemyLevel);
+    changePlayerLvl(screen,playerLevel);
+    changeEnemyXp(screen,enemyCurrentXp);
+    changePlayerXp(screen,playerCurrentXp);
+
+
+    changeEnemyMove1(screen,enemyMove1);
+    changeEnemyMove2(screen,enemyMove2);
+    changePlayerMove1(screen,playerMove1);
+    changePlayerMove2(screen,playerMove2);
+    changeEnemyUltimate(screen,enemyMoveUltimate,enemyUltimateUsed);
+    changePlayerUltimate(screen,playerMoveUltimate,playerUltimateUsed);
+    changeEnemyConsumable(screen,enemyConsumableName,enemyConsumableCount,enemyConsumableMaxCount);
+    changePlayerConsumable(screen,playerConsumableName,playerConsumableCount,playerConsumableMaxCount);
+
+
+    changeEnemyPokemon(screen,enemyPokemonNumber);
+    changePlayerPokemon(screen,playerPokemonNumber);
+
+
+
+
+}
+
+
+void battleUI(int animationNumber)
+{
     char screen[33][65] ={ //32 rows, 64 columns
         "+--------------------------------+                              ",
         "|                                |                              ",
@@ -632,25 +777,10 @@ void battleUI()
         "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
         "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
         "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",};
-    //bot left pokemon 30 width
-    //top right pokemon 32 width?
-    //test 16 lines height
-    //30 char width
+    
 
-    //changeText(screen,1,1,"a");
-    char testInput[100];
-    int testInputInt=1;
-    int ice;
-    
-    //                                "
-    //charizard   hp:[23/33] Fire
-    //level 100  EXP:102
-    //earthquake  flash cannon
-    //ultimate attack hyper potion
-    //later replace these with actual stats
-    
-    resetScreen(screen);
-    resetColorScreen(colorScreen);
+
+/*
 
     char enemyName[12]= "           ";
     char playerName[12]="           ";
@@ -658,45 +788,57 @@ void battleUI()
     int enemyTotalHp=1;
     int playerHp=1;
     int playerTotalHp=1;//if i just intialize them, it might cause problems
-    char enemyType='r';//so thats why i assign values usually
-    char playerType='p';
+    char enemyType='w';//so thats why i assign values usually
+    char playerType='w';
     int playerLevel=1;
     int enemyLevel=1;
-    int playerCurrentXp=1;//currently, the xp holds only 4 digits, tell me if you need more
+    int playerCurrentXp=1;
     int enemyCurrentXp=1;
-    char playerMove1[12]="bullet seed";
-    char playerMove2[12]="intimidate";
-    char playerMoveUltimate[12]="superpower";
-    char enemyMove1[12]="rain dance";
-    char enemyMove2[12]="volt tackle";
-    char enemyMoveUltimate[12]="hyper beam";
-    int enemyUltimateUsed=0;
+    char playerMove1[12]="";
+    char playerMove2[12]="";
+    char playerMoveUltimate[12]="";
+    char enemyMove1[12]="";
+    char enemyMove2[12]="";
+    char enemyMoveUltimate[12]="";
+    int enemyUltimateUsed=1;
     int playerUltimateUsed=1;
-    char playerConsumableName[15]="super potion";
-    char enemyConsumableName[15] ="full restore";
+    char playerConsumableName[15]="";
+    char enemyConsumableName[15] ="";
     int playerConsumableCount=1;
-    int enemyConsumableCount=3;
-    int playerConsumableMaxCount=7;
-    int enemyConsumableMaxCount=4;
+    int enemyConsumableCount=1;
+    int playerConsumableMaxCount=1;
+    int enemyConsumableMaxCount=1;
     int playerPokemonNumber=1;
     int enemyPokemonNumber=1;//p_pokemonID is cant be used if 5 can represent two pokemons at once xD
 
 
 
-
-
-    strncpy(playerName,PLAYERPOKEMONCHOICE,strlen(PLAYERPOKEMONCHOICE));
-    strncpy(enemyName,NPCPOKEMONCHOICE,strlen(NPCPOKEMONCHOICE));
+    strncpy(emptyString(playerName),PLAYERPOKEMONCHOICE,strlen(PLAYERPOKEMONCHOICE));
+    strncpy(emptyString(enemyName),NPCPOKEMONCHOICE,strlen(NPCPOKEMONCHOICE));
+    playerHp=readPokemonStats("player",3);
+    enemyHp=readPokemonStats("npc",3);
+    playerTotalHp=readPokemonStats("player",3);
+    enemyTotalHp=readPokemonStats("npc",3);
     playerType=stringToCharType(STATSTORAGE.p_type);
     enemyType=stringToCharType(STATSTORAGE.n_type);
     playerLevel=readPokemonStats("player",1);
     enemyLevel=readPokemonStats("npc",1);
     playerCurrentXp=readPokemonStats("player",2);
     enemyCurrentXp=readPokemonStats("npc",2);
-    playerHp=readPokemonStats("player",3);
-    enemyHp=readPokemonStats("npc",3);
-    playerTotalHp=readPokemonStats("player",3);
-    enemyTotalHp=readPokemonStats("npc",3);
+    strncpy(emptyString(playerMove1),STATSTORAGE.p_moveOne,strlen(STATSTORAGE.p_moveOne));
+    strncpy(emptyString(playerMove2),STATSTORAGE.p_moveTwo,strlen(STATSTORAGE.p_moveTwo));
+    strncpy(emptyString(playerMoveUltimate),STATSTORAGE.p_ability,strlen(STATSTORAGE.p_ability));
+    strncpy(emptyString(enemyMove1),STATSTORAGE.n_moveOne,strlen(STATSTORAGE.n_moveOne));
+    strncpy(emptyString(enemyMove2),STATSTORAGE.n_moveTwo,strlen(STATSTORAGE.n_moveTwo));
+    strncpy(emptyString(enemyMoveUltimate),STATSTORAGE.n_ability,strlen(STATSTORAGE.n_ability));
+    strncpy(emptyString(playerConsumableName),STATSTORAGE.p_consumable,strlen(STATSTORAGE.p_consumable));
+    strncpy(emptyString(enemyConsumableName),STATSTORAGE.n_consumable,strlen(STATSTORAGE.n_consumable));
+    playerConsumableCount=STATSTORAGE.p_consumableCount;
+    enemyConsumableCount=STATSTORAGE.n_consumableCount;
+    playerUltimateUsed=STATSTORAGE.p_abilityCount;
+    enemyUltimateUsed=STATSTORAGE.n_abilityCount;
+    playerConsumableMaxCount=1;
+    enemyConsumableMaxCount=1;
     playerPokemonNumber=nameToNational(PLAYERPOKEMONCHOICE);
     enemyPokemonNumber=nameToNational(NPCPOKEMONCHOICE);
 
@@ -728,43 +870,27 @@ void battleUI()
     changePlayerConsumable(screen,playerConsumableName,playerConsumableCount,playerConsumableMaxCount);
     changeEnemyPokemon(screen,enemyPokemonNumber);
     changePlayerPokemon(screen,playerPokemonNumber);
-
-    
-
+*/
 
 
-//This would probably be the start of the while loop
-//like while win condition or something is -1
-//and then at the end, we can assign it something to exit the loop,thus the program as well
-//battleUI would be id assume one battle at a time
-    int winCondition=-1;
-    while(winCondition==-1)
-{
     clear();
+    initializeScreen(screen,colorScreen);
     run(screen,colorScreen);
-    delay(10000000);//made it extremely long for testing purposes :P
-    
+    //delay(10000000);//made it extremely long for testing purposes :P
+    if(animationNumber==1)
+        {
+        //insert animation here
+        //tackle,vinewhip,razorleaf,bulletseed,seed bomb
+        //scratch,slash,firefang,flare blitz,flamethrower
+        //headbutt,watergun, aquatail,waterspout,waterfall
+        //il probably store the animations in pokefiles
+
+        }
 }
 
-
-    /* if you for some reason wanna test individual pokemon
-
-    for(ice=1;ice<=151;ice++)
-    {
-      //printf("here%d\n",testInputInt);
-      changeEnemyPokemon(screen,testInputInt);
-      //    changeEnemyPokemon(screen,ice);
-      //    changePlayerPokemon(screen,152-ice);
-      changePlayerPokemon(screen,152-testInputInt);
-
-      run(screen,colorScreen);
-      delay(100);
-      scanf("%s",testInput);
-      testInputInt=atoi(testInput);
-      clear();
-    }
-
-    */
-
+void displayScreen()
+{
+    battleUI(0);
 }
+
 

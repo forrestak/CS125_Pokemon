@@ -11,7 +11,6 @@
 // Global variables
 typedef struct {
 	// Player stat storage
-	char p_type[6];
 	float p_pokemonID;
 	float p_level;
 	float p_experience;
@@ -24,8 +23,12 @@ typedef struct {
 	float p_consumableCount;
 	float p_abilityCount;
 	float p_abilityStatus;
+	char p_type[6];
+	char p_moveOne[15];
+	char p_moveTwo[15];
+	char p_ability[15];
+	char p_consumable[15];
 	// NPC stat storage
-	char n_type[6];
 	float n_pokemonID;
 	float n_level;
 	float n_experience;
@@ -38,6 +41,11 @@ typedef struct {
 	float n_consumableCount;
 	float n_abilityCount;
 	float n_abilityStatus;
+	char n_type[6];
+	char n_moveOne[15];
+	char n_moveTwo[15];
+	char n_ability[15];
+	char n_consumable[15];
 } statStruct;
 extern statStruct STATSTORAGE; 
 extern char TYPE[6];
@@ -66,8 +74,8 @@ int npcAI();
 void useMoveOne(char who[7]);
 void useMoveTwo(char who[7]);
 float useAbility(char who[7]);
-char* useConsumable(char who[7]);
+char* useConsumable(char who[7], int useOrCheck);
 statStruct initializeStats();
-char *moveSelect(char who[7], int moveType);
+char *moveSelect(char who[7], int moveType, int useOrCheck);
 
 #endif

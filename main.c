@@ -82,6 +82,10 @@ int main(){
   generatePokemonStats(pokemonChoiceToInt("player"), 0);
   generatePokemonStats(pokemonChoiceToInt("npc"), 2);
 
+  // Example usage of level-up function - purposefully commented out here
+/*  levelupPokemonStats("player", pokemonChoiceToInt("player"), 30000);
+  levelupPokemonStats("npc", pokemonChoiceToInt("npc"), 30000);*/
+
   // Player stat readout before initiating battle simulator
   printf("You chose %s!\n", PLAYERPOKEMONCHOICE);
   printf("%s is Level %.0f with:\n", PLAYERPOKEMONCHOICE, readPokemonStats("player", 1));
@@ -106,12 +110,21 @@ int main(){
 
   initializeStats(); // populate STATSTORAGE struct with default values from files
 
+  // Remove after battleUI implementation
+  printf("\nbattleUI Variable Testing below:");
+  printf("\nTEST: Player Move One: %s", STATSTORAGE.p_moveOne);
+  printf("\nTEST: Player Move Two: %s", STATSTORAGE.p_moveTwo);
+  printf("\nTEST: Player Ability: %s", STATSTORAGE.p_ability);
+  printf("\nTEST: Player Consumable: %s", STATSTORAGE.p_consumable);
+  printf("\nTEST: NPC Move One: %s", STATSTORAGE.n_moveOne);
+  printf("\nTEST: NPC Move Two: %s", STATSTORAGE.n_moveTwo);
+  printf("\nTEST: NPC Ability: %s", STATSTORAGE.n_ability);
+  printf("\nTEST: NPC Consumable: %s\n\n", STATSTORAGE.n_consumable);
+
   // Start of simulation
   readPrint(count, text5, "standard");
-
-  battleUI();
+  combatScenario();
   endSim();
-  battleUI();
 
   // Clean up directory by deleting temporary files; will later implement an ask if player wants to "save" their game
   remove("playerStats.txt");

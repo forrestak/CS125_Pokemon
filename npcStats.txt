@@ -1,9 +1,9 @@
-Pokemon ID: 6
+Pokemon ID: 4
 Level: 1
 Experience: 1000.00
-HP: 90.00
-Attack: 65.00
-Defense: 65.00
-Sp. Attack: 40.00
-Sp. Defense: 40.00
-Speed: 15.00
+HP: 50.00
+Attack: 75.00
+Defense: 35.00
+Sp. Attack: 70.00
+Sp. Defense: 30.00
+Speed: 40.00

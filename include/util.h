@@ -12,5 +12,6 @@
 void delay(int);
 void clear();
 void readPrint(int, char [], char []);
+int pokemonChoiceToInt(char []);
 
 #endif

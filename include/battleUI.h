@@ -42,6 +42,7 @@ void resetScreen(char [][65]);
 void resetColorScreen(char [][65]);
 void changeEnemyPokemon(char [][65],int);
 void changePlayerPokemon(char [][65],int);
-void battleUI();
+void battleUI(int);
+void displayScreen();
 
 #endif

@@ -31,7 +31,7 @@
 #include "endSim.h"
 
 // Global variables
-statStruct STATSTORAGE; 
+statStruct STATSTORAGE;
 char TYPE[6];
 char MOVESELECTED[15];
 char EFFECTIVENESS[30];
@@ -89,7 +89,7 @@ int main(){
   // Player stat readout before initiating battle simulator
   printf("You chose %s!\n", PLAYERPOKEMONCHOICE);
   printf("%s is Level %.0f with:\n", PLAYERPOKEMONCHOICE, readPokemonStats("player", 1));
-  printf("%.2f XP\n", NPCPOKEMONCHOICE, readPokemonStats("player", 2));
+  printf("%.2f XP\n", readPokemonStats("player", 2));
   printf("%.2f HP\n", readPokemonStats("player", 3));
   printf("%.2f Attack\n", readPokemonStats("player", 4));
   printf("%.2f Defense\n", readPokemonStats("player", 5));
@@ -100,7 +100,7 @@ int main(){
   // NPC stat readout before initiating battle simulator
   printf("\nYour opponent is %s!\n", NPCPOKEMONCHOICE);
   printf("%s is Level %.0f with:\n", NPCPOKEMONCHOICE, readPokemonStats("npc", 1));
-  printf("%.2f XP\n", NPCPOKEMONCHOICE, readPokemonStats("npc", 2));
+  printf("%.2f XP\n", readPokemonStats("npc", 2));
   printf("%.2f HP\n", readPokemonStats("npc", 3));
   printf("%.2f Attack\n", readPokemonStats("npc", 4));
   printf("%.2f Defense\n", readPokemonStats("npc", 5));

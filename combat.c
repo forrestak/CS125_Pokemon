@@ -24,6 +24,7 @@
 #include "levelupPokemonStats.h"
 #include "readPokemonStats.h"
 #include "combat.h"
+#include "battleUI.h"
 
 void combatScenario() // combines primary combat functions to simulate combat until there is a victor
 {
@@ -31,7 +32,7 @@ void combatScenario() // combines primary combat functions to simulate combat un
     displayScreen();
 	if (STATSTORAGE.p_speed >= STATSTORAGE.n_speed)
 	{
-		do 
+		do
 		{
 			playerTurn();
             displayScreen();
@@ -44,7 +45,7 @@ void combatScenario() // combines primary combat functions to simulate combat un
 	}
 	else
 	{
-		do 
+		do
 		{
 			npcTurn(npcAI());
             displayScreen();
@@ -163,7 +164,7 @@ int playerTurnCheck(int playerChoice) // checks whether player chose a valid mov
 {
 	switch(playerChoice)
 	{
-		case 1 : 
+		case 1 :
 		{
 			return 1;
 		}
@@ -171,7 +172,7 @@ int playerTurnCheck(int playerChoice) // checks whether player chose a valid mov
 		{
 			return 2;
 		}
-		case 3 : 
+		case 3 :
 		{
 			if (STATSTORAGE.p_hp <= ((readPokemonStats("player", 3) / 3)) && (STATSTORAGE.n_abilityCount >= 1))
 			{
@@ -184,7 +185,7 @@ int playerTurnCheck(int playerChoice) // checks whether player chose a valid mov
 				break;
 			}
 		}
-		case 4: 
+		case 4:
 		{
 			if (STATSTORAGE.p_consumableCount > 0)
 			{
@@ -225,11 +226,11 @@ int npcAI() // creates psuedo-random choice weights for npcTurn() and checks whe
 	{
 		npcChoice = 3;
 	}
-	else if ((weightedRandomKey <= 60) && (STATSTORAGE.n_hp < ((readPokemonStats("npc", 3) / 2))) && (STATSTORAGE.n_consumableCount > 0)) // 60% chance to use Consumable (if available) while below 1/2 HP 
+	else if ((weightedRandomKey <= 60) && (STATSTORAGE.n_hp < ((readPokemonStats("npc", 3) / 2))) && (STATSTORAGE.n_consumableCount > 0)) // 60% chance to use Consumable (if available) while below 1/2 HP
 	{
 		npcChoice = 4;
 	}
-	else 
+	else
 	{
 		if (weightedRandomKey <= 75)
 		{
@@ -239,7 +240,7 @@ int npcAI() // creates psuedo-random choice weights for npcTurn() and checks whe
 		{
 			npcChoice = 2;
 		}
-		
+
 	}
 	return npcChoice;
 }
@@ -254,7 +255,7 @@ statStruct initializeStats() // populate STATSTORAGE struct with default values 
 	STATSTORAGE.p_level = readPokemonStats("player", 1);
 	STATSTORAGE.p_experience = readPokemonStats("player", 2);
 	STATSTORAGE.p_hp = readPokemonStats("player", 3);
-	STATSTORAGE.p_attack = readPokemonStats("player", 4);	
+	STATSTORAGE.p_attack = readPokemonStats("player", 4);
 	STATSTORAGE.p_defense = readPokemonStats("player", 5);
 	STATSTORAGE.p_spAttack = readPokemonStats("player", 6);
 	STATSTORAGE.p_spDefense = readPokemonStats("player", 7);
@@ -268,7 +269,7 @@ statStruct initializeStats() // populate STATSTORAGE struct with default values 
 	strcpy(STATSTORAGE.p_ability, "Overgrowth");
 	strcpy(STATSTORAGE.p_consumable, useConsumable("player", 1));
 	// Assign NPC stat defaults from files
-	
+
 	STATSTORAGE.n_pokemonID = readPokemonStats("npc", 0);
 	STATSTORAGE.n_level = readPokemonStats("npc", 1);
 	STATSTORAGE.n_experience = readPokemonStats("npc", 2);
@@ -290,7 +291,7 @@ statStruct initializeStats() // populate STATSTORAGE struct with default values 
 	return STATSTORAGE;
 }
 
-/*float readCombatStats(char who[7], int stat) // used by other functions to pull updated combat stats during combatScenario() runtime 
+/*float readCombatStats(char who[7], int stat) // used by other functions to pull updated combat stats during combatScenario() runtime
 {
 	char statResult[12];
 	if (strcmp(who, "player")==0)
@@ -379,11 +380,11 @@ char typeToInt() // converts string from getType() into switch-usable integers
 
 float createTypeModifier(char who[7]) // determines a half-damage/double-damage modifier based on attacking/defending Pokemon types
 {
-	float typeModifier[3][3]={{2, 2, .5}, // chart system to determine modifier; rows/column key: 1-Grass, 2-Fire, 3-Water 
+	float typeModifier[3][3]={{2, 2, .5}, // chart system to determine modifier; rows/column key: 1-Grass, 2-Fire, 3-Water
 							 {.5, 2, 2},
 							 {2, .5, 2}};
 	if (strcmp(who, "player")==0)
-		return typeModifier[(int)STATSTORAGE.p_pokemonID-1][(int)STATSTORAGE.n_pokemonID-4]; 
+		return typeModifier[(int)STATSTORAGE.p_pokemonID-1][(int)STATSTORAGE.n_pokemonID-4];
 	else if (strcmp(who, "npc")==0)
 		return typeModifier[(int)STATSTORAGE.n_pokemonID-4][(int)STATSTORAGE.p_pokemonID-1];
 	else
@@ -459,9 +460,9 @@ float damageCalculation(int moveType, float power, float level, float attack, fl
 	float damage;
 	if (moveType == 1)
 	{
-		damage = (((((((((2.00 * level)/5)+2)) * power * (spAttack / spDefense))/50)+2) * abilityModifier) / typeModifier) * levelModifier; 
+		damage = (((((((((2.00 * level)/5)+2)) * power * (spAttack / spDefense))/50)+2) * abilityModifier) / typeModifier) * levelModifier;
 	}
-	
+
 	else if (moveType == 2)
 	{
 		damage = (((((((((2.00 * level)/5)+2)) * power * (spAttack / spDefense))/50)+2) * abilityModifier) / typeModifier) * levelModifier;
@@ -489,7 +490,7 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 				case 1 : // Grass-type physical moves
 				{
 					if ((STATSTORAGE.p_level >= 1) && (STATSTORAGE.p_level < 20)) // Levels 1-20: Tackle
-					{	
+					{
 						if (useOrCheck != 1)
 						{
 							STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 50, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
@@ -533,7 +534,7 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 				case 2 : // Fire-type physical moves
 				{
 					if ((STATSTORAGE.p_level >= 1) && (STATSTORAGE.p_level < 20)) // Levels 1-20: Scratch
-					{	
+					{
 						if (useOrCheck != 1)
 						{
 							STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 50, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
@@ -577,7 +578,7 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 				case 3 : // Water-type physical moves
 				{
 					if ((STATSTORAGE.p_level >= 1) && (STATSTORAGE.p_level < 20)) // Levels 1-20: Headbutt
-					{	
+					{
 						if (useOrCheck != 1)
 						{
 							STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 50, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
@@ -631,7 +632,7 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 				case 1 : // Grass-type physical moves
 				{
 					if ((STATSTORAGE.n_level >= 1) && (STATSTORAGE.n_level < 20)) // Levels 1-20: Tackle
-					{	
+					{
 						if (useOrCheck != 1)
 						{
 							STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 50, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
@@ -675,7 +676,7 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 				case 2 : // Fire-type physical moves
 				{
 					if ((STATSTORAGE.n_level >= 1) && (STATSTORAGE.n_level < 20)) // Levels 1-20: Scratch
-					{	
+					{
 						if (useOrCheck != 1)
 						{
 							STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 50, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
@@ -719,7 +720,7 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 				case 3 : // Water-type physical moves
 				{
 					if ((STATSTORAGE.n_level >= 1) && (STATSTORAGE.n_level < 20)) // Levels 1-20: Headbutt
-					{	
+					{
 						if (useOrCheck != 1)
 						{
 							STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 50, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
@@ -758,7 +759,7 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 						}
 						strcpy(STATSTORAGE.n_moveOne, "Waterfall");
 					}
-					return STATSTORAGE.n_moveOne;	
+					return STATSTORAGE.n_moveOne;
 				}
 				default :
 				{
@@ -771,7 +772,7 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 			printf("ERROR: moveSelect() if-2-1 defaulted; debug"); // only occurs from developer error in implementation code
 		}
 	}
-	
+
 	else if (moveType == 2)
 	{
 		if (strcmp(who, "player")==0)
@@ -781,7 +782,7 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 				case 1 : // Grass-type special moves
 				{
 					if ((STATSTORAGE.p_level >= 1) && (STATSTORAGE.p_level < 20)) // Levels 1-20: Growth
-					{	
+					{
 						if (useOrCheck != 1)
 						{
 							STATSTORAGE.p_attack = STATSTORAGE.p_attack + (0.45 * 2);
@@ -830,7 +831,7 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 				case 2 : // Fire-type special moves
 				{
 					if ((STATSTORAGE.p_level >= 1) && (STATSTORAGE.p_level < 20)) // Levels 1-20: Growl
-					{	
+					{
 						if (useOrCheck != 1)
 						{
 							STATSTORAGE.n_attack = STATSTORAGE.n_attack - (0.45 * 2);
@@ -879,7 +880,7 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 				case 3 : // Water-type special moves
 				{
 					if ((STATSTORAGE.p_level >= 1) && (STATSTORAGE.p_level < 20)) // Levels 1-20: Tail Wag
-					{	
+					{
 						if (useOrCheck != 1)
 						{
 							STATSTORAGE.n_defense = STATSTORAGE.n_defense - (0.45 * 2);
@@ -938,7 +939,7 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 				case 1 : // Grass-type special moves
 				{
 					if ((STATSTORAGE.n_level >= 1) && (STATSTORAGE.n_level < 20)) // Levels 1-20: Growth
-					{	
+					{
 						if (useOrCheck != 1)
 						{
 							STATSTORAGE.n_attack = STATSTORAGE.n_attack + (0.45 * 2);
@@ -987,7 +988,7 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 				case 2 : // Fire-type special moves
 				{
 					if ((STATSTORAGE.n_level >= 1) && (STATSTORAGE.n_level < 20)) // Levels 1-20: Growl
-					{	
+					{
 						if (useOrCheck != 1)
 						{
 							STATSTORAGE.p_attack = STATSTORAGE.p_attack - (0.45 * 2);
@@ -1036,7 +1037,7 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 				case 3 : // Water-type special moves
 				{
 					if ((STATSTORAGE.n_level >= 1) && (STATSTORAGE.n_level < 20)) // Levels 1-20: Tail Wag
-					{	
+					{
 						if (useOrCheck != 1)
 						{
 							STATSTORAGE.p_defense = STATSTORAGE.p_defense - (0.45 * 2);
@@ -1136,7 +1137,7 @@ float useAbility(char who[7])
 	return abilityModifier;
 }
 
-char* useConsumable(char who[7], int useOrCheck) 
+char* useConsumable(char who[7], int useOrCheck)
 {
 	if (strcmp(who, "player")==0)
 	{

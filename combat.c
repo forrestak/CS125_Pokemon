@@ -28,11 +28,13 @@
 void combatScenario() // combines primary combat functions to simulate combat until there is a victor
 {
 	printf("\nThe tournament has begun!\n");
+    displayScreen();
 	if (STATSTORAGE.p_speed >= STATSTORAGE.n_speed)
 	{
 		do 
 		{
 			playerTurn();
+            displayScreen();
 			if ((STATSTORAGE.p_hp > 0) && (STATSTORAGE.n_hp > 0))
 			{
 				npcTurn(npcAI());
@@ -45,6 +47,8 @@ void combatScenario() // combines primary combat functions to simulate combat un
 		do 
 		{
 			npcTurn(npcAI());
+            displayScreen();
+
 			if ((STATSTORAGE.p_hp > 0) && (STATSTORAGE.n_hp > 0))
 			{
 				playerTurn();

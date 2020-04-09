@@ -29,16 +29,17 @@
 void combatScenario() // combines primary combat functions to simulate combat until there is a victor
 {
 	printf("\nThe tournament has begun!\n");
-    displayScreen();
+	displayScreen();
 	if (STATSTORAGE.p_speed >= STATSTORAGE.n_speed)
 	{
 		do
 		{
 			playerTurn();
-            displayScreen();
+			displayScreen();
 			if ((STATSTORAGE.p_hp > 0) && (STATSTORAGE.n_hp > 0))
 			{
 				npcTurn(npcAI());
+				displayScreen();
 			}
 		}
 		while ((STATSTORAGE.p_hp > 0) && (STATSTORAGE.n_hp > 0));
@@ -48,30 +49,14 @@ void combatScenario() // combines primary combat functions to simulate combat un
 		do
 		{
 			npcTurn(npcAI());
-            displayScreen();
-
+			displayScreen();
 			if ((STATSTORAGE.p_hp > 0) && (STATSTORAGE.n_hp > 0))
 			{
 				playerTurn();
+				displayScreen();
 			}
 		}
 		while ((STATSTORAGE.p_hp > 0) && (STATSTORAGE.n_hp > 0));
-	}
-	if (STATSTORAGE.p_hp <= 0)
-	{
-		STATSTORAGE.p_hp = 0;
-		printf("%s has fainted...\n", PLAYERPOKEMONCHOICE);
-		printf("%s is victorious!\n", NPCPOKEMONCHOICE);
-	}
-	else if (STATSTORAGE.n_hp <= 0)
-	{
-		STATSTORAGE.n_hp = 0;
-		printf("%s has fainted...\n", NPCPOKEMONCHOICE);
-		printf("%s is victorious!\n", PLAYERPOKEMONCHOICE);
-	}
-	else
-	{
-		printf("ERROR: combatScenario() if defaulted; debug"); // only occurs from developer error in implementation code
 	}
 }
 
@@ -81,21 +66,20 @@ void combatScenario() // combines primary combat functions to simulate combat un
 
 void playerTurn() // handles choice implementation for each of the player's four actions
 {	int playerChoice;
-	printf("1-Physical | 2-Special\n3-Ability | 4-Consumable\n");
+	printf("1-Physical    |      2-Special\n3-Ability     |   4-Consumable\n");
 	printf("ACTION: ");
 	scanf("%d", &playerChoice);
 	switch(playerTurnCheck(playerChoice))
 	{
 		case 1 : // Move One
 		{
-			printf("%s uses %s!\n", PLAYERPOKEMONCHOICE, moveSelect("player", 1, 0));
+			moveSelect("player", 1, 2);
 			printf("It's %s\n", checkEffectiveness(createTypeModifier("player")));
-			printf("\n%s HP: %.2f\n\n", NPCPOKEMONCHOICE, STATSTORAGE.n_hp);
 			break;
 		}
 		case 2 : // Move Two
 		{
-			printf("%s uses %s!\n", PLAYERPOKEMONCHOICE, moveSelect("player", 2, 0));
+			moveSelect("player", 2, 2);
 			break;
 		}
 		case 3 : // Ability
@@ -106,8 +90,7 @@ void playerTurn() // handles choice implementation for each of the player's four
 		}
 		case 4 : // Consumable
 		{
-			printf("%s consumed %s!\n", PLAYERPOKEMONCHOICE, useConsumable("player", 0));
-			printf("\n%s HP: %.2f\n\n", PLAYERPOKEMONCHOICE, STATSTORAGE.p_hp);
+			useConsumable("player", 2);
 			break;
 		}
 		default :
@@ -116,24 +99,25 @@ void playerTurn() // handles choice implementation for each of the player's four
 			break;
 		}
 	}
+	checkVictory();
+	sleep(2);
 }
 
 void npcTurn(int npcChoice) // handles choice implementation for each of the NPC's four actions
 {
-	printf("\nWaiting for opponent...\n");
+	printf("\nWaiting for opponent...\n\n");
 	sleep(2);
 	switch(npcChoice)
 	{
 		case 1 : // Move One
 		{
-			printf("%s uses %s!\n", NPCPOKEMONCHOICE, moveSelect("npc", 1, 0));
+			moveSelect("npc", 1, 2);
 			printf("It's %s\n", checkEffectiveness(createTypeModifier("npc")));
-			printf("\n%s HP: %.2f\n\n", PLAYERPOKEMONCHOICE, STATSTORAGE.p_hp);
 			break;
 		}
 		case 2 : // Move Two
 		{
-			printf("%s uses %s!\n", NPCPOKEMONCHOICE, moveSelect("npc", 2, 0));
+			moveSelect("npc", 2, 2);
 			break;
 		}
 		case 3 : // Ability
@@ -144,16 +128,17 @@ void npcTurn(int npcChoice) // handles choice implementation for each of the NPC
 		}
 		case 4 : // Consumable
 		{
-			printf("%s consumed %s!\n", NPCPOKEMONCHOICE, useConsumable("npc", 0));
-			printf("\n%s HP: %.2f\n\n", NPCPOKEMONCHOICE, STATSTORAGE.n_hp);
+			useConsumable("npc", 2);
 			break;
 		}
 		default :
 		{
-			printf("ERROR: playerTurn() switch defaulted; debug"); // only occurs from developer error in implementation code
+			printf("ERROR: npcTurn() switch defaulted; debug"); // only occurs from developer error in implementation code
 			break;
 		}
 	}
+	checkVictory();
+	sleep(2);
 }
 
 
@@ -200,13 +185,13 @@ int playerTurnCheck(int playerChoice) // checks whether player chose a valid mov
 		}
 		default :
 		{
-			printf("ERROR: playerTurnCheck() switch defaulted; debug"); // only occurs from developer error in implementation code
+			printf("Invalid entry - Choose an action 1-4:\n");
+			playerTurn();
 			break;
 		}
 	}
 	return 0;
 }
-
 
 int npcAI() // creates psuedo-random choice weights for npcTurn() and checks whether a move is valid before attempting to execute it
 {
@@ -243,6 +228,26 @@ int npcAI() // creates psuedo-random choice weights for npcTurn() and checks whe
 
 	}
 	return npcChoice;
+}
+
+void checkVictory()
+{
+	if (STATSTORAGE.p_hp <= 0)
+	{
+		STATSTORAGE.p_hp = 0;
+		printf("%s has fainted...\n", PLAYERPOKEMONCHOICE);
+		printf("%s is victorious!\n", NPCPOKEMONCHOICE);
+	}
+	else if (STATSTORAGE.n_hp <= 0)
+	{
+		STATSTORAGE.n_hp = 0;
+		printf("%s has fainted...\n", NPCPOKEMONCHOICE);
+		printf("%s is victorious!\n", PLAYERPOKEMONCHOICE);
+	}
+	else
+	{
+		printf("ERROR: checkVictory() if defaulted; debug"); // only occurs from developer error in implementation code
+	}
 }
 
 
@@ -290,46 +295,6 @@ statStruct initializeStats() // populate STATSTORAGE struct with default values 
 
 	return STATSTORAGE;
 }
-
-/*float readCombatStats(char who[7], int stat) // used by other functions to pull updated combat stats during combatScenario() runtime
-{
-	char statResult[12];
-	if (strcmp(who, "player")==0)
-	{
-		statResult[0] = STATSTORAGE.p_pokemonID;
-		statResult[1] = STATSTORAGE.p_level;
-		statResult[2] = STATSTORAGE.p_experience;
-		statResult[3] = STATSTORAGE.p_hp;
-		statResult[4] = STATSTORAGE.p_attack;
-		statResult[5] = STATSTORAGE.p_defense;
-		statResult[6] = STATSTORAGE.p_spAttack;
-		statResult[7] = STATSTORAGE.p_spDefense;
-		statResult[8] = STATSTORAGE.p_speed;
-		statResult[9] = STATSTORAGE.p_consumableCount;
-		statResult[10] = STATSTORAGE.p_abilityCount;
-		statResult[11] = STATSTORAGE.p_abilityStatus;
-	}
-	else if (strcmp(who, "npc")==0)
-	{
-		statResult[0] = STATSTORAGE.n_pokemonID;
-		statResult[1] = STATSTORAGE.n_level;
-		statResult[2] = STATSTORAGE.n_experience;
-		statResult[3] = STATSTORAGE.n_hp;
-		statResult[4] = STATSTORAGE.n_attack;
-		statResult[5] = STATSTORAGE.n_defense;
-		statResult[6] = STATSTORAGE.n_spAttack;
-		statResult[7] = STATSTORAGE.n_spDefense;
-		statResult[8] = STATSTORAGE.n_speed;
-		statResult[9] = STATSTORAGE.n_consumableCount;
-		statResult[10] = STATSTORAGE.n_abilityCount;
-		statResult[11] = STATSTORAGE.n_abilityStatus;
-	}
-	else
-	{
-		printf("ERROR: readCombatStats() if defaulted; debug"); // only occurs from developer error in implementation code
-	}
-	return statResult[stat];
-}*/
 
 char *getType(int pokemonID) // converts PokemonID to type string for use in printing and typeToInt()
 {
@@ -529,6 +494,10 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 						}
 						strcpy(STATSTORAGE.p_moveOne, "Seed Bomb");
 					}
+					if (useOrCheck == 2)
+					{
+						printf("%s uses %s!\n", PLAYERPOKEMONCHOICE, STATSTORAGE.p_moveOne);
+					}
 					return STATSTORAGE.p_moveOne;
 				}
 				case 2 : // Fire-type physical moves
@@ -573,6 +542,10 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 						}
 						strcpy(STATSTORAGE.p_moveOne, "Flamethrower");
 					}
+					if (useOrCheck == 2)
+					{
+						printf("%s uses %s!\n", PLAYERPOKEMONCHOICE, STATSTORAGE.p_moveOne);
+					}
 					return STATSTORAGE.p_moveOne;
 				}
 				case 3 : // Water-type physical moves
@@ -616,6 +589,10 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 							STATSTORAGE.n_hp = STATSTORAGE.n_hp - damageCalculation(1, 70, STATSTORAGE.p_level, STATSTORAGE.p_attack, STATSTORAGE.p_spAttack, STATSTORAGE.p_defense, STATSTORAGE.p_spDefense, useAbility("player"), createTypeModifier("player"), createLevelModifier("player"));
 						}
 						strcpy(STATSTORAGE.p_moveOne, "Waterfall");
+					}
+					if (useOrCheck == 2)
+					{
+						printf("%s uses %s!\n", PLAYERPOKEMONCHOICE, STATSTORAGE.p_moveOne);
 					}
 					return STATSTORAGE.p_moveOne;
 				}
@@ -671,6 +648,10 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 						}
 						strcpy(STATSTORAGE.n_moveOne, "Seed Bomb");
 					}
+					if (useOrCheck == 2)
+					{
+						printf("%s uses %s!\n", NPCPOKEMONCHOICE, STATSTORAGE.n_moveOne);
+					}
 					return STATSTORAGE.n_moveOne;
 				}
 				case 2 : // Fire-type physical moves
@@ -715,6 +696,10 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 						}
 						strcpy(STATSTORAGE.n_moveOne, "Flamethrower");
 					}
+					if (useOrCheck == 2)
+					{
+						printf("%s uses %s!\n", NPCPOKEMONCHOICE, STATSTORAGE.n_moveOne);
+					}
 					return STATSTORAGE.n_moveOne;
 				}
 				case 3 : // Water-type physical moves
@@ -758,6 +743,10 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 							STATSTORAGE.p_hp = STATSTORAGE.p_hp - damageCalculation(1, 70, STATSTORAGE.n_level, STATSTORAGE.n_attack, STATSTORAGE.n_spAttack, STATSTORAGE.n_defense, STATSTORAGE.n_spDefense, useAbility("npc"), createTypeModifier("npc"), createLevelModifier("npc"));
 						}
 						strcpy(STATSTORAGE.n_moveOne, "Waterfall");
+					}
+					if (useOrCheck == 2)
+					{
+						printf("%s uses %s!\n", NPCPOKEMONCHOICE, STATSTORAGE.n_moveOne);
 					}
 					return STATSTORAGE.n_moveOne;
 				}
@@ -826,6 +815,10 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 						}
 						strcpy(STATSTORAGE.p_moveTwo, "Bloom");
 					}
+					if (useOrCheck == 2)
+					{
+						printf("%s uses %s!\n", PLAYERPOKEMONCHOICE, STATSTORAGE.p_moveTwo);
+					}
 					return STATSTORAGE.p_moveTwo;
 				}
 				case 2 : // Fire-type special moves
@@ -875,6 +868,10 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 						}
 						strcpy(STATSTORAGE.p_moveTwo, "Initimidate");
 					}
+					if (useOrCheck == 2)
+					{
+						printf("%s uses %s!\n", PLAYERPOKEMONCHOICE, STATSTORAGE.p_moveTwo);
+					}
 					return STATSTORAGE.p_moveTwo;
 				}
 				case 3 : // Water-type special moves
@@ -923,6 +920,10 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 							STATSTORAGE.n_spDefense = STATSTORAGE.n_spDefense - (0.52 * 10);
 						}
 						strcpy(STATSTORAGE.p_moveTwo, "Rainstorm");
+					}
+					if (useOrCheck == 2)
+					{
+						printf("%s uses %s!\n", PLAYERPOKEMONCHOICE, STATSTORAGE.p_moveTwo);
 					}
 					return STATSTORAGE.p_moveTwo;
 				}
@@ -983,6 +984,10 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 						}
 						strcpy(STATSTORAGE.n_moveTwo, "Bloom");
 					}
+					if (useOrCheck == 2)
+					{
+						printf("%s uses %s!\n", NPCPOKEMONCHOICE, STATSTORAGE.n_moveTwo);
+					}
 					return STATSTORAGE.n_moveTwo;
 				}
 				case 2 : // Fire-type special moves
@@ -1032,6 +1037,10 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 						}
 						strcpy(STATSTORAGE.n_moveTwo, "Initimidate");
 					}
+					if (useOrCheck == 2)
+					{
+						printf("%s uses %s!\n", NPCPOKEMONCHOICE, STATSTORAGE.n_moveTwo);
+					}
 					return STATSTORAGE.n_moveTwo;
 				}
 				case 3 : // Water-type special moves
@@ -1080,6 +1089,10 @@ char *moveSelect(char who[7], int moveType, int useOrCheck)
 							STATSTORAGE.p_spDefense = STATSTORAGE.p_spDefense - (0.52 * 10);
 						}
 						strcpy(STATSTORAGE.n_moveTwo, "Rainstorm");
+					}
+					if (useOrCheck == 2)
+					{
+						printf("%s uses %s!\n", NPCPOKEMONCHOICE, STATSTORAGE.n_moveTwo);
 					}
 					return STATSTORAGE.n_moveTwo;
 				}
@@ -1194,6 +1207,10 @@ char* useConsumable(char who[7], int useOrCheck)
 		{
 			STATSTORAGE.p_hp = readPokemonStats("npc", 3);
 		}
+		if (useOrCheck == 2)
+		{
+			printf("%s consumed %s!\n", PLAYERPOKEMONCHOICE, STATSTORAGE.p_consumable);
+		}
 		return STATSTORAGE.p_consumable;
 	}
 	else if (strcmp(who, "npc")==0)
@@ -1247,15 +1264,19 @@ char* useConsumable(char who[7], int useOrCheck)
 		{
 			printf("ERROR: useConsumable() if-1-2 defaulted; debug"); // only occurs from developer error in implementation code
 		}
+		if (STATSTORAGE.n_hp > readPokemonStats("npc", 3)) // Prevents healing over maximum default HP
+		{
+			STATSTORAGE.n_hp = readPokemonStats("npc", 3);
+		}
+		if (useOrCheck == 2)
+		{
+			printf("%s consumed %s!\n", NPCPOKEMONCHOICE, STATSTORAGE.n_consumable);
+		}
 		return STATSTORAGE.n_consumable;
 	}
 	else
 	{
 		printf("ERROR: useConsumable() if-1 defaulted; debug"); // only occurs from developer error in implementation code
-	}
-	if (STATSTORAGE.n_hp > readPokemonStats("npc", 3)) // Prevents healing over maximum default HP
-	{
-		STATSTORAGE.n_hp = readPokemonStats("npc", 3);
 	}
 	return "ERROR: useConsumable() return defaulted; debug";
 }

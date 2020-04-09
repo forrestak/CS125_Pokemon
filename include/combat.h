@@ -47,7 +47,7 @@ typedef struct {
 	char n_ability[15];
 	char n_consumable[15];
 } statStruct;
-extern statStruct STATSTORAGE; 
+extern statStruct STATSTORAGE;
 extern char TYPE[6];
 extern char MOVESELECTED[15];
 extern char POKEMONNAME[20];
@@ -60,13 +60,13 @@ extern char NPCPOKEMONCHOICE[20];
 extern int WINORLOSE;
 
 // Function prototypes
-float readCombatStats(char who[7], int stat);
 char *getType(int pokemonID);
 float createTypeModifier(char who[7]);
 char* checkEffectiveness(float typeModifier);
 float createLevelModifier(char who[7]);
 float damageCalculation(int moveType, float power, float level, float attack, float spAttack, float defense, float spDefense, float abilityModifier, float typeModifier, float levelModifier);
 void combatScenario();
+void checkVictory();
 void playerTurn();
 int playerTurnCheck(int playerChoice);
 void npcTurn(int npcChoice);

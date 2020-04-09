@@ -110,19 +110,9 @@ int main(){
 
   initializeStats(); // populate STATSTORAGE struct with default values from files
 
-  // Remove after battleUI implementation
-  printf("\nbattleUI Variable Testing below:");
-  printf("\nTEST: Player Move One: %s", STATSTORAGE.p_moveOne);
-  printf("\nTEST: Player Move Two: %s", STATSTORAGE.p_moveTwo);
-  printf("\nTEST: Player Ability: %s", STATSTORAGE.p_ability);
-  printf("\nTEST: Player Consumable: %s", STATSTORAGE.p_consumable);
-  printf("\nTEST: NPC Move One: %s", STATSTORAGE.n_moveOne);
-  printf("\nTEST: NPC Move Two: %s", STATSTORAGE.n_moveTwo);
-  printf("\nTEST: NPC Ability: %s", STATSTORAGE.n_ability);
-  printf("\nTEST: NPC Consumable: %s\n\n", STATSTORAGE.n_consumable);
-
   // Start of simulation
   readPrint(count, text5, "standard");
+  sleep(2);
   combatScenario();
   endSim();
 

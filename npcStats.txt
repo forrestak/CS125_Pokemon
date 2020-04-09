@@ -1,9 +1,9 @@
 Pokemon ID: 5
 Level: 1
 Experience: 1000.00
-HP: 50.00
-Attack: 85.00
-Defense: 55.00
-Sp. Attack: 65.00
-Sp. Defense: 65.00
-Speed: 90.00
+HP: 55.00
+Attack: 70.00
+Defense: 45.00
+Sp. Attack: 70.00
+Sp. Defense: 50.00
+Speed: 60.00

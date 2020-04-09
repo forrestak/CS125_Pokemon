@@ -97,6 +97,13 @@ void removeBackBlanks(char shift[]){
     }
 }
 
+float round2(float number)
+{
+    int change =(int)(number*100);
+    //if((float)number==(float)compareA)return (float)compareA;//like if 2.104812041240==2
+    //if((float)number==(float)compareB)return (float)(compareB/10);//like if 2.1241241==2.2
+    return ((float)change)/100;
+}
 
 void changeEnemyName(char screen[33][65],char colorScreen[33][65],char enemyName[],char type){
     //g is grass,r is fire, b is water
@@ -117,35 +124,39 @@ void changePlayerName(char screen[33][65],char colorScreen[33][65],char playerNa
         changeColor(colorScreen,28,31+count,type);
 }
 
-void changeEnemyHp(char screen[33][65],int currentHp,int maxHp){
-    char emptyName[13]="HP:[";//max name size is 13
-    char emptyCurrentHp[]="    ";//max name size is 4(3 digits, 1 sign)
-    char emptyCurrentHp2[]="    ";//max name size is 4(3 digits, 1 sign)
-    char emptyMaxHp[]="   ";//max name size is 3(3 digits)
-    char emptyMaxHp2[]="   ";//max name size is 3(3 digits)
-    int spare1 = sprintf(emptyCurrentHp, "%d", currentHp);
-    int spare2 =sprintf(emptyMaxHp, "%d", maxHp);
-    strncpy(emptyCurrentHp2,emptyCurrentHp,strlen(emptyCurrentHp));
-    strncpy(emptyMaxHp2,emptyMaxHp,strlen(emptyMaxHp));
-    removeBackBlanks(emptyCurrentHp2);
-    removeBackBlanks(emptyMaxHp2);
-    strcat(emptyName,emptyCurrentHp2);
-    strcat(emptyName,"/");
-    strcat(emptyName,emptyMaxHp2);
-    strcat(emptyName,"]");
-    changeText(screen,14,1,emptyName); 
+void changeEnemyHp(char screen[33][65],float currentHp,float maxHp){
+
+    char emptyName[19]="HP:[";//max name size is 13
+    char emptyCurrentHp[]= "      ";//max name size is 4(3 digits, 1 sign)
+    char emptyCurrentHp2[]="      ";//max name size is 4(3 digits, 1 sign)
+    char emptyMaxHp[]=     "      ";//max name size is 3(3 digits)
+    char emptyMaxHp2[]=    "      ";//max name size is 3(3 digits)
+    int spare1;int spare2;
+
+
+
+    if(currentHp==((float)((int)(currentHp))))
+    spare1 = sprintf(emptyCurrentHp, "%.0f", currentHp);//these ints actually dont do anything xD
+    else if(currentHp==((float)((int)(currentHp*10))/10))
+    spare1 = sprintf(emptyCurrentHp, "%.1f", currentHp);//these ints actually dont do anything xD
+    else
+    spare1 = sprintf(emptyCurrentHp, "%.2f", currentHp);//these ints actually dont do anything xD
+
+
+    if(currentHp==((float)((int)(maxHp))))
+    {   
+    spare2 = sprintf(emptyMaxHp, "%.0f", maxHp);//these ints actually dont do anything xD
+    }
+    else if(currentHp==((float)((int)(currentHp*10))/10))
+        {
+        spare2 = sprintf(emptyMaxHp, "%.1f", maxHp);//these ints actually dont do anything xD
+        } 
+    else
+        {
+        spare2 = sprintf(emptyMaxHp, "%.2f", maxHp);//these ints actually dont do anything xD
+        }
     
-}
 
-
-void changePlayerHp(char screen[33][65],int currentHp,int maxHp){
-    char emptyName[13]="HP:[";//max name size is 13
-    char emptyCurrentHp[]="    ";//max name size is 4(3 digits, 1 sign)
-    char emptyCurrentHp2[]="    ";//max name size is 4(3 digits, 1 sign)
-    char emptyMaxHp[]="   ";//max name size is 3(3 digits)
-    char emptyMaxHp2[]="   ";//max name size is 3(3 digits)
-    int spare1 = sprintf(emptyCurrentHp, "%d", currentHp);
-    int spare2 =sprintf(emptyMaxHp, "%d", maxHp);
     strncpy(emptyCurrentHp2,emptyCurrentHp,strlen(emptyCurrentHp));
     strncpy(emptyMaxHp2,emptyMaxHp,strlen(emptyMaxHp));
     removeBackBlanks(emptyCurrentHp2);
@@ -154,7 +165,50 @@ void changePlayerHp(char screen[33][65],int currentHp,int maxHp){
     strcat(emptyName,"/");
     strcat(emptyName,emptyMaxHp2);
     strcat(emptyName,"]");
-    changeText(screen,44,28,emptyName);
+    changeText(screen,1,2,emptyName);
+
+
+
+    //if((float)number==(float)compareA)return (float)compareA;//like if 2.104812041240==2
+    //if((float)number==(float)compareB)return (float)(compareB/10);//like if 2.1241241==2.2
+}
+
+
+void changePlayerHp(char screen[33][65],float currentHp,float maxHp){
+
+    char emptyName[19]="HP:[";//max name size is 13
+    char emptyCurrentHp[]= "      ";//max name size is 4(3 digits, 1 sign)
+    char emptyCurrentHp2[]="      ";//max name size is 4(3 digits, 1 sign)
+    char emptyMaxHp[]=     "      ";//max name size is 3(3 digits)
+    char emptyMaxHp2[]=    "      ";//max name size is 3(3 digits)
+    int spare1;int spare2;
+
+    if(currentHp==((float)((int)(currentHp))))
+    spare1 = sprintf(emptyCurrentHp, "%.0f", currentHp);//these ints actually dont do anything xD
+    else if(currentHp==((float)((int)(currentHp*10))/10))
+    spare1 = sprintf(emptyCurrentHp, "%.1f", currentHp);//these ints actually dont do anything xD
+    else
+    spare1 = sprintf(emptyCurrentHp, "%.2f", currentHp);//these ints actually dont do anything xD
+
+
+    if(currentHp==((float)((int)(maxHp))))
+    spare2 = sprintf(emptyMaxHp, "%.0f", maxHp);//these ints actually dont do anything xD
+    else if(currentHp==((float)((int)(currentHp*10))/10))
+    spare2 = sprintf(emptyMaxHp, "%.1f", maxHp);//these ints actually dont do anything xD
+    else
+    spare2 = sprintf(emptyMaxHp, "%.2f", maxHp);//these ints actually dont do anything xD
+
+
+    strncpy(emptyCurrentHp2,emptyCurrentHp,strlen(emptyCurrentHp));
+    strncpy(emptyMaxHp2,emptyMaxHp,strlen(emptyMaxHp));
+    removeBackBlanks(emptyCurrentHp2);
+    removeBackBlanks(emptyMaxHp2);
+    strcat(emptyName,emptyCurrentHp2);//now its just putting the pieces together
+    strcat(emptyName,"/");
+    strcat(emptyName,emptyMaxHp2);
+    strcat(emptyName,"]");
+    changeText(screen,31,29,emptyName);
+
     
 }
 
@@ -215,9 +269,10 @@ void changePlayerType(char screen[33][65], char colorScreen[33][65],char enemyTy
 }
 
 void changeEnemyLvl(char screen[33][65],int lvl){
+
     char emptyName[13]="Lvl:";//max name size is 13
-    char emptyCurrentLvl[]="    ";//max name size is 4(3 digits, 1 sign)
-    char emptyCurrentLvl2[]="    ";//max name size is 4(3 digits, 1 sign)
+    char emptyCurrentLvl[]="   ";//max name size is 4(3 digits, 1 sign)
+    char emptyCurrentLvl2[]="   ";//max name size is 4(3 digits, 1 sign)
     //char emptyMaxHp[]="   ";//max name size is 3(3 digits)
     //char emptyMaxHp2[]="   ";//max name size is 3(3 digits)
     int spare1 = sprintf(emptyCurrentLvl, "%d", lvl);
@@ -230,13 +285,14 @@ void changeEnemyLvl(char screen[33][65],int lvl){
     //strcat(emptyName,"/");
     //strcat(emptyName,emptyMaxHp2);
     //strcat(emptyName,"]");
-    changeText(screen,1,2,emptyName);
+    changeText(screen,20,1,emptyName);
+    changeText(screen,16,1,"NPC");
 }
 
 void changePlayerLvl(char screen[33][65],int lvl){
     char emptyName[13]="Lvl:";//max name size is 13
-    char emptyCurrentLvl[]="    ";//max name size is 4(3 digits, 1 sign)
-    char emptyCurrentLvl2[]="    ";//max name size is 4(3 digits, 1 sign)
+    char emptyCurrentLvl[]="   ";//max name size is 4(3 digits, 1 sign)
+    char emptyCurrentLvl2[]="   ";//max name size is 4(3 digits, 1 sign)
     //char emptyMaxHp[]="   ";//max name size is 3(3 digits)
     //char emptyMaxHp2[]="   ";//max name size is 3(3 digits)
     int spare1 = sprintf(emptyCurrentLvl, "%d", lvl);
@@ -249,107 +305,108 @@ void changePlayerLvl(char screen[33][65],int lvl){
     //strcat(emptyName,"/");
     //strcat(emptyName,emptyMaxHp2);
     //strcat(emptyName,"]");
-    changeText(screen,31,29,emptyName);
+    changeText(screen,50,28,emptyName);
+    changeText(screen,46,28,"YOU");
 
 }
 
 void changeEnemyXp(char screen[33][65],int experience)
 {
-    char emptyClearance[20]= "EXP:               ";//max name size is 19 duh
-    changeText(screen,14,2,emptyClearance);//your customary clearance is here 
-    char emptyName[20]=  "EXP:";
+    char emptyClearance[18]= "EXP:         ";//max name size is 17 duh
+    changeText(screen,20,2,emptyClearance);//your customary clearance is here 
+    char emptyName[18]=  "EXP:";
     char emptyCurrentLvl[]=  "                   ";//max name size is 15 digits :o
     int spare1 = sprintf(emptyCurrentLvl, "%d", experience);//but technically you can only go up to 10 digits
     removeBackBlanks(emptyCurrentLvl);//since like 2 billion is like the max integer number limit
     strcat(emptyName,emptyCurrentLvl);//now its just putting the pieces together
-    changeText(screen,14,2,emptyName);
+    changeText(screen,20,2,emptyName);
 
 
 }
 
 void changePlayerXp(char screen[33][65],int experience)
 {
-    char emptyClearance[20]= "EXP:               ";//max name size is 19 duh
-    changeText(screen,44,29,emptyClearance);//your customary clearance is here 
-    char emptyName[20]=  "EXP:";
+    char emptyClearance[18]= "EXP:         ";//max name size is 17 duh
+    changeText(screen,50,29,emptyClearance);//your customary clearance is here 
+    char emptyName[18]=  "EXP:";
     char emptyCurrentLvl[]=  "                   ";//max name size is 15 digits :o
     int spare1 = sprintf(emptyCurrentLvl, "%d", experience);//but technically you can only go up to 10 digits
     removeBackBlanks(emptyCurrentLvl);//since like 2 billion is like the max integer number limit
     strcat(emptyName,emptyCurrentLvl);//now its just putting the pieces together
-    changeText(screen,44,29,emptyName);
+    changeText(screen,50,29,emptyName);
 
 }
     
 void changeEnemyMove1(char screen[33][65],char move1[12])
 {
-    changeText(screen,1,3,"            ");//12 spaces
-    changeText(screen,1,3,move1);
+    changeText(screen,1,3,"1-          ");//12 spaces
+    changeText(screen,3,3,move1);
 
 }
 
 void changeEnemyMove2(char screen[33][65],char move1[12])
 {
-    changeText(screen,1,4,"            ");//12 spaces
-    changeText(screen,1,4,move1);
+    changeText(screen,1,4,"2-          ");//12 spaces
+    changeText(screen,3,4,move1);
 
 }
 
 void changePlayerMove1(char screen[33][65],char move1[12])
 {
-    changeText(screen,31,30,"            ");//12 spaces
-    changeText(screen,31,30,move1);
+    changeText(screen,31,30,"1-          ");//12 spaces
+    changeText(screen,33,30,move1);
 
 }
 
 void changePlayerMove2(char screen[33][65],char move1[12])
 {
-    changeText(screen,31,31,"            ");//12 spaces
-    changeText(screen,31,31,move1);
+    changeText(screen,31,31,"2-          ");//12 spaces
+    changeText(screen,33,31,move1);
 
 }
 
 void changeEnemyUltimate(char screen[33][65],char move1[12],int ultimateUsed){
-    changeText(screen,14,3,"              [ /1]");//19 spaces//careful if you shift everything over, might ruin the border
-    changeText(screen,14,3,move1);
+    changeText(screen,16,3,"3-            [ ]");//19 spaces//careful if you shift everything over, might ruin the border
+    changeText(screen,18,3,move1);
     char spareUlt[2]; 
     sprintf(spareUlt, "%d", ultimateUsed);
 
-    changeText(screen,29,3,spareUlt);
+    changeText(screen,31,3,spareUlt);
 
 }
 
 void changePlayerUltimate(char screen[33][65],char move1[12],int ultimateUsed){
-    changeText(screen,44,30,"              [ /1]");//19 spaces//careful if you shift everything over, might ruin the border
-    changeText(screen,44,30,move1);
+    changeText(screen,46,30,"3-            [ ]");//19 spaces//careful if you shift everything over, might ruin the border
+    changeText(screen,48,30,move1);
     char spareUlt[2]; 
     sprintf(spareUlt, "%d", ultimateUsed);
 
-    changeText(screen,59,30,spareUlt);
+    changeText(screen,61,30,spareUlt);
 
 
 }
 void changeEnemyConsumable(char screen[33][65],char consumableName[15],int consumableRemaining,int consumableMax)
 {
-    changeText(screen,14,4 ,"                   ");//20 spaces//this makes it so i dont have to size check stuff
-    changeText(screen,14,4,consumableName);
+    changeText(screen,16,4 ,"4-               ");//20 spaces//this makes it so i dont have to size check stuff
+    changeText(screen,18,4,consumableName);
 
     char spareRemains[2]; 
     sprintf(spareRemains, "%d", consumableRemaining);
     char spareMax[2]; 
     sprintf(spareMax, "%d", consumableMax);
 
-    changeText(screen,28,4,"[");
-    changeText(screen,29,4,spareRemains);
-    changeText(screen,30,4,"/");
-    changeText(screen,31,4,spareMax);
+    changeText(screen,30,4,"[");
+    changeText(screen,31,4,spareRemains);
+    //changeText(screen,30,4,"/");
+    //changeText(screen,31,4,spareMax);
     changeText(screen,32,4,"]");
 
 }
 
 void changePlayerConsumable(char screen[33][65],char consumableName[15],int consumableRemaining,int consumableMax)
 {
-    changeText(screen,44,31 ,"                   ");//20 spaces//this makes it so i dont have to size check stuff
-    changeText(screen,44,31,consumableName);
+    changeText(screen,46,31 ,"4-               ");//20 spaces//this makes it so i dont have to size check stuff
+    changeText(screen,48,31,consumableName);
 
     char spareRemains[2]; 
     sprintf(spareRemains, "%d", consumableRemaining);
@@ -357,10 +414,10 @@ void changePlayerConsumable(char screen[33][65],char consumableName[15],int cons
     sprintf(spareMax, "%d", consumableMax);
 
 
-    changeText(screen,58,31,"[");
-    changeText(screen,59,31,spareRemains);
-    changeText(screen,60,31,"/");
-    changeText(screen,61,31,spareMax);
+    changeText(screen,60,31,"[");
+    changeText(screen,61,31,spareRemains);
+    //changeText(screen,60,31,"/");
+    //changeText(screen,61,31,spareMax);
     changeText(screen,62,31,"]");
 
 }
@@ -611,28 +668,28 @@ starslash//and change these too
 *///remove these slashes if you want to try to optimize
 
 //sorry for horribly optimized code
-    char enemyName[12]= "           ";
-    char playerName[12]="           ";
-    int enemyHp=1;
-    int enemyTotalHp=1;
-    int playerHp=1;
-    int playerTotalHp=1;//if i just intialize them, it might cause problems
+    char enemyName[13]= "";
+    char playerName[13]="";
+    float enemyHp=1;
+    float enemyTotalHp=1;
+    float playerHp=1;
+    float playerTotalHp=1;//if i just intialize them, it might cause problems
     char enemyType='w';//so thats why i assign values usually
     char playerType='w';
     int playerLevel=1;
     int enemyLevel=1;
     int playerCurrentXp=1;//holds max int value digits :D
     int enemyCurrentXp=1;
-    char playerMove1[12]="";
-    char playerMove2[12]="";
-    char playerMoveUltimate[12]="";
-    char enemyMove1[12]="";
-    char enemyMove2[12]="";
-    char enemyMoveUltimate[12]="";
+    char playerMove1[13]="";
+    char playerMove2[13]="";
+    char playerMoveUltimate[13]="";
+    char enemyMove1[13]="";
+    char enemyMove2[13]="";
+    char enemyMoveUltimate[13]="";
     int enemyUltimateUsed=1;
     int playerUltimateUsed=1;
-    char playerConsumableName[15]="";
-    char enemyConsumableName[15] ="";
+    char playerConsumableName[13]="";
+    char enemyConsumableName[13] ="";
     int playerConsumableCount=1;
     int enemyConsumableCount=1;
     int playerConsumableMaxCount=1;
@@ -644,10 +701,10 @@ starslash//and change these too
 
     strncpy(emptyString(playerName),PLAYERPOKEMONCHOICE,strlen(PLAYERPOKEMONCHOICE));
     strncpy(emptyString(enemyName),NPCPOKEMONCHOICE,strlen(NPCPOKEMONCHOICE));
-    playerHp=(int)STATSTORAGE.p_hp;
-    enemyHp=(int)STATSTORAGE.n_hp;
-    playerTotalHp=readPokemonStats("player",3);
-    enemyTotalHp=readPokemonStats("npc",3);
+    playerHp=round2(STATSTORAGE.p_hp);
+    enemyHp=round2(STATSTORAGE.n_hp);
+    playerTotalHp=round2(readPokemonStats("player",3));
+    enemyTotalHp=round2(readPokemonStats("npc",3));
     playerType=stringToCharType(STATSTORAGE.p_type);
     enemyType=stringToCharType(STATSTORAGE.n_type);
     playerLevel=readPokemonStats("player",1);
@@ -685,8 +742,6 @@ starslash//and change these too
     changePlayerLvl(screen,playerLevel);
     changeEnemyXp(screen,enemyCurrentXp);
     changePlayerXp(screen,playerCurrentXp);
-
-
     changeEnemyMove1(screen,enemyMove1);
     changeEnemyMove2(screen,enemyMove2);
     changePlayerMove1(screen,playerMove1);
@@ -695,8 +750,6 @@ starslash//and change these too
     changePlayerUltimate(screen,playerMoveUltimate,playerUltimateUsed);
     changeEnemyConsumable(screen,enemyConsumableName,enemyConsumableCount,enemyConsumableMaxCount);
     changePlayerConsumable(screen,playerConsumableName,playerConsumableCount,playerConsumableMaxCount);
-
-
     changeEnemyPokemon(screen,enemyPokemonNumber);
     changePlayerPokemon(screen,playerPokemonNumber);
 
@@ -881,9 +934,10 @@ void battleUI(int animationNumber)
         {
         //insert animation here
         //tackle,vinewhip,razorleaf,bulletseed,seed bomb
-        //scratch,slash,firefang,flare blitz,flamethrower
+        //scratch,slash,firefang,flare blitz,flamethrower(12 char as well)
         //headbutt,watergun, aquatail,waterspout,waterfall
         //il probably store the animations in pokefiles
+        //potion,super potion,hyper potion,max potion, full restore(12 char)
 
         }
 }

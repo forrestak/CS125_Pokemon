@@ -135,26 +135,20 @@ void changeEnemyHp(char screen[33][65],float currentHp,float maxHp){
 
 
 
-    if(currentHp==((float)((int)(currentHp))))
+    if(((float)((int)(currentHp*100))/100)==((float)((int)(currentHp))))
     spare1 = sprintf(emptyCurrentHp, "%.0f", currentHp);//these ints actually dont do anything xD
-    else if(currentHp==((float)((int)(currentHp*10))/10))
-    spare1 = sprintf(emptyCurrentHp, "%.1f", currentHp);//these ints actually dont do anything xD
-    else
-    spare1 = sprintf(emptyCurrentHp, "%.2f", currentHp);//these ints actually dont do anything xD
+        else if(((float)((int)(currentHp*100))/100)==((float)((int)(currentHp*10))/10))
+            spare1 = sprintf(emptyCurrentHp, "%.1f", currentHp);//these ints actually dont do anything xD
+            else
+                spare1 = sprintf(emptyCurrentHp, "%.2f", currentHp);//these ints actually dont do anything xD
 
 
-    if(currentHp==((float)((int)(maxHp))))
-    {   
-    spare2 = sprintf(emptyMaxHp, "%.0f", maxHp);//these ints actually dont do anything xD
-    }
-    else if(currentHp==((float)((int)(currentHp*10))/10))
-        {
-        spare2 = sprintf(emptyMaxHp, "%.1f", maxHp);//these ints actually dont do anything xD
-        } 
-    else
-        {
-        spare2 = sprintf(emptyMaxHp, "%.2f", maxHp);//these ints actually dont do anything xD
-        }
+    if(((float)((int)(maxHp*100))/100)==((float)((int)(maxHp))))
+        spare2 = sprintf(emptyMaxHp, "%.0f", maxHp);//these ints actually dont do anything xD
+        else if(((float)((int)(maxHp*100))/100)==((float)((int)(maxHp*10))/10))
+            spare2 = sprintf(emptyMaxHp, "%.1f", maxHp);//these ints actually dont do anything xD
+            else
+                spare2 = sprintf(emptyMaxHp, "%.2f", maxHp);//these ints actually dont do anything xD
     
 
     strncpy(emptyCurrentHp2,emptyCurrentHp,strlen(emptyCurrentHp));
@@ -183,20 +177,20 @@ void changePlayerHp(char screen[33][65],float currentHp,float maxHp){
     char emptyMaxHp2[]=    "      ";//max name size is 3(3 digits)
     int spare1;int spare2;
 
-    if(currentHp==((float)((int)(currentHp))))
+    if(((float)((int)(currentHp*100))/100)==((float)((int)(currentHp))))
     spare1 = sprintf(emptyCurrentHp, "%.0f", currentHp);//these ints actually dont do anything xD
-    else if(currentHp==((float)((int)(currentHp*10))/10))
-    spare1 = sprintf(emptyCurrentHp, "%.1f", currentHp);//these ints actually dont do anything xD
-    else
-    spare1 = sprintf(emptyCurrentHp, "%.2f", currentHp);//these ints actually dont do anything xD
+        else if(((float)((int)(currentHp*100))/100)==((float)((int)(currentHp*10))/10))
+            spare1 = sprintf(emptyCurrentHp, "%.1f", currentHp);//these ints actually dont do anything xD
+            else
+                spare1 = sprintf(emptyCurrentHp, "%.2f", currentHp);//these ints actually dont do anything xD
 
-
-    if(currentHp==((float)((int)(maxHp))))
-    spare2 = sprintf(emptyMaxHp, "%.0f", maxHp);//these ints actually dont do anything xD
-    else if(currentHp==((float)((int)(currentHp*10))/10))
-    spare2 = sprintf(emptyMaxHp, "%.1f", maxHp);//these ints actually dont do anything xD
-    else
-    spare2 = sprintf(emptyMaxHp, "%.2f", maxHp);//these ints actually dont do anything xD
+    if(((float)((int)(maxHp*100))/100)==((float)((int)(maxHp))))
+        spare2 = sprintf(emptyMaxHp, "%.0f", maxHp);//these ints actually dont do anything xD
+        else if(((float)((int)(maxHp*100))/100)==((float)((int)(maxHp*10))/10))
+            spare2 = sprintf(emptyMaxHp, "%.1f", maxHp);//these ints actually dont do anything xD
+            else
+                spare2 = sprintf(emptyMaxHp, "%.2f", maxHp);//these ints actually dont do anything xD
+    
 
 
     strncpy(emptyCurrentHp2,emptyCurrentHp,strlen(emptyCurrentHp));

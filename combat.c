@@ -73,6 +73,7 @@ void playerTurn() // handles choice implementation for each of the player's four
 	{
 		case 1 : // Move One
 		{
+            battleUI(2);
 			moveSelect("player", 1, 2);
 			printf("It's %s\n", checkEffectiveness(createTypeModifier("player")));
 			break;
@@ -111,6 +112,7 @@ void npcTurn(int npcChoice) // handles choice implementation for each of the NPC
 	{
 		case 1 : // Move One
 		{
+            battleUI(1);
 			moveSelect("npc", 1, 2);
 			printf("It's %s\n", checkEffectiveness(createTypeModifier("npc")));
 			break;

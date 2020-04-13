@@ -15,7 +15,7 @@
 #include <string.h>
 
 void delay(int milliseconds){
-  milliseconds*=10; // DEBUG: sped up for testing purposes; SHOULD BE: 1000
+  milliseconds*=1000; // DEBUG: sped up for testing purposes; SHOULD BE: 1000
   clock_t start_time =clock();
   while(clock()<start_time + milliseconds);
 }

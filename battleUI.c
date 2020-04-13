@@ -586,14 +586,14 @@ int floatToInt(float number)
 
 void enemyAttackBuffer(char screen[33][65], char colorScreen[33][65])
 {
-
+/*
         changeEnemyPokemon(screen,nameToNational(NPCPOKEMONCHOICE));
         delay(500);
         clear();
         run(screen,colorScreen);
-
+*/
         changeEnemyPokemon(screen,0);//get that flicker in :D
-        delay(250);
+        delay(500);
         clear();
         run(screen,colorScreen);
 
@@ -610,17 +610,29 @@ void enemyAttackBuffer(char screen[33][65], char colorScreen[33][65])
         changeEnemyPokemon(screen,nameToNational(NPCPOKEMONCHOICE));
         delay(250);
         clear();
+        run(screen,colorScreen);
 
+        changeEnemyPokemon(screen,0);//get that flicker in :D
+        delay(250);
+        clear();
+        run(screen,colorScreen);
+
+        changeEnemyPokemon(screen,nameToNational(NPCPOKEMONCHOICE));
+/*
+        delay(250);
+        clear();
+        run(screen,colorScreen);
+*/
 }
 
 void playerAttackBuffer(char screen[33][65], char colorScreen[33][65])
 {
-
+/*
         changePlayerPokemon(screen,nameToNational(PLAYERPOKEMONCHOICE));
         delay(500);
         clear();
         run(screen,colorScreen);
-
+*/
         changePlayerPokemon(screen,0);//get that flicker in :D
         delay(250);
         clear();
@@ -639,6 +651,19 @@ void playerAttackBuffer(char screen[33][65], char colorScreen[33][65])
         changePlayerPokemon(screen,nameToNational(PLAYERPOKEMONCHOICE));
         delay(250);
         clear();
+        run(screen,colorScreen);
+
+        changePlayerPokemon(screen,0);//get that flicker in :D
+        delay(250);
+        clear();
+        run(screen,colorScreen);
+
+        changePlayerPokemon(screen,nameToNational(PLAYERPOKEMONCHOICE));
+/*
+        delay(250);
+        clear();
+        run(screen,colorScreen);
+*/
 
 }
 
@@ -810,13 +835,16 @@ void battleUI(int animationNumber)
     
 
 
-
-    clear();
     initializeScreen(screen,colorScreen);
     if(animationNumber==1)
-        playerAttackBuffer(screen,colorScreen);//enemy attacking player
+{
+        playerAttackBuffer(screen,colorScreen);
+}
     if(animationNumber==2)
-        enemyAttackBuffer(screen,colorScreen);//player attacking enemy(freeze frames :D)
+{
+        enemyAttackBuffer(screen,colorScreen);
+}
+    clear();
     run(screen,colorScreen);
 
 }
@@ -825,4 +853,9 @@ void displayScreen()
 {
     battleUI(0);
 }
+
+
+
+
+
 

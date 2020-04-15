@@ -1,9 +1,0 @@
-Pokemon ID: 6
-Level: 20
-Experience: 20000.00
-HP: 119.07
-Attack: 73.36
-Defense: 73.55
-Sp. Attack: 49.69
-Sp. Defense: 49.88
-Speed: 23.55

@@ -71,12 +71,13 @@ void combatScenario() // combines primary combat functions to simulate combat un
 
 
 void playerTurn() // handles choice implementation for each of the player's four actions
-{	char playerChoiceString[20];
+{	char playerChoiceString[40];
 	char* playerChoiceStringEndPtr;
 	long playerChoice;
 	// printf("1-Physical    |      2-Special\n3-Ability     |   4-Consumable\n"); // made obsolete by including prompts in battleUI(); uncomment to implement standalone combatScenario()
 	printf("ACTION: ");
-	fgets(playerChoiceString, 20, stdin);
+	fgets(playerChoiceString, 40, stdin);
+	fflush(stdin);
 	playerChoice = strtol(playerChoiceString, &playerChoiceStringEndPtr, 10); // error-handling for non-string input
 	switch(playerTurnCheck(playerChoice))
 	{

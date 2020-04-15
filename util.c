@@ -12,6 +12,7 @@
 #include "levelupPokemonStats.h"
 #include "readPokemonStats.h"
 #include "combat.h"
+#include "endSim.h"
 
 // Standard libraries
 #include <stdio.h>
@@ -137,6 +138,7 @@ int debugLauncher() // Enables several options to modify the behavior of main at
     }
     case 4 :
     {
+      BATTLECOUNT = 1; // to limit overcapping on experience from playing too many battles
       DELAYMODIFIER = 10;
       return 3;
     }

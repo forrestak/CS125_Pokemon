@@ -127,10 +127,11 @@ char* starter(){
     readPrint(count, "Bulbasaur", "green");
     readPrint(count, text7, "standard");
   }
-  else if (strcmp(PLAYERPOKEMONCHOICE, "mewtwo")==0){
-    readPrint(count, "Mewtwo", "purple");
-    readPrint(count, text150, "standard");
-  }
+  // intended to include Mewto as an easter-egg, but functionality never implemented
+  // else if (strcmp(PLAYERPOKEMONCHOICE, "mewtwo")==0){
+  //   readPrint(count, "Mewtwo", "purple");
+  //   readPrint(count, text150, "standard");
+  // }
 
   // Player's Opponent-Type Choice
   readPrint(count, text11, "standard");

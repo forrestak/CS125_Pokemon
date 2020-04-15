@@ -67,7 +67,7 @@ void playAgainPrompt() // Enables choices to play another battle or quit the gam
 {
   int count;
   int loopCheck; // Used to error-check (loop) prompt entries until they match a desired input
-  char endChoice[5];
+  char endChoice[20];
   char text4[] = "\nDo you want to continue training? (Yes/No): ";
   char text5[] = "You have completed the maximum number of tutorial battles.\n";
   char text6[] = "\nThis is the end of the tutorial simulator. I hope you enjoyed it\nand learned the basics for your upcoming adventure. I look forward to\nhearing all of the amazing stories about you and your companions!\n\nSee ya!\n";
@@ -76,19 +76,19 @@ void playAgainPrompt() // Enables choices to play another battle or quit the gam
     do
     {
       readPrint(count, text4, "standard");
-      fgets(endChoice, 5, stdin);
+      fgets(endChoice, 20, stdin);
       endChoice[strcspn(endChoice, "\n")]=0;
       for (count=0; count<=strlen(endChoice); count++)
         endChoice[count] = tolower(endChoice[count]);
       fflush(stdin);
       printf("\n");
-      if (strcmp(endChoice, "yes")==0)
+      if ((strcmp(endChoice, "yes")==0) || (strcmp(endChoice, "y")==0))
       {
         loopCheck = 1;
         combatScenario();
         endSim();
       }
-      else if (strcmp(endChoice, "no")==0)
+      else if ((strcmp(endChoice, "no")==0) || (strcmp(endChoice, "n")==0))
       {
         loopCheck = 1;
         readPrint(count, text6, "standard");
@@ -110,5 +110,5 @@ void playAgainPrompt() // Enables choices to play another battle or quit the gam
 int randomizeExperienceGain() // Generates psuedo-randomized experience between 21000 and 19000 for use in endSim()
 {
   srand(time(NULL)); 
-  return rand()%2000+19000;
+  return rand()%1000+19000;
 }

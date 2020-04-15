@@ -26,10 +26,15 @@
 #include "readPokemonStats.h"
 #include "combat.h"
 #include "battleUI.h"
+#include "util.h"
 
 void combatScenario() // combines primary combat functions to simulate combat until there is a victor
 {
-	printf("\n\nThe tournament has begun!\n");
+	int count;
+	clear();
+	char text1[] = "The tournament is about to begin...";
+	readPrint(count, text1, "yellow");
+	sleep(2);
 	displayScreen();
 	if (STATSTORAGE.p_speed >= STATSTORAGE.n_speed) // checks which Pokemon goes first based off their speed stat
 	{
@@ -189,15 +194,11 @@ int playerTurnCheck(int playerChoice) // checks whether player chose a valid mov
 		}
 		default :
 		{
-			{
-				printf("Invalid entry - Choose an action 1-4:\n");
-				playerTurn();
-			}
-			printf("ERROR: playerTurnCheck() switch defaulted; debug"); // only occurs from developer error in implementation code
-			break;
+			printf("Invalid entry - Choose an action 1-4:\n");
+			playerTurn();
+			return 0;
 		}
 	}
-
 	return 0;
 }
 
@@ -794,7 +795,7 @@ char *moveSelect(char who[7], int moveType, int useOrCheck) // performs Pokemon 
 						}
 						strcpy(STATSTORAGE.p_moveTwo, "Roar");
 					}
-					else if ((STATSTORAGE.p_level >= 80) && (STATSTORAGE.p_level <= 100)) // Levels 81-100: Initimidate
+					else if ((STATSTORAGE.p_level >= 80) && (STATSTORAGE.p_level <= 100)) // Levels 81-100: Intimidate
 					{
 						STATSTORAGE.p_buffReceived = STATSTORAGE.n_attack; // saves stat prior to buff; subtract buffReceived from stat to calculate change in value
 						if (useOrCheck != 1)
@@ -802,7 +803,7 @@ char *moveSelect(char who[7], int moveType, int useOrCheck) // performs Pokemon 
 							STATSTORAGE.n_attack = STATSTORAGE.n_attack - (0.45 * 10);
 							STATSTORAGE.n_spAttack = STATSTORAGE.n_spAttack - (0.51 * 10);
 						}
-						strcpy(STATSTORAGE.p_moveTwo, "Initimidate");
+						strcpy(STATSTORAGE.p_moveTwo, "Intimidate");
 					}
 
 					if (useOrCheck == 2)
@@ -978,7 +979,7 @@ char *moveSelect(char who[7], int moveType, int useOrCheck) // performs Pokemon 
 						}
 						strcpy(STATSTORAGE.n_moveTwo, "Roar");
 					}
-					else if ((STATSTORAGE.n_level >= 80) && (STATSTORAGE.n_level <= 100)) // Levels 81-100: Initimidate
+					else if ((STATSTORAGE.n_level >= 80) && (STATSTORAGE.n_level <= 100)) // Levels 81-100: Intimidate
 					{
 						STATSTORAGE.n_buffReceived = STATSTORAGE.p_attack; // saves stat prior to buff; subtract buffReceived from stat to calculate change in value
 						if (useOrCheck != 1)
@@ -986,7 +987,7 @@ char *moveSelect(char who[7], int moveType, int useOrCheck) // performs Pokemon 
 							STATSTORAGE.p_attack = STATSTORAGE.p_attack - (0.45 * 10);
 							STATSTORAGE.p_spAttack = STATSTORAGE.p_spAttack - (0.51 * 10);
 						}
-						strcpy(STATSTORAGE.n_moveTwo, "Initimidate");
+						strcpy(STATSTORAGE.n_moveTwo, "Intimidate");
 					}
 
 					if (useOrCheck == 2)

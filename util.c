@@ -8,23 +8,30 @@
 // Header File
 #include "util.h"
 #include "battleUI.h"
+#include "generatePokemonStats.h"
+#include "levelupPokemonStats.h"
+#include "readPokemonStats.h"
+#include "combat.h"
 
 // Standard libraries
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
 
-void delay(int milliseconds){
-  milliseconds*=1000; // DEBUG: sped up for testing purposes; SHOULD BE: 1000
+// Global variables
+int DELAYMODIFIER = 600; // default readPrint() speed, modified by debugLauncher()
+
+void delay(int milliseconds){ // Applies millisecond delay for usage in readPrint()
+  milliseconds*=DELAYMODIFIER;
   clock_t start_time =clock();
   while(clock()<start_time + milliseconds);
 }
 
-void clear(){
+void clear(){ // Clears the entire screen
   printf("\e[2J\e[H");
 }
 
-void readPrint(int count, char text[], char color[]){
+void readPrint(int count, char text[], char color[]){ // Reads out text incrementally and with color options
   if (strcmp(color, "standard")==0){
     for (count=0;count<strlen(text);count++){
       printf("\e[0m%c", text[count]);
@@ -69,7 +76,7 @@ void readPrint(int count, char text[], char color[]){
   }
 }
 
-int pokemonChoiceToInt(char who[7]) // converts choices from starter.c into usable pokemon IDs
+int pokemonChoiceToInt(char who[7]) // Converts choices from starter.c into usable pokemon IDs
 {
   if (strcmp(who, "player")==0)
   {
@@ -103,4 +110,64 @@ int pokemonChoiceToInt(char who[7]) // converts choices from starter.c into usab
   }
 
 
+}
+
+int debugLauncher() // Enables several options to modify the behavior of main at the start of the program, for use in testing and debugging
+{ 
+  int debugChoice;
+  printf("You have started Pokemon Battle Simulator (Eagle Version) via the debug launcher!\nYou have the following testing options:\n\n");
+  printf("1. Full Program\n2. Full Program (testing speed)\n3. Skip to Starter (testing speed)\n4. Skip to Battle (level 20 preset Pokemon)\n\n");
+  printf("Enter your launch option here: ");
+  scanf("%d", &debugChoice);
+  switch(debugChoice)
+  {
+    case 1 :
+    {
+      return 1;
+    }
+    case 2 :
+    {
+      DELAYMODIFIER = 10;
+      return 1;
+    }
+    case 3 :
+    {
+      DELAYMODIFIER = 10;
+      return 2;
+    }
+    case 4 :
+    {
+      DELAYMODIFIER = 10;
+      return 3;
+    }
+    default :
+    {
+      printf("Invalid entry - Choose an option 1-4:\n");
+      main();
+    }
+  }
+}
+
+void playerStatReadout() // Prints all stats from playerStats.txt to the terminal
+{
+  printf("%s is Level %.0f with:\n", PLAYERPOKEMONCHOICE, readPokemonStats("player", 1));
+  printf("  %.0f XP\n", readPokemonStats("player", 2));
+  printf("  %.2f HP\n", readPokemonStats("player", 3));
+  printf("  %.2f Attack\n", readPokemonStats("player", 4));
+  printf("  %.2f Defense\n", readPokemonStats("player", 5));
+  printf("  %.2f Special Attack\n", readPokemonStats("player", 6));
+  printf("  %.2f Special Defense\n", readPokemonStats("player", 7));
+  printf("  %.2f Speed\n", readPokemonStats("player", 8));
+}
+
+void npcStatReadout() // Prints all stats from npcStats.txt to the terminal
+{
+  printf("%s is Level %.0f with:\n", NPCPOKEMONCHOICE, readPokemonStats("npc", 1));
+  printf("  %.0f XP\n", readPokemonStats("npc", 2));
+  printf("  %.2f HP\n", readPokemonStats("npc", 3));
+  printf("  %.2f Attack\n", readPokemonStats("npc", 4));
+  printf("  %.2f Defense\n", readPokemonStats("npc", 5));
+  printf("  %.2f Special Attack\n", readPokemonStats("npc", 6));
+  printf("  %.2f Special Defense\n", readPokemonStats("npc", 7));
+  printf("  %.2f Speed\n", readPokemonStats("npc", 8));
 }

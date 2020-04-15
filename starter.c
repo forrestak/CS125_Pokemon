@@ -36,7 +36,7 @@ char* starter(){
   char text5[] = "Which would you like to choose? ";
   char text6[] = "Ah, you've chosen ";
   char text7[] = "! A very good choice! That is a strong Pokemon!\nI'm sure you two will make an amazing team!\n";
-  char text8[] = "Oops! I didn't get that. Please try again.\n";
+  char text8[] = "Oops! I didn't get that. Please try again.\n\n";
   char text9[] = ", ";
   char text10[] = ".\n\n";
   char text11[] = "\nNow, one last thing, what type of opponent would you like to practice against - ";
@@ -48,7 +48,7 @@ char* starter(){
   char text17[] = "Bulbasaur";
   char text18[] = "Charmander";
   char text19[] = "Squirtle";
-  char text150[] = "! You cheater pants! Your adventure won't\neven be a challenge! Cheaters don't learn anything.\nBut it's your choice. Your 'adventure' awaits... Good luck,\nas if you need it.\n";
+  char text150[] = "! You cheater pants! Your adventure won't\neven be a challenge! Cheaters don't learn anything.\nBut it's your choice. Your 'adventure' awaits... Good luck,\nas if you need it.\n"; // Mewto easter-egg chance; functionality not implemented
 
   // Text 1 & 2
   readPrint(count, text1, "standard");
@@ -111,7 +111,7 @@ char* starter(){
   }while ((strcmp(PLAYERPOKEMONCHOICE, "charmander")!=0) && (strcmp(PLAYERPOKEMONCHOICE, "squirtle")!=0) && (strcmp(PLAYERPOKEMONCHOICE, "bulbasaur")!=0) && (strcmp(PLAYERPOKEMONCHOICE, "mewtwo")!=0));
 
   readPrint(count, text6, "standard");
-  
+
 
 
   // Result of Choice
@@ -143,24 +143,24 @@ char* starter(){
   readPrint(count, text16, "standard");
 
   do{
-      printf("Enter your choice here: ");
-      fgets(NPCPOKEMONCHOICE, 20, stdin);
-      NPCPOKEMONCHOICE[strcspn(NPCPOKEMONCHOICE, "\n")]=0;
-      for (count=0; count<=strlen(NPCPOKEMONCHOICE); count++){
-        NPCPOKEMONCHOICE[count] = tolower(NPCPOKEMONCHOICE[count]);
-      }
-      fflush(stdin);
-      printf("\n");
-      if ((strcmp(NPCPOKEMONCHOICE, "grass")!=0) && (strcmp(NPCPOKEMONCHOICE, "fire")!=0) && (strcmp(NPCPOKEMONCHOICE, "water")!=0)){
-        readPrint(count, text8, "standard");
-        readPrint(count, types1, "green");
-        readPrint(count, text9, "standard");
-        readPrint(count, types2, "red");
-        readPrint(count, text9, "standard");
-        readPrint(count, text15, "standard");
-        readPrint(count, types3, "blue");
-        readPrint(count, text16, "standard");
-      }
+    printf("Enter your choice here: ");
+    fgets(NPCPOKEMONCHOICE, 20, stdin);
+    NPCPOKEMONCHOICE[strcspn(NPCPOKEMONCHOICE, "\n")]=0;
+    for (count=0; count<=strlen(NPCPOKEMONCHOICE); count++){
+      NPCPOKEMONCHOICE[count] = tolower(NPCPOKEMONCHOICE[count]);
+    }
+    fflush(stdin);
+    printf("\n");
+    if ((strcmp(NPCPOKEMONCHOICE, "grass")!=0) && (strcmp(NPCPOKEMONCHOICE, "fire")!=0) && (strcmp(NPCPOKEMONCHOICE, "water")!=0)){
+      readPrint(count, text8, "standard");
+      readPrint(count, types1, "green");
+      readPrint(count, text9, "standard");
+      readPrint(count, types2, "red");
+      readPrint(count, text9, "standard");
+      readPrint(count, text15, "standard");
+      readPrint(count, types3, "blue");
+      readPrint(count, text16, "standard");
+    }
     }while ((strcmp(NPCPOKEMONCHOICE, "grass")!=0) && (strcmp(NPCPOKEMONCHOICE, "fire")!=0) && (strcmp(NPCPOKEMONCHOICE, "water")!=0));
 
     // Result of Choice

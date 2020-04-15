@@ -1,7 +1,7 @@
 /*  CS125 Group Project
     File: animationTest.c
     Description: Controls live-updating of battleUI elements
-    Authors: Vince Trance
+    Authors: Vince Tran
     References: N/A
 */
 

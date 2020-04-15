@@ -8,7 +8,12 @@
 #ifndef ENDSIM
 #define ENDSIM
 
+// Global Variables
+extern int BATTLECOUNT;
+
 // Function prototypes
 void endSim();
+void playAgainPrompt();
+int randomizeExperienceGain();
 
 #endif

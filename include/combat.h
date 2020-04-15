@@ -23,6 +23,9 @@ typedef struct {
 	float p_consumableCount;
 	float p_abilityCount;
 	float p_abilityStatus;
+	float p_damageDealt;
+	float p_buffReceived;
+	float p_consumableRestore;
 	char p_type[6];
 	char p_moveOne[15];
 	char p_moveTwo[15];
@@ -41,6 +44,9 @@ typedef struct {
 	float n_consumableCount;
 	float n_abilityCount;
 	float n_abilityStatus;
+	float n_damageDealt;
+	float n_buffReceived;
+	float n_consumableRestore;
 	char n_type[6];
 	char n_moveOne[15];
 	char n_moveTwo[15];
@@ -53,29 +59,28 @@ extern char MOVESELECTED[15];
 extern char POKEMONNAME[20];
 extern char EFFECTIVENESS[30];
 extern char POTIONSELECTED[15];
-extern int NPCRANDOMIZE;
 extern char USERNAME[50];
 extern char PLAYERPOKEMONCHOICE[20];
 extern char NPCPOKEMONCHOICE[20];
+extern int NPCRANDOMIZE;
 extern int WINORLOSE;
 
 // Function prototypes
+void combatScenario();
+void playerTurn();
+void npcTurn(int npcChoice);
+int playerTurnCheck(int playerChoice);
+int npcAI();
+void checkVictory();
+statStruct initializeStats();
 char *getType(int pokemonID);
+char typeToInt();
 float createTypeModifier(char who[7]);
 char* checkEffectiveness(float typeModifier);
 float createLevelModifier(char who[7]);
 float damageCalculation(int moveType, float power, float level, float attack, float spAttack, float defense, float spDefense, float abilityModifier, float typeModifier, float levelModifier);
-void combatScenario();
-void checkVictory();
-void playerTurn();
-int playerTurnCheck(int playerChoice);
-void npcTurn(int npcChoice);
-int npcAI();
-void useMoveOne(char who[7]);
-void useMoveTwo(char who[7]);
+char *moveSelect(char who[7], int moveType, int useOrCheck);
 float useAbility(char who[7]);
 char* useConsumable(char who[7], int useOrCheck);
-statStruct initializeStats();
-char *moveSelect(char who[7], int moveType, int useOrCheck);
 
 #endif

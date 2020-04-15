@@ -8,10 +8,16 @@
 #ifndef UTIL
 #define UTIL
 
+// Global variables
+extern int DELAYMODIFIER;
+
 // Function prototypes
 void delay(int);
 void clear();
 void readPrint(int, char [], char []);
 int pokemonChoiceToInt(char []);
+int debugLauncher();
+void pokemonStatReadout();
+void npcStatReadout();
 
 #endif

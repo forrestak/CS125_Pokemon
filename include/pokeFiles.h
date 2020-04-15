@@ -1,7 +1,8 @@
-/*  CS125_Pokemon
-    CS125 Programming Project
-    pokeFiles.c
-    Battle UI pokemon art - Header file
+/*  CS125 Group Project
+    File: pokeFiles.h
+    Description: Header file to include pokeFiles.c functions
+    Authors: Vince Tran, Forrest Mobley
+    References: N/A
 */
 
 #ifndef POKEFILES

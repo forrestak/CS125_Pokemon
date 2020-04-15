@@ -1,9 +1,9 @@
-Pokemon ID: 2
-Level: 1
-Experience: 1000.00
-HP: 39.00
-Attack: 52.00
-Defense: 43.00
-Sp. Attack: 60.00
-Sp. Defense: 50.00
-Speed: 65.00
+Pokemon ID: 1
+Level: 20
+Experience: 20000.00
+HP: 74.07
+Attack: 57.36
+Defense: 57.55
+Sp. Attack: 74.69
+Sp. Defense: 74.88
+Speed: 53.55

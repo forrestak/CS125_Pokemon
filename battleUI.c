@@ -19,14 +19,7 @@
 #include "readPokemonStats.h"
 #include "combat.h"
 
-//changes made on 4/3/2020
 void printPixel(char screen[33][65],char colorScreen[33][65],int x, int y){
-//        printf("\033[0;31m");//red
-//        printf("\033[0m");//white
-//        printf("\e[0;34m");//blue
-//        printf("\e[0;32m");//green
-//        printf("\e[0;35m");//purple
-//        printf("\e[0;33m");//yellow
 if(colorScreen[x][y]=='r')
         printf("\033[0;31m");//red
 if(colorScreen[x][y]=='w')
@@ -60,25 +53,16 @@ void run(char screen[33][65], char colorScreen[33][65])
 
 void changeText(char screen[33][65],int xScreenPos,int yScreenPos,char sentence[])
 {
-    fflush(stdout);//lol the godly function that runs the machine
+    fflush(stdout);
     char spareLine[65]="";
     char secondSpareLine[65]="";
     char completeSpareLine[65]="";
-    //printf("screenq%s\n",screen[yScreenPos]);
     strncpy(spareLine,screen[yScreenPos],xScreenPos);
-    //printf("spare q%s\n",spareLine);
     strncpy(secondSpareLine,screen[yScreenPos]+xScreenPos+strlen(sentence),65);
-    //printf("2ndsreq%s\n",secondSpareLine);
-    //next three functions are to put together the final result
     strncpy(completeSpareLine,spareLine,strlen(spareLine));
-    //printf("final1q%s\n",completeSpareLine);
     strcat(completeSpareLine,sentence);
-    //printf("final2q%s\n",completeSpareLine);
     strcat(completeSpareLine,secondSpareLine);
-    //printf("final3q%s\n",completeSpareLine);
-    //copy the final result
     strncpy(screen[yScreenPos],completeSpareLine,65);
-    //printf("last  q%s\n",screen[yScreenPos]);
 }
 
 void changeColor(char colorScreen[33][65],int x, int y,char input){
@@ -86,7 +70,7 @@ void changeColor(char colorScreen[33][65],int x, int y,char input){
 }
 
 void removeBackBlanks(char shift[]){
-    char copy[20]=""; //this is to right adjust the numbers
+    char copy[20]=""; // this is to right-align the numbers
     char copy2[20]=" ";
     strncpy(copy,shift,strlen(shift)-1);
     strcat(copy2,copy);
@@ -100,119 +84,106 @@ void removeBackBlanks(char shift[]){
 float round2(float number)
 {
     int change =(int)(number*100);
-    //if((float)number==(float)compareA)return (float)compareA;//like if 2.104812041240==2
-    //if((float)number==(float)compareB)return (float)(compareB/10);//like if 2.1241241==2.2
     return ((float)change)/100;
 }
 
 void changeEnemyName(char screen[33][65],char colorScreen[33][65],char enemyName[],char type){
     //g is grass,r is fire, b is water
-    char emptyName[]="           ";//max name size is 11
+    char emptyName[]="           "; // max name size is 11
     int count=0;
     strncpy(emptyName,enemyName,strlen(enemyName));
     changeText(screen,1,1,emptyName);
-    for(count=0;count<11;count++)//also sorry,x isnt x and y isnt y
+    for(count=0;count<11;count++)
         changeColor(colorScreen,1,1+count,type);
 }
 
 void changePlayerName(char screen[33][65],char colorScreen[33][65],char playerName[],char type){
-    char emptyName[]="           ";//max name size is 11
+    char emptyName[]="           "; // max name size is 11
     int count=0;
     strncpy(emptyName,playerName,strlen(playerName));
     changeText(screen,31,28,emptyName);
-    for(count=0;count<11;count++)//also sorry,x isnt x and y isnt y, must have mixed up somewhere
+    for(count=0;count<11;count++)
         changeColor(colorScreen,28,31+count,type);
 }
 
 void changeEnemyHp(char screen[33][65],float currentHp,float maxHp){
 
-    char emptyName[19]="HP:[";//max name size is 13
-    char emptyCurrentHp[]= "      ";//max name size is 4(3 digits, 1 sign)
-    char emptyCurrentHp2[]="      ";//max name size is 4(3 digits, 1 sign)
-    char emptyMaxHp[]=     "      ";//max name size is 3(3 digits)
-    char emptyMaxHp2[]=    "      ";//max name size is 3(3 digits)
+    char emptyName[19]="HP:["; // max name size is 13
+    char emptyCurrentHp[]= "      "; // max name size is 4(3 digits, 1 sign)
+    char emptyCurrentHp2[]="      "; // max name size is 4(3 digits, 1 sign)
+    char emptyMaxHp[]=     "      "; // max name size is 3(3 digits)
+    char emptyMaxHp2[]=    "      "; // max name size is 3(3 digits)
     int spare1;int spare2;
 
 
 
     if(((float)((int)(currentHp*100))/100)==((float)((int)(currentHp))))
-    spare1 = sprintf(emptyCurrentHp, "%.0f", currentHp);//these ints actually dont do anything xD
+    spare1 = sprintf(emptyCurrentHp, "%.2f", currentHp);
         else if(((float)((int)(currentHp*100))/100)==((float)((int)(currentHp*10))/10))
-            spare1 = sprintf(emptyCurrentHp, "%.1f", currentHp);//these ints actually dont do anything xD
+            spare1 = sprintf(emptyCurrentHp, "%.2f", currentHp);
             else
-                spare1 = sprintf(emptyCurrentHp, "%.2f", currentHp);//these ints actually dont do anything xD
+                spare1 = sprintf(emptyCurrentHp, "%.2f", currentHp);
 
 
     if(((float)((int)(maxHp*100))/100)==((float)((int)(maxHp))))
-        spare2 = sprintf(emptyMaxHp, "%.0f", maxHp);//these ints actually dont do anything xD
+        spare2 = sprintf(emptyMaxHp, "%.2f", maxHp);
         else if(((float)((int)(maxHp*100))/100)==((float)((int)(maxHp*10))/10))
-            spare2 = sprintf(emptyMaxHp, "%.1f", maxHp);//these ints actually dont do anything xD
+            spare2 = sprintf(emptyMaxHp, "%.2f", maxHp);
             else
-                spare2 = sprintf(emptyMaxHp, "%.2f", maxHp);//these ints actually dont do anything xD
+                spare2 = sprintf(emptyMaxHp, "%.2f", maxHp);
     
 
     strncpy(emptyCurrentHp2,emptyCurrentHp,strlen(emptyCurrentHp));
     strncpy(emptyMaxHp2,emptyMaxHp,strlen(emptyMaxHp));
     removeBackBlanks(emptyCurrentHp2);
     removeBackBlanks(emptyMaxHp2);
-    strcat(emptyName,emptyCurrentHp2);//now its just putting the pieces together
+    strcat(emptyName,emptyCurrentHp2);
     strcat(emptyName,"/");
     strcat(emptyName,emptyMaxHp2);
     strcat(emptyName,"]");
     changeText(screen,1,2,emptyName);
-
-
-
-    //if((float)number==(float)compareA)return (float)compareA;//like if 2.104812041240==2
-    //if((float)number==(float)compareB)return (float)(compareB/10);//like if 2.1241241==2.2
 }
-
 
 void changePlayerHp(char screen[33][65],float currentHp,float maxHp){
 
-    char emptyName[19]="HP:[";//max name size is 13
-    char emptyCurrentHp[]= "      ";//max name size is 4(3 digits, 1 sign)
-    char emptyCurrentHp2[]="      ";//max name size is 4(3 digits, 1 sign)
-    char emptyMaxHp[]=     "      ";//max name size is 3(3 digits)
-    char emptyMaxHp2[]=    "      ";//max name size is 3(3 digits)
+    char emptyName[19]="HP:["; // max name size is 13
+    char emptyCurrentHp[]= "      "; // max name size is 4(3 digits, 1 sign)
+    char emptyCurrentHp2[]="      "; // max name size is 4(3 digits, 1 sign)
+    char emptyMaxHp[]=     "      "; // max name size is 3(3 digits)
+    char emptyMaxHp2[]=    "      "; // max name size is 3(3 digits)
     int spare1;int spare2;
 
     if(((float)((int)(currentHp*100))/100)==((float)((int)(currentHp))))
-    spare1 = sprintf(emptyCurrentHp, "%.0f", currentHp);//these ints actually dont do anything xD
+    spare1 = sprintf(emptyCurrentHp, "%.2f", currentHp);
         else if(((float)((int)(currentHp*100))/100)==((float)((int)(currentHp*10))/10))
-            spare1 = sprintf(emptyCurrentHp, "%.1f", currentHp);//these ints actually dont do anything xD
+            spare1 = sprintf(emptyCurrentHp, "%.2f", currentHp);
             else
-                spare1 = sprintf(emptyCurrentHp, "%.2f", currentHp);//these ints actually dont do anything xD
+                spare1 = sprintf(emptyCurrentHp, "%.2f", currentHp);
 
     if(((float)((int)(maxHp*100))/100)==((float)((int)(maxHp))))
-        spare2 = sprintf(emptyMaxHp, "%.0f", maxHp);//these ints actually dont do anything xD
+        spare2 = sprintf(emptyMaxHp, "%.2f", maxHp);
         else if(((float)((int)(maxHp*100))/100)==((float)((int)(maxHp*10))/10))
-            spare2 = sprintf(emptyMaxHp, "%.1f", maxHp);//these ints actually dont do anything xD
+            spare2 = sprintf(emptyMaxHp, "%.2f", maxHp);
             else
-                spare2 = sprintf(emptyMaxHp, "%.2f", maxHp);//these ints actually dont do anything xD
+                spare2 = sprintf(emptyMaxHp, "%.2f", maxHp);
     
-
-
     strncpy(emptyCurrentHp2,emptyCurrentHp,strlen(emptyCurrentHp));
     strncpy(emptyMaxHp2,emptyMaxHp,strlen(emptyMaxHp));
     removeBackBlanks(emptyCurrentHp2);
     removeBackBlanks(emptyMaxHp2);
-    strcat(emptyName,emptyCurrentHp2);//now its just putting the pieces together
+    strcat(emptyName,emptyCurrentHp2);
     strcat(emptyName,"/");
     strcat(emptyName,emptyMaxHp2);
     strcat(emptyName,"]");
     changeText(screen,31,29,emptyName);
-
-    
 }
 
 void changeEnemyType(char screen[33][65], char colorScreen[33][65],char enemyTypeChar)
 {
-    //g is grass,r is fire, b is water
+    // g is grass, r is fire, b is water
     char clearThisVariable[]="     ";
-    char emptyName[5]="     ";//max name size is 5//no idea why but this is causing an insane amount of problems
-    //maybe a memory leak or something, but this is taking data from previous functions, even if i change the variable names
-    strncpy(emptyName,clearThisVariable,30);//somehow this works to fix the mysterious bug .-.
+    char emptyName[5]="     "; // max name size is 5
+    strncpy(emptyName,clearThisVariable,30);
     char enemyType[5]="blank";
 
     char ifWaterType[5]="Water";
@@ -222,24 +193,20 @@ void changeEnemyType(char screen[33][65], char colorScreen[33][65],char enemyTyp
     char ifGrassType[5]="Grass";    
         if(enemyTypeChar=='g')strncpy(enemyType,ifGrassType,5);
 
-    //printf("%sbeep\n\nwww\n",emptyName);//this is the checker to see whats in the variable
-    //it should theoretically be empty, but nope, for some darn reason xD
-    
     int count=0;
     strncpy(emptyName,enemyType,5);
-    changeText(screen,28,1,emptyName);//changes appearance or text
-    for(count=0;count<5;count++)//also sorry,x isnt x and y isnt y
-        changeColor(colorScreen,1,28+count,enemyTypeChar);//this is just to change the color map
+    changeText(screen,28,1,emptyName); // changes appearance of text
+    for(count=0;count<5;count++) 
+        changeColor(colorScreen,1,28+count,enemyTypeChar); // to change the color map
 
 }
 
 void changePlayerType(char screen[33][65], char colorScreen[33][65],char enemyTypeChar)
 {
-    //g is grass,r is fire, b is water
+    // g is grass, r is fire, b is water
     char clearThisVariable[]="     ";
-    char emptyName[5]="     ";//max name size is 5//no idea why but this is causing an insane amount of problems
-    //maybe a memory leak or something, but this is taking data from previous functions, even if i change the variable names
-    strncpy(emptyName,clearThisVariable,30);//somehow this works to fix the mysterious bug .-.
+    char emptyName[5]="     "; // max name size is 5
+    strncpy(emptyName,clearThisVariable,30);
     char enemyType[5]="blank";
 
     char ifWaterType[5]="Water";
@@ -250,55 +217,36 @@ void changePlayerType(char screen[33][65], char colorScreen[33][65],char enemyTy
         if(enemyTypeChar=='g')strncpy(enemyType,ifGrassType,5);
     char ifPsychType[5]="Psych";    
         if(enemyTypeChar=='p')strncpy(enemyType,ifPsychType,5);
-
-    //printf("%sbeep\n\nwww\n",emptyName);//this is the checker to see whats in the variable
-    //it should theoretically be empty, but nope, for some darn reason xD
     
     int count=0;
     strncpy(emptyName,enemyType,5);
-    changeText(screen,58,28,emptyName);//changes appearance or text
-    for(count=0;count<5;count++)//also sorry,x isnt x and y isnt y
-        changeColor(colorScreen,28,58+count,enemyTypeChar);//this is just to change the color map
+    changeText(screen,58,28,emptyName); // changes appearance of text
+    for(count=0;count<5;count++)
+        changeColor(colorScreen,28,58+count,enemyTypeChar); // to change the color map
 
 }
 
 void changeEnemyLvl(char screen[33][65],int lvl){
 
-    char emptyName[13]="Lvl:";//max name size is 13
-    char emptyCurrentLvl[]="   ";//max name size is 4(3 digits, 1 sign)
-    char emptyCurrentLvl2[]="   ";//max name size is 4(3 digits, 1 sign)
-    //char emptyMaxHp[]="   ";//max name size is 3(3 digits)
-    //char emptyMaxHp2[]="   ";//max name size is 3(3 digits)
+    char emptyName[13]="Lvl:"; // max name size is 13
+    char emptyCurrentLvl[]="   "; // max name size is 4(3 digits, 1 sign)
+    char emptyCurrentLvl2[]="   "; // max name size is 4(3 digits, 1 sign)
     int spare1 = sprintf(emptyCurrentLvl, "%d", lvl);
-    //int spare2 =sprintf(emptyMaxHp, "%d", maxHp);
     strncpy(emptyCurrentLvl2,emptyCurrentLvl,strlen(emptyCurrentLvl));
-    //strncpy(emptyMaxHp2,emptyMaxHp,strlen(emptyMaxHp));
     removeBackBlanks(emptyCurrentLvl2);
-    //removeBackBlanks(emptyMaxHp2);
-    strcat(emptyName,emptyCurrentLvl2);//now its just putting the pieces together
-    //strcat(emptyName,"/");
-    //strcat(emptyName,emptyMaxHp2);
-    //strcat(emptyName,"]");
+    strcat(emptyName,emptyCurrentLvl2);
     changeText(screen,20,1,emptyName);
     changeText(screen,16,1,"NPC");
 }
 
 void changePlayerLvl(char screen[33][65],int lvl){
-    char emptyName[13]="Lvl:";//max name size is 13
-    char emptyCurrentLvl[]="   ";//max name size is 4(3 digits, 1 sign)
-    char emptyCurrentLvl2[]="   ";//max name size is 4(3 digits, 1 sign)
-    //char emptyMaxHp[]="   ";//max name size is 3(3 digits)
-    //char emptyMaxHp2[]="   ";//max name size is 3(3 digits)
+    char emptyName[13]="Lvl:"; // max name size is 13
+    char emptyCurrentLvl[]="   "; // max name size is 4(3 digits, 1 sign)
+    char emptyCurrentLvl2[]="   "; // max name size is 4(3 digits, 1 sign)
     int spare1 = sprintf(emptyCurrentLvl, "%d", lvl);
-    //int spare2 =sprintf(emptyMaxHp, "%d", maxHp);
     strncpy(emptyCurrentLvl2,emptyCurrentLvl,strlen(emptyCurrentLvl));
-    //strncpy(emptyMaxHp2,emptyMaxHp,strlen(emptyMaxHp));
     removeBackBlanks(emptyCurrentLvl2);
-    //removeBackBlanks(emptyMaxHp2);
-    strcat(emptyName,emptyCurrentLvl2);//now its just putting the pieces together
-    //strcat(emptyName,"/");
-    //strcat(emptyName,emptyMaxHp2);
-    //strcat(emptyName,"]");
+    strcat(emptyName,emptyCurrentLvl2);
     changeText(screen,50,28,emptyName);
     changeText(screen,46,28,"YOU");
 
@@ -306,82 +254,73 @@ void changePlayerLvl(char screen[33][65],int lvl){
 
 void changeEnemyXp(char screen[33][65],int experience)
 {
-    char emptyClearance[18]= "EXP:         ";//max name size is 17 duh
-    changeText(screen,20,2,emptyClearance);//your customary clearance is here 
+    char emptyClearance[18]= "EXP:         "; // max name size is 17 duh
+    changeText(screen,20,2,emptyClearance); // your customary clearance is here 
     char emptyName[18]=  "EXP:";
-    char emptyCurrentLvl[]=  "                   ";//max name size is 15 digits :o
-    int spare1 = sprintf(emptyCurrentLvl, "%d", experience);//but technically you can only go up to 10 digits
-    removeBackBlanks(emptyCurrentLvl);//since like 2 billion is like the max integer number limit
-    strcat(emptyName,emptyCurrentLvl);//now its just putting the pieces together
+    char emptyCurrentLvl[]=  "                   "; // max name size is 15 digits :o
+    int spare1 = sprintf(emptyCurrentLvl, "%d", experience); // but technically you can only go up to 10 digits
+    removeBackBlanks(emptyCurrentLvl); // since like 2 billion is like the max integer number limit
+    strcat(emptyName,emptyCurrentLvl); // now its just putting the pieces together
     changeText(screen,20,2,emptyName);
-
-
 }
 
 void changePlayerXp(char screen[33][65],int experience)
 {
-    char emptyClearance[18]= "EXP:         ";//max name size is 17 duh
-    changeText(screen,50,29,emptyClearance);//your customary clearance is here 
+    char emptyClearance[18]= "EXP:         "; // max name size is 17
+    changeText(screen,50,29,emptyClearance);
     char emptyName[18]=  "EXP:";
-    char emptyCurrentLvl[]=  "                   ";//max name size is 15 digits :o
-    int spare1 = sprintf(emptyCurrentLvl, "%d", experience);//but technically you can only go up to 10 digits
-    removeBackBlanks(emptyCurrentLvl);//since like 2 billion is like the max integer number limit
-    strcat(emptyName,emptyCurrentLvl);//now its just putting the pieces together
+    char emptyCurrentLvl[]=  "                   "; // max name size is 15 digits
+    int spare1 = sprintf(emptyCurrentLvl, "%d", experience); // technically you can only go up to 10 digits
+    removeBackBlanks(emptyCurrentLvl); 
+    strcat(emptyName,emptyCurrentLvl); 
     changeText(screen,50,29,emptyName);
-
 }
     
 void changeEnemyMove1(char screen[33][65],char move1[12])
 {
-    changeText(screen,1,3,"1-          ");//12 spaces
+    changeText(screen,1,3,"1-          "); // 12 spaces
     changeText(screen,3,3,move1);
-
 }
 
 void changeEnemyMove2(char screen[33][65],char move1[12])
 {
-    changeText(screen,1,4,"2-          ");//12 spaces
+    changeText(screen,1,4,"2-          "); // 12 spaces
     changeText(screen,3,4,move1);
-
 }
 
 void changePlayerMove1(char screen[33][65],char move1[12])
 {
-    changeText(screen,31,30,"1-          ");//12 spaces
+    changeText(screen,31,30,"1-          "); // 12 spaces
     changeText(screen,33,30,move1);
-
 }
 
 void changePlayerMove2(char screen[33][65],char move1[12])
 {
-    changeText(screen,31,31,"2-          ");//12 spaces
+    changeText(screen,31,31,"2-          "); // 12 spaces
     changeText(screen,33,31,move1);
-
 }
 
 void changeEnemyUltimate(char screen[33][65],char move1[12],int ultimateUsed){
-    changeText(screen,16,3,"3-            [ ]");//19 spaces//careful if you shift everything over, might ruin the border
+    changeText(screen,16,3,"3-            [ ]"); // 19 spaces
     changeText(screen,18,3,move1);
     char spareUlt[2]; 
     sprintf(spareUlt, "%d", ultimateUsed);
 
     changeText(screen,31,3,spareUlt);
-
 }
 
 void changePlayerUltimate(char screen[33][65],char move1[12],int ultimateUsed){
-    changeText(screen,46,30,"3-            [ ]");//19 spaces//careful if you shift everything over, might ruin the border
+    changeText(screen,46,30,"3-            [ ]");
     changeText(screen,48,30,move1);
     char spareUlt[2]; 
     sprintf(spareUlt, "%d", ultimateUsed);
 
     changeText(screen,61,30,spareUlt);
 
-
 }
 void changeEnemyConsumable(char screen[33][65],char consumableName[15],int consumableRemaining,int consumableMax)
 {
-    changeText(screen,16,4 ,"4-               ");//20 spaces//this makes it so i dont have to size check stuff
+    changeText(screen,16,4 ,"4-               ");
     changeText(screen,18,4,consumableName);
 
     char spareRemains[2]; 
@@ -391,15 +330,12 @@ void changeEnemyConsumable(char screen[33][65],char consumableName[15],int consu
 
     changeText(screen,30,4,"[");
     changeText(screen,31,4,spareRemains);
-    //changeText(screen,30,4,"/");
-    //changeText(screen,31,4,spareMax);
     changeText(screen,32,4,"]");
-
 }
 
 void changePlayerConsumable(char screen[33][65],char consumableName[15],int consumableRemaining,int consumableMax)
 {
-    changeText(screen,46,31 ,"4-               ");//20 spaces//this makes it so i dont have to size check stuff
+    changeText(screen,46,31 ,"4-               ");
     changeText(screen,48,31,consumableName);
 
     char spareRemains[2]; 
@@ -407,13 +343,9 @@ void changePlayerConsumable(char screen[33][65],char consumableName[15],int cons
     char spareMax[2]; 
     sprintf(spareMax, "%d", consumableMax);
 
-
     changeText(screen,60,31,"[");
     changeText(screen,61,31,spareRemains);
-    //changeText(screen,60,31,"/");
-    //changeText(screen,61,31,spareMax);
     changeText(screen,62,31,"]");
-
 }
 
 void subtractEnemyHp(char screen[33][65],int current, int max, int subtract)
@@ -433,22 +365,20 @@ void subtractPlayerHp(char screen[33][65],int current, int max, int subtract)
 char stringToCharType(char type[6])
 {
     if(0==strcmp(type,"Grass"))
-        return 'g';//green
+        return 'g'; // green
     if(0==strcmp(type,"Fire"))
-        return 'r';//red
+        return 'r'; // red
     if(0==strcmp(type,"Water"))
-        return 'b';//blue
+        return 'b'; // blue
     if(0==strcmp(type,"Psych"))
-        return 'p';//purple
-
-
+        return 'p'; // purple
 
     return 'w';
 }
 
 int nameToNational(char name[12])
 {
-//if you add more pokemon, gotta add it here as well
+
     if(0==strcmp(name,"Bulbasaur"))
         return 1;
     if(0==strcmp(name,"Charmander"))
@@ -467,23 +397,18 @@ int nameToNational(char name[12])
         return 79;
     if(0==strcmp(name,"Seel"))
         return 86;
-    return 816;//crying frog pokemon
+    return 816;
 }
 
 char* emptyString(char objectToEmpty[])
 {
-    char blank[]="                                                                  ";//idk how long this is
+    char blank[]="                                                                  ";
     strncpy(objectToEmpty,blank,strlen(objectToEmpty));
     return objectToEmpty;
 }
 
-
-
 void resetScreen(char screen[33][65])
 {
-
-
-
     changeText(screen,0,0, "+--------------------------------+                              ");
     changeText(screen,0,1, "|                                |                              ");
     changeText(screen,0,2, "|                                |                              ");
@@ -517,9 +442,6 @@ void resetScreen(char screen[33][65])
     changeText(screen,0,30,"                              |                                |");
     changeText(screen,0,31,"                              |                                |");
     changeText(screen,0,32,"                              +--------------------------------+");
-
-
-
 }
 
 void resetColorScreen(char colorScreen[33][65])
@@ -527,15 +449,8 @@ void resetColorScreen(char colorScreen[33][65])
     int countColorScreen=0;
     for(countColorScreen=0;countColorScreen<33;countColorScreen++)
         changeText(colorScreen,0,countColorScreen,"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
-
-
 }
 
-
-
-
-
-//////////////////////////////////////////////////////////////////
 void changeEnemyPokemon(char screen[33][65],int pokemonIndex)
 {
     int count=0;
@@ -558,9 +473,8 @@ void changeEnemyPokemon(char screen[33][65],int pokemonIndex)
 
 void changePlayerPokemon(char screen[33][65],int pokemonIndex)
 {
-    //screen[33]="0123456789012345678901234567890123456789012345678901234567890123";
     int count;
-    int shift=16;//how down
+    int shift=16;
     char enemyPokemon[17][31];
     char cleanSpare[65-30];
     char spare[65-30];
@@ -586,12 +500,6 @@ int floatToInt(float number)
 
 void enemyAttackBuffer(char screen[33][65], char colorScreen[33][65])
 {
-/*
-        changeEnemyPokemon(screen,nameToNational(NPCPOKEMONCHOICE));
-        delay(500);
-        clear();
-        run(screen,colorScreen);
-*/
         changeEnemyPokemon(screen,0);//get that flicker in :D
         delay(500);
         clear();
@@ -618,21 +526,10 @@ void enemyAttackBuffer(char screen[33][65], char colorScreen[33][65])
         run(screen,colorScreen);
 
         changeEnemyPokemon(screen,nameToNational(NPCPOKEMONCHOICE));
-/*
-        delay(250);
-        clear();
-        run(screen,colorScreen);
-*/
 }
 
 void playerAttackBuffer(char screen[33][65], char colorScreen[33][65])
 {
-/*
-        changePlayerPokemon(screen,nameToNational(PLAYERPOKEMONCHOICE));
-        delay(500);
-        clear();
-        run(screen,colorScreen);
-*/
         changePlayerPokemon(screen,0);//get that flicker in :D
         delay(250);
         clear();
@@ -653,34 +550,27 @@ void playerAttackBuffer(char screen[33][65], char colorScreen[33][65])
         clear();
         run(screen,colorScreen);
 
-        changePlayerPokemon(screen,0);//get that flicker in :D
+        changePlayerPokemon(screen,0);
         delay(250);
         clear();
         run(screen,colorScreen);
 
         changePlayerPokemon(screen,nameToNational(PLAYERPOKEMONCHOICE));
-/*
-        delay(250);
-        clear();
-        run(screen,colorScreen);
-*/
-
 }
 
 void initializeScreen(char screen[33][65],char colorScreen[33][65])
 {
-
     char enemyName[13]= "";
     char playerName[13]="";
     float enemyHp=1;
     float enemyTotalHp=1;
     float playerHp=1;
-    float playerTotalHp=1;//if i just intialize them, it might cause problems
-    char enemyType='w';//so thats why i assign values usually
+    float playerTotalHp=1;
+    char enemyType='w';
     char playerType='w';
     int playerLevel=1;
     int enemyLevel=1;
-    int playerCurrentXp=1;//holds max int value digits :D
+    int playerCurrentXp=1;
     int enemyCurrentXp=1;
     char playerMove1[13]="";
     char playerMove2[13]="";
@@ -697,9 +587,7 @@ void initializeScreen(char screen[33][65],char colorScreen[33][65])
     int playerConsumableMaxCount=1;
     int enemyConsumableMaxCount=1;
     int playerPokemonNumber=1;
-    int enemyPokemonNumber=1;//p_pokemonID is cant be used if 5 can represent two pokemons at once xD
-
-
+    int enemyPokemonNumber=1;
 
     strncpy(emptyString(playerName),PLAYERPOKEMONCHOICE,strlen(PLAYERPOKEMONCHOICE));
     strncpy(emptyString(enemyName),NPCPOKEMONCHOICE,strlen(NPCPOKEMONCHOICE));
@@ -730,10 +618,6 @@ void initializeScreen(char screen[33][65],char colorScreen[33][65])
     playerPokemonNumber=nameToNational(PLAYERPOKEMONCHOICE);
     enemyPokemonNumber=nameToNational(NPCPOKEMONCHOICE);
 
-
-
-
-
     changeEnemyName(screen,colorScreen,enemyName,enemyType);
     changePlayerName(screen,colorScreen,playerName,playerType);
     changeEnemyHp(screen,enemyHp,enemyTotalHp);
@@ -754,12 +638,7 @@ void initializeScreen(char screen[33][65],char colorScreen[33][65])
     changePlayerConsumable(screen,playerConsumableName,playerConsumableCount,playerConsumableMaxCount);
     changeEnemyPokemon(screen,enemyPokemonNumber);
     changePlayerPokemon(screen,playerPokemonNumber);
-
-
-
-
 }
-
 
 void battleUI(int animationNumber)
 {
@@ -832,21 +711,18 @@ void battleUI(int animationNumber)
         "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
         "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
         "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",};
-    
-
 
     initializeScreen(screen,colorScreen);
     if(animationNumber==1)
-{
+    {
         playerAttackBuffer(screen,colorScreen);
-}
+    }
     if(animationNumber==2)
-{
-        enemyAttackBuffer(screen,colorScreen);
-}
+    {
+       enemyAttackBuffer(screen,colorScreen);
+    }
     clear();
     run(screen,colorScreen);
-
 }
 
 void displayScreen()

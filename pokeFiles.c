@@ -1,7 +1,7 @@
 /*  CS125 Group Project
     File: pokeFiles.c
     Description: ASCII art for BattleUI usage
-    Authors: Vince Trance, Forrest Mobley
+    Authors: Vince Tran, Forrest Mobley
     References: https://pokemondb.net/pokedex/national
   				https://www.text-image.com/convert/ascii.html
   				http://www.unit-conversion.info/texttools/replace-text/
@@ -17,29 +17,8 @@
 // Header files
 #include "pokeFiles.h"
 
-// void getPokemon(char holder[17][31],int pokemonIndex);
-/*
-int main()
-{
-char hold[17][31];
-int count;
-int whichOne=1;
-printf("which pokemon do you want?");
-scanf("%d",&whichOne);
-getPokemon(hold,whichOne);
-for(count=0;count<17;count++)
-{
-    printf("%s\n",hold[count]);
-}
-}
-*/
-
 void getPokemon(char holder[17][31],int pokemonIndex){
   char pokemon[17][31];
-  //
-  //make the width 30
-  //height has to be 16
-  //replace all slashes with l
   char bulbasaur[17][31]=
   {
     "                              ",

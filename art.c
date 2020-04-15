@@ -1,7 +1,7 @@
 /*  CS125 Group Project
     File: art.c
     Description: All ASCII art utilized in UI elements
-    Authors: Vince Trance, Forrest Mobley
+    Authors: Vince Tran, Forrest Mobley
     References: N/A
 */
 
@@ -125,7 +125,7 @@ void asciiart(int input){
       break;
 
 
-    case 150: // Mewtwo
+    case 150: // Mewtwo - for easter-egg Pokemon that was never implemented
     printf("\e[0;35m                                               `/:+`                      ```                        \n");
     printf("                                              :- .+`     `....``        -+-:/:                      \n");
     printf("                                              ./. `/--:::-....--:::::-./:   +.                      \n");

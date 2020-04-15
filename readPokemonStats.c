@@ -17,7 +17,7 @@
 #include "readPokemonStats.h"
 #include "combat.h"
 
-float readPokemonStats(char who[7], int stat)
+float readPokemonStats(char who[7], int stat) // used to read stat values from playerStats.txt and npcStats.txt
 {
 	float statResult[9];
 	if (strcmp(who, "player")==0)
